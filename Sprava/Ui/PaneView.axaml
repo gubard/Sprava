@@ -3,9 +3,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
-             xmlns:h="clr-namespace:Sprava.Helpers"
+             xmlns:sh="clr-namespace:Sprava.Helpers"
+             xmlns:ch="clr-namespace:Cromwell.Helpers;assembly=Cromwell"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
-    <Button Content="{DynamicResource Lang.Close}" Command="{x:Static h:SpravaCommands.HidePaneCommand}" />
+    <ScrollViewer>
+        <StackPanel>
+            <Button Content="{DynamicResource Lang.Cromwell}"
+                    Command="{x:Static ch:CromwellCommands.NavigateToRootCredentialsViewCommand}" />
+            <Button Content="{DynamicResource Lang.Close}" Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inanna", "..\Inanna\Inanna\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inanna.SourceGenerator", "..\Inanna\Inanna.SourceGenerator\Inanna.SourceGenerator.csproj", "{F4E55B84-9BCA-4DC2-9FAF-28B8C0CF804F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gaia", "Gaia", "{7060567C-2E2E-470C-A3A5-5A9901EB2D8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaia", "..\Gaia\Gaia\Gaia.csproj", "{262B6A15-5B25-48EF-B496-4F99A5A96410}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,10 @@ Global
 		{F4E55B84-9BCA-4DC2-9FAF-28B8C0CF804F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E55B84-9BCA-4DC2-9FAF-28B8C0CF804F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E55B84-9BCA-4DC2-9FAF-28B8C0CF804F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262B6A15-5B25-48EF-B496-4F99A5A96410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262B6A15-5B25-48EF-B496-4F99A5A96410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262B6A15-5B25-48EF-B496-4F99A5A96410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262B6A15-5B25-48EF-B496-4F99A5A96410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,5 +85,6 @@ Global
 		{BADE43EC-4D42-44B2-8D3A-D420BE28CDC8} = {4024DAB6-F4CB-44B6-8060-901F70D2342D}
 		{32DB1105-331E-4234-9D57-3A00995E3A7D} = {AD40F875-5661-426A-BE26-2CC113653991}
 		{F4E55B84-9BCA-4DC2-9FAF-28B8C0CF804F} = {AD40F875-5661-426A-BE26-2CC113653991}
+		{262B6A15-5B25-48EF-B496-4F99A5A96410} = {7060567C-2E2E-470C-A3A5-5A9901EB2D8B}
 	EndGlobalSection
 EndGlobal

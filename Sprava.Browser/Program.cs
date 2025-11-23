@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Browser;
 using Inanna.Helpers;
+using Sprava.Services;
 
 namespace Sprava.Browser;
 
@@ -9,7 +10,7 @@ internal sealed partial class Program
 {
     private static Task Main(string[] args)
     {
-        DiHelper.ServiceProvider = new ServiceProvider();
+        DiHelper.ServiceProvider = new SpravaServiceProvider();
 
         return BuildAvaloniaApp().WithInterFont().StartBrowserAppAsync("out");
     }

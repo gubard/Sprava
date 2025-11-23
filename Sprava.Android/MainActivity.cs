@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
 using Inanna.Helpers;
+using Sprava.Services;
 
 namespace Sprava.Android;
 
@@ -12,7 +13,7 @@ public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
-        DiHelper.ServiceProvider = new ServiceProvider();
+        DiHelper.ServiceProvider = new SpravaServiceProvider();
 
         return base.CustomizeAppBuilder(builder).WithInterFont();
     }
