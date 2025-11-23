@@ -1,0 +1,24 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dataTemplates="clr-namespace:Cromwell.DataTemplates;assembly=Cromwell"
+             x:Class="Sprava.App"
+             RequestedThemeVariant="Default">
+    <Application.DataTemplates>
+        <sg:CromwellViewLocator />
+        <dataTemplates:ValidationErrorDataTemplate />
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Assets/Langs/en-US.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://IconPacks.Avalonia.MaterialDesign/MaterialDesign.axaml" />
+        <StyleInclude Source="avares://Inanna/Styles/Theme.axaml" />
+    </Application.Styles>
+</Application>
