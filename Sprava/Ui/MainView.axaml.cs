@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Sprava.Views;
+namespace Sprava.Ui;
 
 public partial class MainView : UserControl
 {

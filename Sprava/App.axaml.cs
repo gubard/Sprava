@@ -1,55 +1,45 @@
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
-using Sprava.ViewModels;
-using Sprava.Views;
+using Inanna.Helpers;
+using Inanna.Services;
+using Microsoft.EntityFrameworkCore;
+using Sprava.Ui;
+using MainViewModel = Sprava.Ui.MainViewModel;
 
 namespace Sprava;
 
-public partial class App : Application
+public partial class App : InannaApplication
 {
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
-
+    
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
+        var viewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
+        var dbContext = DiHelper.ServiceProvider.GetService<DbContext>();
+        dbContext.Database.EnsureCreated();
+        DisableAvaloniaDataAnnotationValidation();
 
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainViewModel()
-            };
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        switch (ApplicationLifetime)
         {
-            singleViewPlatform.MainView = new MainView
-            {
-                DataContext = new MainViewModel()
-            };
+            case IClassicDesktopStyleApplicationLifetime desktop:
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = viewModel,
+                };
+
+                break;
+            case ISingleViewApplicationLifetime singleViewPlatform:
+                singleViewPlatform.MainView = new MainView
+                {
+                    DataContext = viewModel,
+                };
+
+                break;
         }
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    private void DisableAvaloniaDataAnnotationValidation()
-    {
-        // Get an array of plugins to remove
-        var dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
-
-        // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
     }
 }
