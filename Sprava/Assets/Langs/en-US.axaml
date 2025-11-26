@@ -41,4 +41,7 @@
     <s:String x:Key="Lang.Theme">Theme</s:String>
     <s:String x:Key="Lang.Menu">Menu</s:String>
     <s:String x:Key="Lang.Close">Close</s:String>
+    <s:String x:Key="Lang.Email">Email</s:String>
+    <s:String x:Key="Lang.RepeatPassword">Repeat password</s:String>
+    <s:String x:Key="Lang.CreateUser">Create user</s:String>
 </ResourceDictionary>

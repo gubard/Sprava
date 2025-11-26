@@ -2,6 +2,7 @@
 using Cromwell.Ui;
 using Inanna.Models;
 using Inanna.Ui;
+using Melnikov.Ui;
 
 namespace Sprava.Ui;
 
@@ -12,7 +13,7 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(
         StackViewModel stack,
         NavigationBarViewModel navigationBar,
-        RootCredentialsViewModel rootCredentials,
+        CreateUserViewModel rootCredentials,
         PaneViewModel pane
     )
     {

@@ -1,4 +1,4 @@
-﻿using Cromwell.Generator;
+﻿using Inanna.Generator;
 using Sprava.Ui;
 
 [assembly: ViewPair(typeof(PaneView), typeof(PaneViewModel))]

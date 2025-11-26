@@ -1,12 +1,12 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:dt="clr-namespace:Cromwell.DataTemplates;assembly=Cromwell"
-             xmlns:s="clr-namespace:Sprava.Services"
+             xmlns:ss="clr-namespace:Sprava.Services"
+             xmlns:cs="clr-namespace:Cromwell.Services;assembly=Cromwell"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
-        <s:ViewLocator />
-        <dt:ValidationErrorDataTemplate />
+        <ss:ViewLocator />
+        <cs:ValidationErrorDataTemplate />
     </Application.DataTemplates>
 
     <Application.Resources>

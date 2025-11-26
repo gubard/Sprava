@@ -4,7 +4,6 @@ using Inanna.Helpers;
 using Inanna.Services;
 using Microsoft.EntityFrameworkCore;
 using Sprava.Ui;
-using MainViewModel = Sprava.Ui.MainViewModel;
 
 namespace Sprava;
 

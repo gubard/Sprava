@@ -3,6 +3,7 @@ using Avalonia.Controls.Templates;
 using Cromwell.SourceGenerator;
 using Inanna.Models;
 using Sprava.SourceGenerator;
+using Melnikov.SourceGenerator;
 
 namespace Sprava.Services;
 
@@ -23,6 +24,11 @@ public class ViewLocator : IDataTemplate
         }
 
         if (SpravaViewLocator.Builders.TryGetValue(type, out builder))
+        {
+            return builder();
+        }
+        
+        if (MelnikovViewLocator.Builders.TryGetValue(type, out builder))
         {
             return builder();
         }
