@@ -1,6 +1,6 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Inanna.Services;
 using Microsoft.EntityFrameworkCore;
 using Sprava.Ui;

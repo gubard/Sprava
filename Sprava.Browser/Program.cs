@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Sprava.Services;
 
 namespace Sprava.Browser;

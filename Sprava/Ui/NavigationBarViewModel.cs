@@ -5,7 +5,7 @@ using Cromwell.Ui;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
-using IServiceProvider = Inanna.Services.IServiceProvider;
+using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Ui;
 

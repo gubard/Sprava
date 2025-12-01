@@ -7,7 +7,6 @@ using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
 using Sprava.Ui;
-using IServiceProvider = Inanna.Services.IServiceProvider;
 
 namespace Sprava.Services;
 
@@ -21,7 +20,7 @@ namespace Sprava.Services;
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(ManisServiceOptions), Factory = nameof(GetManisServiceOptions))]
-public partial class SpravaServiceProvider : IServiceProvider
+public partial class SpravaServiceProvider : Gaia.Services.IServiceProvider
 {
     public static SignInViewModel GetLoginViewModel(IManisService manisService)
     {

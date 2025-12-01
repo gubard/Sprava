@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Sprava.Ui;
 
 namespace Sprava.Helpers;

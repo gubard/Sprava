@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Cromwell.Services;
 using Gaia.Errors;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Inanna.Services;
 
 namespace Sprava.Services;

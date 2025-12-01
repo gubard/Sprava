@@ -1,6 +1,6 @@
 ﻿using System;
 using Avalonia;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Sprava.Services;
 
 namespace Sprava.Desktop;

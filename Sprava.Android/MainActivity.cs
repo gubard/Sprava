@@ -2,7 +2,7 @@
 using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
-using Inanna.Helpers;
+using Gaia.Helpers;
 using Sprava.Services;
 
 namespace Sprava.Android;
