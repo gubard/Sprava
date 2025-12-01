@@ -6,7 +6,8 @@
              xmlns:h="clr-namespace:Sprava.Helpers"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.NavigationBarView"
-             x:DataType="ui:NavigationBarViewModel">
+             x:DataType="ui:NavigationBarViewModel"
+             IsVisible="{Binding IsVisible}">
     <Grid ColumnDefinitions="Auto,*,Auto">
         <StackPanel Grid.Column="0" Classes="horizontal">
             <Button Content="{DynamicResource Lang.Menu}"

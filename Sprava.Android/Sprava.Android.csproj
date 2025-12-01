@@ -9,6 +9,8 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
         <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+        <AndroidSdkDirectory>C:\Users\memse\AppData\Local\Android\sdk</AndroidSdkDirectory>
+        <JavaSdkDirectory>C:\Program Files\Java\jdk-21</JavaSdkDirectory>
     </PropertyGroup>
 
     <ItemGroup>

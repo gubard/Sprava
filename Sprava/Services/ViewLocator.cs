@@ -2,8 +2,9 @@
 using Avalonia.Controls.Templates;
 using Cromwell.SourceGenerator;
 using Inanna.Models;
-using Sprava.SourceGenerator;
+using Inanna.SourceGenerator;
 using Melnikov.SourceGenerator;
+using Sprava.SourceGenerator;
 
 namespace Sprava.Services;
 
@@ -18,7 +19,12 @@ public class ViewLocator : IDataTemplate
 
         var type = param.GetType();
 
-        if (CromwellViewLocator.Builders.TryGetValue(type, out var builder))
+        if (InannaViewLocator.Builders.TryGetValue(type, out var builder))
+        {
+            return builder();
+        }
+
+        if (CromwellViewLocator.Builders.TryGetValue(type, out builder))
         {
             return builder();
         }
@@ -27,7 +33,7 @@ public class ViewLocator : IDataTemplate
         {
             return builder();
         }
-        
+
         if (MelnikovViewLocator.Builders.TryGetValue(type, out builder))
         {
             return builder();
@@ -35,7 +41,7 @@ public class ViewLocator : IDataTemplate
 
         return new TextBlock
         {
-            Text = $"Not found \"{type}\""
+            Text = $"Not found \"{type}\"",
         };
     }
 

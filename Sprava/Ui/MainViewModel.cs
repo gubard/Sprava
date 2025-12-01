@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Cromwell.Ui;
 using Inanna.Models;
 using Inanna.Ui;
 using Melnikov.Ui;
@@ -13,14 +12,14 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(
         StackViewModel stack,
         NavigationBarViewModel navigationBar,
-        CreateUserViewModel rootCredentials,
+        SignInViewModel signInViewModel,
         PaneViewModel pane
     )
     {
         Stack = stack;
         NavigationBar = navigationBar;
         Pane = pane;
-        Stack.PushView(rootCredentials);
+        Stack.PushView(signInViewModel);
     }
 
     public StackViewModel Stack { get; }

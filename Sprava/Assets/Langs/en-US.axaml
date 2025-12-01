@@ -44,4 +44,11 @@
     <s:String x:Key="Lang.Email">Email</s:String>
     <s:String x:Key="Lang.RepeatPassword">Repeat password</s:String>
     <s:String x:Key="Lang.CreateUser">Create user</s:String>
+    <s:String x:Key="Lang.LoginOrEmail">Login or email</s:String>
+    <s:String x:Key="Lang.WelcomeToCromwell">Welcome to Cromwell</s:String>
+    <s:String x:Key="Lang.NotFound">Not found "{}"</s:String>
+    <s:String x:Key="Lang.AlreadyExists">"{}" already exists</s:String>
+    <s:String x:Key="Lang.SignIn">Sign In</s:String>
+    <s:String x:Key="Lang.SignUp">Sign Up</s:String>
+    <s:String x:Key="Lang.Sprava">Sprava</s:String>
 </ResourceDictionary>
