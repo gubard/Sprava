@@ -22,9 +22,9 @@ namespace Sprava.Services;
 [Transient(typeof(ManisServiceOptions), Factory = nameof(GetManisServiceOptions))]
 public partial class SpravaServiceProvider : Gaia.Services.IServiceProvider
 {
-    public static SignInViewModel GetLoginViewModel(IManisService manisService)
+    public static SignInViewModel GetLoginViewModel(IAuthenticationService authenticationService)
     {
-        return new(manisService, UiHelper.NavigateToAsync<RootCredentialsViewModel>);
+        return new(authenticationService, UiHelper.NavigateToAsync<RootCredentialsViewModel>);
     }
 
     public static ManisServiceOptions GetManisServiceOptions()
