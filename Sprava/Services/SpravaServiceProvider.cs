@@ -16,7 +16,7 @@ namespace Sprava.Services;
 [Singleton(typeof(MainViewModel))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetLoginViewModel))]
-[Transient(typeof(IManisValidator), typeof(ManisValidator))]
+[Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(ManisServiceOptions), Factory = nameof(GetManisServiceOptions))]
