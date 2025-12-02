@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.SourceGenerator", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Db.Sqlite", "..\Nestor\Nestor.Db.Sqlite\Nestor.Db.Sqlite.csproj", "{A47567D2-18A6-4FDF-9244-405947B4DE0E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Turtole", "Turtole", "{F5A7A3BF-C66A-4E51-A3DB-FA5E4C53D2FC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Turtle", "Turtle", "{F5A7A3BF-C66A-4E51-A3DB-FA5E4C53D2FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turtle", "..\Turtle\Turtle\Turtle.csproj", "{71B54742-159E-4D4F-AE26-1E074E394890}"
 EndProject
