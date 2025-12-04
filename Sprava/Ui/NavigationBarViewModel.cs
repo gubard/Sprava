@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell.Services;
 using Cromwell.Ui;
@@ -16,6 +17,9 @@ public partial class NavigationBarViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly IServiceProvider _serviceProvider;
     private readonly IApplicationResourceService _appResourceService;
+
+    [ObservableProperty] private bool _isOnline;
+    [ObservableProperty] private bool _isSingIn;
 
     public NavigationBarViewModel(
         INavigator navigator,

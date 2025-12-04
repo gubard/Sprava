@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:h="clr-namespace:Sprava.Helpers"
+             xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.NavigationBarView"
              x:DataType="ui:NavigationBarViewModel"
@@ -18,8 +20,30 @@
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding Header}" />
-        <Button Grid.Column="2"
-                Content="{DynamicResource Lang.Settings}"
-                Command="{Binding ShowSettingsViewCommand}" />
+
+        <StackPanel Grid.Column="2" Classes="horizontal">
+            <c:ViewSelectorControl State="{Binding  IsSingIn}">
+                <c:ViewSelectorItemControl State="{x:True}">
+                    <ip:PackIconMaterialDesign Kind="Person" Foreground="{DynamicResource AccentButtonBackground}" />
+                </c:ViewSelectorItemControl>
+                <c:ViewSelectorItemControl State="{x:False}">
+                    <ip:PackIconMaterialDesign Kind="PersonOff"
+                                               Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+                </c:ViewSelectorItemControl>
+            </c:ViewSelectorControl>
+
+            <c:ViewSelectorControl State="{Binding  IsOnline}">
+                <c:ViewSelectorItemControl State="{x:True}">
+                    <ip:PackIconMaterialDesign Kind="Wifi" Foreground="{DynamicResource AccentButtonBackground}" />
+                </c:ViewSelectorItemControl>
+                <c:ViewSelectorItemControl State="{x:False}">
+                    <ip:PackIconMaterialDesign Kind="WifiOff"
+                                               Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+                </c:ViewSelectorItemControl>
+            </c:ViewSelectorControl>
+
+            <Button Content="{DynamicResource Lang.Settings}"
+                    Command="{Binding ShowSettingsViewCommand}" />
+        </StackPanel>
     </Grid>
 </UserControl>
