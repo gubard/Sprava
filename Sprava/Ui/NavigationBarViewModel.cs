@@ -3,9 +3,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell.Services;
 using Cromwell.Ui;
+using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
+using Melnikov.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Ui;
@@ -26,14 +28,19 @@ public partial class NavigationBarViewModel : ViewModelBase
         IAppSettingService appSettingService,
         IDialogService dialogService,
         IServiceProvider serviceProvider,
-        IApplicationResourceService appResourceService
-    )
+        IApplicationResourceService appResourceService,
+        IUiAuthenticationService authenticationService,
+        ITryPolicyService tryPolicyService)
     {
         _navigator = navigator;
         _appSettingService = appSettingService;
         _dialogService = dialogService;
         _serviceProvider = serviceProvider;
         _appResourceService = appResourceService;
+        tryPolicyService.OnSuccess += () => IsOnline = true;
+        tryPolicyService.OnError += _ => IsOnline = false;
+        authenticationService.LoggedIn += _ => IsSingIn = true;
+        authenticationService.LoggedOut += () => IsSingIn = false;
 
         _navigator.ViewChanged += (_, _) =>
         {
@@ -80,11 +87,11 @@ public partial class NavigationBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private Task ShowSettingsViewAsync(CancellationToken cancellationToken)
+    private async Task ShowSettingsViewAsync(CancellationToken cancellationToken)
     {
         var setting = _serviceProvider.GetService<AppSettingViewModel>();
 
-        return WrapCommand(() => _dialogService.ShowMessageBoxAsync(new(
+        await WrapCommand(() => _dialogService.ShowMessageBoxAsync(new(
             _appResourceService.GetResource<string>("Lang.Settings"),
             _serviceProvider.GetService<AppSettingViewModel>(),
             new DialogButton(_appResourceService.GetResource<string>("Lang.Save"), SaveSettingsCommand, setting,
@@ -92,9 +99,9 @@ public partial class NavigationBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private Task BackAsync(CancellationToken cancellationToken)
+    private async Task BackAsync(CancellationToken cancellationToken)
     {
-        return WrapCommand(async () =>
+        await WrapCommand(async () =>
         {
             await _navigator.NavigateBackOrNullAsync(cancellationToken);
             OnPropertyChanged(nameof(IsCanBack));
@@ -102,9 +109,9 @@ public partial class NavigationBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken cancellationToken)
+    private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken cancellationToken)
     {
-        return WrapCommand(async () =>
+        await WrapCommand(async () =>
         {
             await _appSettingService.SaveAppSettingsAsync(new()
             {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
 using Gaia.Helpers;
+using Inanna.Helpers;
 using Sprava.Ui;
 
 namespace Sprava.Helpers;
@@ -11,18 +11,18 @@ public static class SpravaCommands
     {
         var mainViewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
 
-        ShowPaneCommand = new AsyncRelayCommand(ct =>
+        ShowPaneCommand = UiHelper.CreateCommand(_ =>
         {
             mainViewModel.IsShowPane = true;
 
-            return Task.CompletedTask;
+            return ValueTask.CompletedTask;
         });
 
-        HidePaneCommand = new AsyncRelayCommand(ct =>
+        HidePaneCommand = UiHelper.CreateCommand(_ =>
         {
             mainViewModel.IsShowPane = false;
 
-            return Task.CompletedTask;
+            return ValueTask.CompletedTask;
         });
     }
 

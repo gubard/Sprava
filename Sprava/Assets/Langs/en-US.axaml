@@ -51,4 +51,5 @@
     <s:String x:Key="Lang.SignIn">Sign In</s:String>
     <s:String x:Key="Lang.SignUp">Sign Up</s:String>
     <s:String x:Key="Lang.Sprava">Sprava</s:String>
+    <s:String x:Key="Lang.Offline">Offline</s:String>
 </ResourceDictionary>

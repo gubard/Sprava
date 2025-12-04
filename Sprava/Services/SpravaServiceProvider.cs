@@ -1,6 +1,7 @@
 ﻿using Cromwell.Models;
 using Cromwell.Services;
 using Cromwell.Ui;
+using Gaia.Services;
 using Inanna.Helpers;
 using Jab;
 using Manis.Contract.Services;
@@ -16,6 +17,7 @@ namespace Sprava.Services;
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
 [Singleton(typeof(MainViewModel))]
+[Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetLoginViewModel))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
@@ -25,9 +27,9 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
-    public static SignInViewModel GetLoginViewModel(IAuthenticationService authenticationService)
+    public static SignInViewModel GetLoginViewModel(IUiAuthenticationService uiAuthenticationService)
     {
-        return new(authenticationService, UiHelper.NavigateToAsync<RootCredentialsViewModel>);
+        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootCredentialsViewModel>, UiHelper.NavigateToAsync<RootCredentialsViewModel>);
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions()
@@ -44,5 +46,10 @@ public partial class SpravaServiceProvider : IServiceProvider
         {
             Url = "https://localhost:7089",
         };
+    }
+
+    public static ITryPolicyService GetTryPolicyService()
+    {
+        return new TryPolicyService(3, TimeSpan.FromSeconds(1));
     }
 }

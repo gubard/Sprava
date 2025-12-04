@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Cromwell.Services;
-using Gaia.Errors;
 using Gaia.Helpers;
+using Gaia.Models;
 using Inanna.Services;
 
 namespace Sprava.Services;
