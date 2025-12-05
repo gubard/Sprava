@@ -1,0 +1,39 @@
+<Solution>
+  <Folder Name="/Cromwell/">
+    <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
+  </Folder>
+  <Folder Name="/Gaia/">
+    <Project Path="../Gaia/Gaia/Gaia.csproj" />
+  </Folder>
+  <Folder Name="/Inanna/">
+    <Project Path="../Inanna/Inanna.SourceGenerator/Inanna.SourceGenerator.csproj" />
+    <Project Path="../Inanna/Inanna/Inanna.csproj" />
+  </Folder>
+  <Folder Name="/Manis/">
+    <Project Path="../Manis/Manis.Contract/Manis.Contract.csproj" />
+    <Project Path="../Manis/Manis/Manis.csproj" />
+  </Folder>
+  <Folder Name="/Melnikov/">
+    <Project Path="../Melnikov/Melnikov/Melnikov.csproj" />
+  </Folder>
+  <Folder Name="/Nestor/">
+    <Project Path="../Nestor/Nestor.Db.Sqlite/Nestor.Db.Sqlite.csproj" />
+    <Project Path="../Nestor/Nestor.Db/Nestor.Db.csproj" />
+    <Project Path="../Nestor/Nestor.SourceGenerator/Nestor.SourceGenerator.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/Turtle/">
+    <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />
+    <Project Path="../Turtle/Turtle/Turtle.csproj" />
+  </Folder>
+  <Folder Name="/Zeus/">
+    <Project Path="../Zeus/Zeus/Zeus.csproj" />
+  </Folder>
+  <Project Path="Sprava.Android/Sprava.Android.csproj" />
+  <Project Path="Sprava.Browser/Sprava.Browser.csproj" />
+  <Project Path="Sprava.Desktop/Sprava.Desktop.csproj" />
+  <Project Path="Sprava.iOS/Sprava.iOS.csproj" />
+  <Project Path="Sprava/Sprava.csproj" />
+</Solution>
