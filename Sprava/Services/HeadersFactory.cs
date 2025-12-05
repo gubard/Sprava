@@ -20,7 +20,7 @@ public class HeadersFactory : IFactory<Memory<HttpHeader>>
 
         return new[]
         {
-            new HttpHeader("Authenticate", $"Bearer {token.Token}"),
+            new HttpHeader(HttpHeader.Authorization, $"{HttpHeader.Bearer} {token.Token}"),
         };
     }
 }
