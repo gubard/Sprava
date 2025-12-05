@@ -1,6 +1,7 @@
 ﻿using Cromwell.Models;
 using Cromwell.Services;
 using Cromwell.Ui;
+using Gaia.Models;
 using Gaia.Services;
 using Inanna.Helpers;
 using Jab;
@@ -23,6 +24,7 @@ namespace Sprava.Services;
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
+[Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
 [Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 public partial class SpravaServiceProvider : IServiceProvider
