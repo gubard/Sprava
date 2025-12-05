@@ -2,6 +2,9 @@
   <Folder Name="/Cromwell/">
     <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
   </Folder>
+  <Folder Name="/Diocles/">
+    <Project Path="../Diocles/Diocles/Diocles.csproj" />
+  </Folder>
   <Folder Name="/Gaia/">
     <Project Path="../Gaia/Gaia/Gaia.csproj" />
   </Folder>
