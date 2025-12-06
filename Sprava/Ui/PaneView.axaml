@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:sh="clr-namespace:Sprava.Helpers"
-             xmlns:ch="clr-namespace:Cromwell.Helpers;assembly=Cromwell"
              xmlns:controls="clr-namespace:Inanna.Controls;assembly=Inanna"
+             xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
+             xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
@@ -20,7 +21,8 @@
             <StackPanel>
                 <Button Classes="alignment-stretch"
                         Content="{DynamicResource Lang.Cromwell}"
-                        Command="{x:Static ch:CromwellCommands.NavigateToRootCredentialsViewCommand}" />
+                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                        CommandParameter="{x:Type cui:RootCredentialsViewModel}" />
             </StackPanel>
         </controls:GroupBoxControl>
     </ScrollViewer>

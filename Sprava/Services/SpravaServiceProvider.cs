@@ -1,6 +1,7 @@
 ﻿using Cromwell.Models;
 using Cromwell.Services;
-using Cromwell.Ui;
+using Diocles.Ui;
+using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
 using Inanna.Helpers;
@@ -31,7 +32,7 @@ public partial class SpravaServiceProvider : IServiceProvider
 {
     public static SignInViewModel GetLoginViewModel(IUiAuthenticationService uiAuthenticationService)
     {
-        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootCredentialsViewModel>, UiHelper.NavigateToAsync<RootCredentialsViewModel>);
+        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootToDosViewModel>, UiHelper.NavigateToAsync<RootToDosViewModel>);
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions()
@@ -53,5 +54,10 @@ public partial class SpravaServiceProvider : IServiceProvider
     public static ITryPolicyService GetTryPolicyService()
     {
         return new TryPolicyService(3, TimeSpan.FromSeconds(1));
+    }
+
+    public object GetService(Type type)
+    {
+        return ((System.IServiceProvider)this).GetService(type).ThrowIfNull();
     }
 }
