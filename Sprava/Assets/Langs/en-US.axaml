@@ -52,4 +52,6 @@
     <s:String x:Key="Lang.SignUp">Sign Up</s:String>
     <s:String x:Key="Lang.Sprava">Sprava</s:String>
     <s:String x:Key="Lang.Offline">Offline</s:String>
+    <s:String x:Key="Lang.ToDos">ToDos</s:String>
+    <s:String x:Key="Lang.Credentials">Credentials</s:String>
 </ResourceDictionary>

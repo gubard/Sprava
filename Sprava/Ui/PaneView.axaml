@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:Inanna.Controls;assembly=Inanna"
              xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
              xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
+             xmlns:dui="clr-namespace:Diocles.Ui;assembly=Diocles"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
@@ -20,7 +21,11 @@
 
             <StackPanel>
                 <Button Classes="alignment-stretch"
-                        Content="{DynamicResource Lang.Cromwell}"
+                        Content="{DynamicResource Lang.ToDos}"
+                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                        CommandParameter="{x:Type dui:RootToDosViewModel}" />
+                <Button Classes="alignment-stretch"
+                        Content="{DynamicResource Lang.Credentials}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                         CommandParameter="{x:Type cui:RootCredentialsViewModel}" />
             </StackPanel>

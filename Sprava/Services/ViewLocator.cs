@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Cromwell.SourceGenerator;
+using Diocles.SourceGenerator;
 using Inanna.Models;
 using Inanna.SourceGenerator;
 using Melnikov.SourceGenerator;
@@ -19,7 +20,12 @@ public class ViewLocator : IDataTemplate
 
         var type = param.GetType();
 
-        if (InannaViewLocator.Builders.TryGetValue(type, out var builder))
+        if (DioclesViewLocator.Builders.TryGetValue(type, out var builder))
+        {
+            return builder();
+        }
+
+        if (InannaViewLocator.Builders.TryGetValue(type, out builder))
         {
             return builder();
         }

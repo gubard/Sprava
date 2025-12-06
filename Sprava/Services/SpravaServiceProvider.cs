@@ -1,5 +1,6 @@
 ﻿using Cromwell.Models;
 using Cromwell.Services;
+using Diocles.Services;
 using Diocles.Ui;
 using Gaia.Helpers;
 using Gaia.Models;
@@ -18,6 +19,7 @@ namespace Sprava.Services;
 [ServiceProvider]
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
+[Import(typeof(IDioclesServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
