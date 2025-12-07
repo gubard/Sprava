@@ -1,4 +1,5 @@
-﻿using Cromwell.Models;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Cromwell.Models;
 using Cromwell.Services;
 using Diocles.Services;
 using Diocles.Ui;
@@ -6,6 +7,7 @@ using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
 using Inanna.Helpers;
+using Inanna.Models;
 using Jab;
 using Manis.Contract.Services;
 using Melnikov.Models;
@@ -21,12 +23,14 @@ namespace Sprava.Services;
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
 [Singleton(typeof(MainViewModel))]
+[Singleton(typeof(AppState))]
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetLoginViewModel))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
+[Transient(typeof(JwtSecurityTokenHandler))]
 [Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
 [Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]

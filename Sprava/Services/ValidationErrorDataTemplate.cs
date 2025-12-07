@@ -9,8 +9,8 @@ namespace Sprava.Services;
 
 public class ValidationErrorDataTemplate : IDataTemplate
 {
-    private readonly IApplicationResourceService _appResourceService =
-        DiHelper.ServiceProvider.GetService<IApplicationResourceService>();
+    private readonly IAppResourceService _appResourceService =
+        DiHelper.ServiceProvider.GetService<IAppResourceService>();
 
     private readonly IStringFormater _stringFormater = DiHelper.ServiceProvider.GetService<IStringFormater>();
 

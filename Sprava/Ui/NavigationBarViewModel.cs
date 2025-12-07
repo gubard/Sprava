@@ -1,8 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell.Services;
 using Cromwell.Ui;
+using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
@@ -18,7 +20,7 @@ public partial class NavigationBarViewModel : ViewModelBase
     private readonly IAppSettingService _appSettingService;
     private readonly IDialogService _dialogService;
     private readonly IServiceProvider _serviceProvider;
-    private readonly IApplicationResourceService _appResourceService;
+    private readonly IAppResourceService _appResourceService;
 
     [ObservableProperty] private bool _isOnline;
     [ObservableProperty] private bool _isSingIn;
@@ -28,19 +30,53 @@ public partial class NavigationBarViewModel : ViewModelBase
         IAppSettingService appSettingService,
         IDialogService dialogService,
         IServiceProvider serviceProvider,
-        IApplicationResourceService appResourceService,
+        IAppResourceService appResourceService,
         IUiAuthenticationService authenticationService,
-        ITryPolicyService tryPolicyService)
+        ITryPolicyService tryPolicyService,
+        AppState appState,
+        JwtSecurityTokenHandler jwtSecurityTokenHandler)
     {
         _navigator = navigator;
         _appSettingService = appSettingService;
         _dialogService = dialogService;
         _serviceProvider = serviceProvider;
         _appResourceService = appResourceService;
-        tryPolicyService.OnSuccess += () => IsOnline = true;
-        tryPolicyService.OnError += _ => IsOnline = false;
-        authenticationService.LoggedIn += _ => IsSingIn = true;
-        authenticationService.LoggedOut += () => IsSingIn = false;
+
+        tryPolicyService.OnSuccess += () =>
+        {
+            IsOnline = true;
+            appState.Mode = AppMode.Online;
+        };
+
+        tryPolicyService.OnError += _ =>
+        {
+            IsOnline = false;
+            appState.Mode = AppMode.Offline;
+        };
+
+        authenticationService.LoggedIn += token =>
+        {
+            if (!jwtSecurityTokenHandler.CanReadToken(token.Token))
+            {
+                throw new("Invalid token");
+            }
+
+            var jwtSecurityToken = jwtSecurityTokenHandler.ReadJwtToken(token.Token);
+            IsSingIn = true;
+
+            appState.User = new()
+            {
+                Id = Guid.Parse(jwtSecurityToken.Claims.GetNameIdentifierClaim().Value),
+                Login = jwtSecurityToken.Claims.GetNameClaim().Value,
+                Email = jwtSecurityToken.Claims.GetEmailClaim().Value,
+            };
+        };
+
+        authenticationService.LoggedOut += () =>
+        {
+            IsSingIn = false;
+            appState.User = null;
+        };
 
         _navigator.ViewChanged += (_, _) =>
         {
