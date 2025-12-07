@@ -2,14 +2,13 @@ using System.IdentityModel.Tokens.Jwt;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Cromwell.Services;
-using Cromwell.Ui;
 using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Melnikov.Services;
+using Sprava.Models;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Ui;
@@ -17,7 +16,6 @@ namespace Sprava.Ui;
 public partial class NavigationBarViewModel : ViewModelBase
 {
     private readonly INavigator _navigator;
-    private readonly IAppSettingService _appSettingService;
     private readonly IDialogService _dialogService;
     private readonly IServiceProvider _serviceProvider;
     private readonly IAppResourceService _appResourceService;
@@ -27,7 +25,6 @@ public partial class NavigationBarViewModel : ViewModelBase
 
     public NavigationBarViewModel(
         INavigator navigator,
-        IAppSettingService appSettingService,
         IDialogService dialogService,
         IServiceProvider serviceProvider,
         IAppResourceService appResourceService,
@@ -37,7 +34,6 @@ public partial class NavigationBarViewModel : ViewModelBase
         JwtSecurityTokenHandler jwtSecurityTokenHandler)
     {
         _navigator = navigator;
-        _appSettingService = appSettingService;
         _dialogService = dialogService;
         _serviceProvider = serviceProvider;
         _appResourceService = appResourceService;
@@ -149,11 +145,14 @@ public partial class NavigationBarViewModel : ViewModelBase
     {
         await WrapCommand(async () =>
         {
-            await _appSettingService.SaveAppSettingsAsync(new()
+            await DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>().SaveSettingsAsync(new()
             {
-                GeneralKey = setting.GeneralKey,
-                Id = Guid.Empty,
-                Theme = setting.Theme,
+                CromwellSettings = new()
+                {
+                    GeneralKey = setting.GeneralKey,
+                    Id = Guid.Empty,
+                    Theme = setting.Theme,
+                },
             }, cancellationToken);
 
             _dialogService.CloseMessageBox();

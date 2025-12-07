@@ -8,11 +8,14 @@ using Gaia.Models;
 using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
+using Inanna.Services;
 using Jab;
 using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
+using Nestor.Db.Sqlite.Helpers;
+using Sprava.Models;
 using Sprava.Ui;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
@@ -26,7 +29,11 @@ namespace Sprava.Services;
 [Singleton(typeof(AppState))]
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
-[Transient(typeof(SignInViewModel), Factory = nameof(GetLoginViewModel))]
+[Transient(typeof(AppSettingViewModel))]
+[Transient(typeof(ISettingsService<CromwellSettings>), Factory = nameof(GetSettingsService))]
+[Transient(typeof(ISettingsService<SpravaSettings>), Factory = nameof(GetSettingsService))]
+[Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
+[Transient(typeof(ISettingsService<MelnikovSettings>), Factory = nameof(GetMelnikovSettingsService))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
@@ -36,9 +43,19 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
-    public static SignInViewModel GetLoginViewModel(IUiAuthenticationService uiAuthenticationService)
+    public static SettingsService GetSettingsService(AppState appState)
     {
-        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootToDosViewModel>, UiHelper.NavigateToAsync<RootToDosViewModel>);
+        return new(new FileInfo($"./storage/settings/{appState.User.ThrowIfNull().Id}.db").InitDbContext());
+    }
+
+    public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService()
+    {
+        return new MelnikovSettingsSettingsService(new FileInfo("./storage/sprava.db").InitDbContext());
+    }
+
+    public static SignInViewModel GetSignInViewModel(IUiAuthenticationService uiAuthenticationService, ISettingsService<MelnikovSettings> settingsService)
+    {
+        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootToDosViewModel>, UiHelper.NavigateToAsync<RootToDosViewModel>, settingsService);
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions()

@@ -2,12 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ui="clr-namespace:Cromwell.Ui"
              xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
-             xmlns:ui1="clr-namespace:Sprava.Ui"
+             xmlns:ui="clr-namespace:Sprava.Ui"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.MainView"
-             x:DataType="ui1:MainViewModel">
+             x:DataType="ui:MainViewModel">
     <Panel x:Name="PART_Panel">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>

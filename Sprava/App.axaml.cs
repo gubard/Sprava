@@ -17,8 +17,6 @@ public partial class App : InannaApplication
     public override void OnFrameworkInitializationCompleted()
     {
         var viewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
-        var dbContext = DiHelper.ServiceProvider.GetService<DbContext>();
-        dbContext.Database.EnsureCreated();
         DisableAvaloniaDataAnnotationValidation();
 
         switch (ApplicationLifetime)
