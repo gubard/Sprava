@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Cromwell.Models;
 using Cromwell.Services;
+using Diocles.Models;
 using Diocles.Services;
 using Diocles.Ui;
 using Gaia.Helpers;
@@ -30,32 +31,47 @@ namespace Sprava.Services;
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(AppSettingViewModel))]
-[Transient(typeof(ISettingsService<CromwellSettings>), Factory = nameof(GetSettingsService))]
-[Transient(typeof(ISettingsService<SpravaSettings>), Factory = nameof(GetSettingsService))]
+[Transient(typeof(ISettingsService<CromwellSettings>),
+    Factory = nameof(GetSettingsService))]
+[Transient(typeof(ISettingsService<SpravaSettings>),
+    Factory = nameof(GetSettingsService))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
-[Transient(typeof(ISettingsService<MelnikovSettings>), Factory = nameof(GetMelnikovSettingsService))]
+[Transient(typeof(ISettingsService<MelnikovSettings>),
+    Factory = nameof(GetMelnikovSettingsService))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(JwtSecurityTokenHandler))]
 [Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
-[Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
-[Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
+[Transient(typeof(AuthenticationServiceOptions),
+    Factory = nameof(GetAuthenticationServiceOptions))]
+[Transient(typeof(CredentialServiceOptions),
+    Factory = nameof(GetCredentialServiceOptions))]
+[Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
     public static SettingsService GetSettingsService(AppState appState)
     {
-        return new(new FileInfo($"./storage/settings/{appState.User.ThrowIfNull().Id}.db").InitDbContext());
+        return new(
+            new FileInfo(
+                    $"./storage/settings/{appState.User.ThrowIfNull().Id}.db")
+               .InitDbContext());
     }
 
-    public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService()
+    public static ISettingsService<MelnikovSettings>
+        GetMelnikovSettingsService()
     {
-        return new MelnikovSettingsSettingsService(new FileInfo("./storage/sprava.db").InitDbContext());
+        return new MelnikovSettingsSettingsService(
+            new FileInfo("./storage/sprava.db").InitDbContext());
     }
 
-    public static SignInViewModel GetSignInViewModel(IUiAuthenticationService uiAuthenticationService, ISettingsService<MelnikovSettings> settingsService)
+    public static SignInViewModel GetSignInViewModel(
+        IUiAuthenticationService uiAuthenticationService,
+        ISettingsService<MelnikovSettings> settingsService)
     {
-        return new(uiAuthenticationService, UiHelper.NavigateToAsync<RootToDosViewModel>, UiHelper.NavigateToAsync<RootToDosViewModel>, settingsService);
+        return new(uiAuthenticationService,
+            UiHelper.NavigateToAsync<RootToDosViewModel>,
+            UiHelper.NavigateToAsync<RootToDosViewModel>, settingsService);
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions()
@@ -67,6 +83,14 @@ public partial class SpravaServiceProvider : IServiceProvider
     }
 
     public static CredentialServiceOptions GetCredentialServiceOptions()
+    {
+        return new()
+        {
+            Url = "https://localhost:7089",
+        };
+    }
+
+    public static ToDoServiceOptions GetToDoServiceOptions()
     {
         return new()
         {
