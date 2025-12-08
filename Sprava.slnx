@@ -8,6 +8,10 @@
   <Folder Name="/Gaia/">
     <Project Path="../Gaia/Gaia/Gaia.csproj" />
   </Folder>
+  <Folder Name="/Hestia/">
+    <Project Path="../Hestia/Hestia.Contract/Hestia.Contract.csproj" />
+    <Project Path="../Hestia/Hestia/Hestia.csproj" />
+  </Folder>
   <Folder Name="/Inanna/">
     <Project Path="../Inanna/Inanna.SourceGenerator/Inanna.SourceGenerator.csproj" />
     <Project Path="../Inanna/Inanna/Inanna.csproj" />
