@@ -4,6 +4,7 @@ using Cromwell.Services;
 using Gaia.Helpers;
 using Gaia.Models;
 using Inanna.Services;
+using Manis.Contract.Errors;
 
 namespace Sprava.Services;
 
@@ -42,6 +43,10 @@ public class ValidationErrorDataTemplate : IDataTemplate
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.AlreadyExists"),
                     alreadyExists.Identity),
+            },
+            InvalidPasswordValidationError _ => new()
+            {
+                Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
             },
             _ => new TextBlock
             {
