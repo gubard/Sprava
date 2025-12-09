@@ -119,7 +119,7 @@ public partial class NavigationBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task ShowSettingsViewAsync(CancellationToken cancellationToken)
+    private async Task ShowSettingsViewAsync(CancellationToken ct)
     {
         var setting = _serviceProvider.GetService<AppSettingViewModel>();
 
@@ -131,17 +131,17 @@ public partial class NavigationBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task BackAsync(CancellationToken cancellationToken)
+    private async Task BackAsync(CancellationToken ct)
     {
         await WrapCommand(async () =>
         {
-            await _navigator.NavigateBackOrNullAsync(cancellationToken);
+            await _navigator.NavigateBackOrNullAsync(ct);
             OnPropertyChanged(nameof(IsCanBack));
         });
     }
 
     [RelayCommand]
-    private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken cancellationToken)
+    private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken ct)
     {
         await WrapCommand(async () =>
         {
@@ -153,7 +153,7 @@ public partial class NavigationBarViewModel : ViewModelBase
                     Id = Guid.Empty,
                     Theme = setting.Theme,
                 },
-            }, cancellationToken);
+            }, ct);
 
             _dialogService.CloseMessageBox();
         });
