@@ -13,7 +13,8 @@ public class ValidationErrorDataTemplate : IDataTemplate
     private readonly IAppResourceService _appResourceService =
         DiHelper.ServiceProvider.GetService<IAppResourceService>();
 
-    private readonly IStringFormater _stringFormater = DiHelper.ServiceProvider.GetService<IStringFormater>();
+    private readonly IStringFormater _stringFormater =
+        DiHelper.ServiceProvider.GetService<IStringFormater>();
 
     public Control? Build(object? param)
     {
@@ -23,14 +24,18 @@ public class ValidationErrorDataTemplate : IDataTemplate
             PropertyZeroValidationError zero => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>("Lang.PropertyZeroValidationError"),
-                    _appResourceService.GetResource<string>($"Lang.{zero.PropertyName}")),
+                    _appResourceService.GetResource<string>(
+                        "Lang.PropertyZeroValidationError"),
+                    _appResourceService.GetResource<string>(
+                        $"Lang.{zero.PropertyName}")),
             },
             PropertyEmptyValidationError empty => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>("Lang.PropertyEmptyValidationError"),
-                    _appResourceService.GetResource<string>($"Lang.{empty.PropertyName}")),
+                    _appResourceService.GetResource<string>(
+                        "Lang.PropertyEmptyValidationError"),
+                    _appResourceService.GetResource<string>(
+                        $"Lang.{empty.PropertyName}")),
             },
             NotFoundValidationError userNotFound => new()
             {
@@ -41,12 +46,19 @@ public class ValidationErrorDataTemplate : IDataTemplate
             AlreadyExistsValidationError alreadyExists => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>("Lang.AlreadyExists"),
+                    _appResourceService.GetResource<string>(
+                        "Lang.AlreadyExists"),
                     alreadyExists.Identity),
             },
             InvalidPasswordValidationError _ => new()
             {
-                Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
+                Text = _appResourceService.GetResource<string>(
+                    "Lang.InvalidPassword"),
+            },
+            ExceptionsValidationError exceptions => new()
+            {
+                Text = string.Join(Environment.NewLine,
+                    exceptions.Exceptions.Select(e => e.Message)),
             },
             _ => new TextBlock
             {
