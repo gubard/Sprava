@@ -4,8 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:h="clr-namespace:Sprava.Helpers"
-             xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.NavigationBarView"
              x:DataType="ui:NavigationBarViewModel"
