@@ -22,7 +22,7 @@
         <ContentControl Grid.Column="1" Content="{Binding Header}" />
 
         <StackPanel Grid.Column="2" Classes="horizontal">
-            <c:ViewSelectorControl State="{Binding  IsSingIn}">
+            <!--<c:ViewSelectorControl State="{Binding  IsSingIn}">
                 <c:ViewSelectorItemControl State="{x:True}">
                     <ip:PackIconMaterialDesign Kind="Person" Foreground="{DynamicResource AccentButtonBackground}" />
                 </c:ViewSelectorItemControl>
@@ -40,7 +40,7 @@
                     <ip:PackIconMaterialDesign Kind="WifiOff"
                                                Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
                 </c:ViewSelectorItemControl>
-            </c:ViewSelectorControl>
+            </c:ViewSelectorControl>-->
 
             <Button Content="{DynamicResource Lang.Settings}"
                     Command="{Binding ShowSettingsViewCommand}" />
