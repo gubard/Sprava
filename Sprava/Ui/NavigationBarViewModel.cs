@@ -82,41 +82,31 @@ public partial class NavigationBarViewModel : ViewModelBase
         };
     }
 
-    public bool IsCanBack
-    {
-        get => !_navigator.IsEmpty;
-    }
+    public bool IsCanBack => !_navigator.IsEmpty;
+    public bool IsVisible => _navigator.CurrentView is not INonHeader;
 
-    public bool IsVisible
+    public object Header => _navigator.CurrentView switch
     {
-        get => _navigator.CurrentView is not INonHeader;
-    }
-
-    public object Header
-    {
-        get => _navigator.CurrentView switch
+        null => new TextBlock
         {
-            null => new TextBlock
+            Text = _appResourceService.GetResource<string>("Lang.Sprava"),
+            Classes =
             {
-                Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-                Classes =
-                {
-                    "alignment-left-center",
-                    "h3",
-                },
+                "alignment-left-center",
+                "h3",
             },
-            IHeader header => header.Header,
-            _ => new TextBlock
+        },
+        IHeader header => header.Header,
+        _ => new TextBlock
+        {
+            Text = _appResourceService.GetResource<string>("Lang.Sprava"),
+            Classes =
             {
-                Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-                Classes =
-                {
-                    "alignment-left-center",
-                    "h3",
-                },
+                "alignment-left-center",
+                "h3",
             },
-        };
-    }
+        },
+    };
 
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)

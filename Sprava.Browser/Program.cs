@@ -6,7 +6,7 @@ using Sprava.Services;
 
 namespace Sprava.Browser;
 
-internal sealed partial class Program
+internal sealed class Program
 {
     private static Task Main(string[] args)
     {
@@ -15,5 +15,8 @@ internal sealed partial class Program
         return BuildAvaloniaApp().WithInterFont().StartBrowserAppAsync("out");
     }
 
-    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>();
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        return AppBuilder.Configure<App>();
+    }
 }
