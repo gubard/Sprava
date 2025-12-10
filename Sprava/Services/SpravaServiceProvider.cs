@@ -50,19 +50,19 @@ namespace Sprava.Services;
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
-    public static SettingsService GetSettingsService(AppState appState)
+    public static SettingsService GetSettingsService(AppState appState, IStorageService storageService)
     {
         return new(
             new FileInfo(
-                    $"./storage/settings/{appState.User.ThrowIfNull().Id}.db")
+                    $"{storageService.GetAppDirectory()}/settings/{appState.User.ThrowIfNull().Id}.db")
                .InitDbContext());
     }
 
     public static ISettingsService<MelnikovSettings>
-        GetMelnikovSettingsService()
+        GetMelnikovSettingsService(IStorageService storageService)
     {
         return new MelnikovSettingsSettingsService(
-            new FileInfo("./storage/sprava.db").InitDbContext());
+            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext());
     }
 
     public static SignInViewModel GetSignInViewModel(
