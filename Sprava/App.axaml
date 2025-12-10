@@ -1,11 +1,16 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ss="clr-namespace:Sprava.Services"
+             xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
         <ss:ViewLocator />
         <ss:ValidationErrorDataTemplate />
+
+        <DataTemplate x:DataType="m:InannaCommand">
+            <Button IsEnabled="{Binding IsEnable}" Content="{Binding Content}" Command="{Binding Command}" CommandParameter="{Binding Parameter}" />
+        </DataTemplate>
     </Application.DataTemplates>
 
     <Application.Resources>
