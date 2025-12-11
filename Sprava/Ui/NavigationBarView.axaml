@@ -20,9 +20,8 @@
 
         <ContentControl Grid.Column="1" Content="{Binding Header}" />
 
-        <StackPanel Grid.Column="2" Classes="horizontal">
-            <Button Content="{ip:MaterialDesign Settings}"
-                    Command="{Binding ShowSettingsViewCommand}" />
-        </StackPanel>
+        <Button Grid.Column="2"
+                Content="{ip:MaterialDesign Settings}"
+                Command="{Binding ShowSettingsViewCommand}" />
     </Grid>
 </UserControl>

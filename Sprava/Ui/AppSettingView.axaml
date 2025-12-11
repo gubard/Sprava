@@ -14,13 +14,9 @@
     </Interaction.Behaviors>
 
     <StackPanel>
-        <StackPanel>
-            <TextBlock Classes="field" Text="{StaticResource Lang.GeneralKey}" />
-            <TextBox Text="{Binding GeneralKey}" />
-        </StackPanel>
-        <StackPanel>
-            <TextBlock Classes="field" Text="{StaticResource Lang.Theme}" />
-            <c:EnumSelectorControl SelectedEnum="{Binding Theme}" />
-        </StackPanel>
+        <TextBlock Classes="field" Text="{StaticResource Lang.GeneralKey}" />
+        <TextBox Text="{Binding GeneralKey}" />
+        <TextBlock Classes="field" Text="{StaticResource Lang.Theme}" />
+        <c:EnumSelectorControl SelectedEnum="{Binding Theme}" />
     </StackPanel>
 </UserControl>
