@@ -12,7 +12,8 @@
             <Button
                 Classes.danger="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Danger}}"
                 Classes.primary="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Primary}}"
-                IsEnabled="{Binding IsEnable}" Content="{Binding Content}" Command="{Binding Command}"
+                IsEnabled="{Binding IsEnable}" Content="{Binding Content}" 
+                Command="{Binding Command}"
                 CommandParameter="{Binding Parameter}" />
         </DataTemplate>
     </Application.DataTemplates>

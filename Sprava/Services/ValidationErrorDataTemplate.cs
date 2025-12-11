@@ -3,6 +3,7 @@ using Avalonia.Controls.Templates;
 using Cromwell.Services;
 using Gaia.Helpers;
 using Gaia.Models;
+using Gaia.Services;
 using Inanna.Services;
 using Manis.Contract.Errors;
 
