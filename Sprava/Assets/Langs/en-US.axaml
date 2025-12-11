@@ -2,8 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.Name">Name</s:String>
+    <s:String x:Key="Lang.Link">Link</s:String>
+    <s:String x:Key="Lang.AnnuallyDays">Annually days</s:String>
+    <s:String x:Key="Lang.MonthlyDays">Monthly days</s:String>
+    <s:String x:Key="Lang.WeeklyDays">Weekly days</s:String>
+    <s:String x:Key="Lang.Sunday">Sunday</s:String>
+    <s:String x:Key="Lang.Monday">Monday</s:String>
+    <s:String x:Key="Lang.Tuesday">Tuesday</s:String>
+    <s:String x:Key="Lang.Wednesday">Wednesday</s:String>
+    <s:String x:Key="Lang.Thursday">Thursday</s:String>
+    <s:String x:Key="Lang.Friday">Friday</s:String>
+    <s:String x:Key="Lang.Saturday">Saturday</s:String>
+    <s:String x:Key="Lang.Parameters">Parameters</s:String>
     <s:String x:Key="Lang.Login">Login</s:String>
     <s:String x:Key="Lang.Key">Key</s:String>
+    <s:String x:Key="Lang.Style">Style</s:String>
+    <s:String x:Key="Lang.DueDate">Due date</s:String>
     <s:String x:Key="Lang.IsAvailableUpperLatin">Is available upper latin</s:String>
     <s:String x:Key="Lang.IsAvailableLowerLatin">Is available lower latin</s:String>
     <s:String x:Key="Lang.IsAvailableNumber">Is available number</s:String>
@@ -61,7 +75,7 @@
     <s:String x:Key="Lang.RemindDaysBefore">Remind days before</s:String>
     <s:String x:Key="Lang.DescriptionType">Description type</s:String>
     <s:String x:Key="Lang.IsRequiredCompleteInDueDate">Is required complete in due date</s:String>
-    <s:String x:Key="Lang.ChildrenType">Children type</s:String>
+    <s:String x:Key="Lang.ChildrenCompletionType">Children completion type</s:String>
     <s:String x:Key="Lang.YearsOffset">Years offset</s:String>
     <s:String x:Key="Lang.WeeksOffset">Weeks offset</s:String>
     <s:String x:Key="Lang.IsFavorite">Is favorite</s:String>
