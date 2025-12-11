@@ -20,6 +20,7 @@
     <s:String x:Key="Lang.Error">Error</s:String>
     <s:String x:Key="Lang.Ok">Ok</s:String>
     <s:String x:Key="Lang.Delete">Delete</s:String>
+    <s:String x:Key="Lang.DeleteAsk">Delete {}?</s:String>
     <s:String x:Key="Lang.CreatingNewItem">Create new {}</s:String>
     <s:String x:Key="Lang.Message">Message</s:String>
     <s:String x:Key="Lang.StackTrace">Stack trace</s:String>
