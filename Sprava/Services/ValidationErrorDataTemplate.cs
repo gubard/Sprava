@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Cromwell.Services;
 using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
@@ -51,7 +50,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                         "Lang.AlreadyExists"),
                     alreadyExists.Identity),
             },
-            InvalidPasswordValidationError _ => new()
+            InvalidPasswordValidationError => new()
             {
                 Text = _appResourceService.GetResource<string>(
                     "Lang.InvalidPassword"),
@@ -59,7 +58,17 @@ public class ValidationErrorDataTemplate : IDataTemplate
             ExceptionsValidationError exceptions => new()
             {
                 Text = string.Join(Environment.NewLine,
-                    exceptions.Exceptions.Select(e => e.Message)),
+                    exceptions.Exceptions.Select(e => e.Message).Distinct()),
+            },
+            PropertyInvalidValidationError propertyInvalid => new()
+            {
+                Text = _stringFormater.Format(_appResourceService.GetResource<string>(
+                    "Lang.InvalidValue"), propertyInvalid.PropertyName),
+            },
+            PropertyMaxSizeValidationError propertyMaxSize => new()
+            {
+                Text = _stringFormater.Format(_appResourceService.GetResource<string>(
+                    "Lang.MaxSizeReached"), propertyMaxSize),
             },
             _ => new TextBlock
             {

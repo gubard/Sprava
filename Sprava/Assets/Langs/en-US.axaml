@@ -87,5 +87,7 @@
     <s:String x:Key="Lang.Credentials">Credentials</s:String>
     <s:String x:Key="Lang.RememberMe">Remember me</s:String>
     <s:String x:Key="Lang.InvalidPassword">Invalid password</s:String>
-    <s:String x:Key="Lang.EditItem">Edit {}</s:String>
+    <s:String x:Key="Lang.EditItem">Edit "{}"</s:String>
+    <s:String x:Key="Lang.InvalidValue">"{}" has invalid value</s:String>
+    <s:String x:Key="Lang.MaxSizeReached"> Max size "{MaxSize}" reached</s:String>
 </ResourceDictionary>
