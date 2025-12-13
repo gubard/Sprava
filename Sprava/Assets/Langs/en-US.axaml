@@ -90,4 +90,5 @@
     <s:String x:Key="Lang.EditItem">Edit "{}"</s:String>
     <s:String x:Key="Lang.InvalidValue">"{}" has invalid value</s:String>
     <s:String x:Key="Lang.MaxSizeReached"> Max size "{MaxSize}" reached</s:String>
+    <s:String x:Key="Lang.Reference">Reference</s:String>
 </ResourceDictionary>
