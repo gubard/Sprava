@@ -23,7 +23,7 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
 
     public async ValueTask SaveSettingsAsync(MelnikovSettings settings, CancellationToken ct)
     {
-        await MelnikovSettings.EditMelnikovSettingssAsync(_dbContext, "App", [
+        await MelnikovSettings.EditEntitiesAsync(_dbContext, "App", [
             new(Guid.Empty)
             {
                 Token = settings.Token,
@@ -46,7 +46,7 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
 
     async ValueTask<CromwellSettings> ISettingsService<CromwellSettings>.GetSettingsAsync(CancellationToken ct)
     {
-        var settings = await CromwellSettings.FindCromwellSettingsAsync(Guid.Empty, _dbContext.Set<EventEntity>(), ct);
+        var settings = await CromwellSettings.FindEntityAsync(Guid.Empty, _dbContext.Set<EventEntity>(), ct);
 
         return settings ?? new();
     }
@@ -58,7 +58,7 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
 
     public async ValueTask SaveSettingsAsync(CromwellSettings settings, CancellationToken ct)
     {
-        await CromwellSettings.EditCromwellSettingssAsync(_dbContext, "App", [
+        await CromwellSettings.EditEntitiesAsync(_dbContext, "App", [
             new(Guid.Empty)
             {
                 GeneralKey = settings.GeneralKey,

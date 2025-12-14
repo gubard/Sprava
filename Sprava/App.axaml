@@ -31,5 +31,6 @@
         <StyleInclude Source="avares://IconPacks.Avalonia.MaterialDesign/MaterialDesign.axaml" />
         <StyleInclude Source="avares://Inanna/Styles/Theme.axaml" />
         <StyleInclude Source="avares://Cromwell/Styles/Theme.axaml" />
+        <StyleInclude Source="avares://Diocles/Styles/Theme.axaml" />
     </Application.Styles>
 </Application>

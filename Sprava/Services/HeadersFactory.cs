@@ -21,6 +21,7 @@ public class HeadersFactory : IFactory<Memory<HttpHeader>>
         return new[]
         {
             new HttpHeader(HttpHeader.Authorization, $"{HttpHeader.Bearer} {token.Token}"),
+            new HttpHeader(HttpHeader.TimeZoneOffset, DateTimeOffset.UtcNow.Offset.ToString()),
         };
     }
 }

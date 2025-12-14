@@ -48,8 +48,14 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialServiceOptions),
     Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
+[Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
+    public static GaiaValues GetGaiaValues(AppState appState)
+    {
+        return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
+    }
+
     public static SettingsService GetSettingsService(AppState appState, IStorageService storageService)
     {
         return new(
@@ -94,7 +100,7 @@ public partial class SpravaServiceProvider : IServiceProvider
     {
         return new()
         {
-            Url = "https://localhost:7089",
+            Url = "https://localhost:7039",
         };
     }
 
