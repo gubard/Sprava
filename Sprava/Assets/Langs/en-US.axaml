@@ -2,6 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.Name">Name</s:String>
+    <s:String x:Key="Lang.Miss">Miss</s:String>
+    <s:String x:Key="Lang.ReadyForComplete">Ready for complete</s:String>
+    <s:String x:Key="Lang.Completed">Completed</s:String>
+    <s:String x:Key="Lang.ComingSoon">Coming soon</s:String>
+    <s:String x:Key="Lang.Value">Value</s:String>
+    <s:String x:Key="Lang.FixedDate">Fixed date</s:String>
+    <s:String x:Key="Lang.Group">Group</s:String>
+    <s:String x:Key="Lang.Planned">Planned</s:String>
+    <s:String x:Key="Lang.Circle">Circle</s:String>
+    <s:String x:Key="Lang.Step">Step</s:String>
+    <s:String x:Key="Lang.PeriodicityOffset">PeriodicityOffset</s:String>
+    <s:String x:Key="Lang.Periodicity">Periodicity</s:String>
     <s:String x:Key="Lang.Link">Link</s:String>
     <s:String x:Key="Lang.AnnuallyDays">Annually days</s:String>
     <s:String x:Key="Lang.MonthlyDays">Monthly days</s:String>
@@ -92,4 +104,5 @@
     <s:String x:Key="Lang.MaxSizeReached"> Max size "{MaxSize}" reached</s:String>
     <s:String x:Key="Lang.Reference">Reference</s:String>
     <s:String x:Key="Lang.Tasks">Tasks</s:String>
+    <s:String x:Key="Lang.GroupBy">Group by</s:String>
 </ResourceDictionary>
