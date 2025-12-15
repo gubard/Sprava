@@ -20,6 +20,9 @@ public class SpravaViewModelFactory : ISpravaViewModelFactory
 
     public AppSettingViewModel Create()
     {
-        return new(_application, DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>());
+        return new(
+            _application,
+            DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
+        );
     }
 }

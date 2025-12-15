@@ -14,8 +14,11 @@ public partial class PaneViewModel : ViewModelBase
     private readonly ISpravaViewModelFactory _spravaViewModelFactory;
     private readonly IAppResourceService _appResourceService;
 
-    public PaneViewModel(IDialogService dialogService, ISpravaViewModelFactory spravaViewModelFactory,
-        IAppResourceService appResourceService)
+    public PaneViewModel(
+        IDialogService dialogService,
+        ISpravaViewModelFactory spravaViewModelFactory,
+        IAppResourceService appResourceService
+    )
     {
         _dialogService = dialogService;
         _spravaViewModelFactory = spravaViewModelFactory;
@@ -50,8 +53,8 @@ public partial class PaneViewModel : ViewModelBase
         await WrapCommand(async () =>
         {
             await DiHelper
-               .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
-               .SaveSettingsAsync(
+                .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
+                .SaveSettingsAsync(
                     new()
                     {
                         CromwellSettings = new()
