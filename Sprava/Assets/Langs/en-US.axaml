@@ -3,6 +3,7 @@
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.Name">Name</s:String>
     <s:String x:Key="Lang.Miss">Miss</s:String>
+    <s:String x:Key="Lang.OrderBy">Order by</s:String>
     <s:String x:Key="Lang.ReadyForComplete">Ready for complete</s:String>
     <s:String x:Key="Lang.Completed">Completed</s:String>
     <s:String x:Key="Lang.ComingSoon">Coming soon</s:String>
