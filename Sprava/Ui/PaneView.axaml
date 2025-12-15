@@ -14,17 +14,17 @@
     <ScrollViewer>
         <controls:GroupBoxControl>
             <controls:GroupBoxControl.Header>
-                <Button Classes="alignment-right"
+                <Button Classes="align-right"
                         Content="{DynamicResource Lang.Close}"
                         Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
             </controls:GroupBoxControl.Header>
 
             <StackPanel>
-                <Button Classes="alignment-stretch"
+                <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.ToDos}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                         CommandParameter="{x:Type dui:RootToDosViewModel}" />
-                <Button Classes="alignment-stretch"
+                <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Credentials}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                         CommandParameter="{x:Type cui:RootCredentialsViewModel}" />

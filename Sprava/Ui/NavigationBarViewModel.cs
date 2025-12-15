@@ -95,13 +95,13 @@ public partial class NavigationBarViewModel : ViewModelBase
             null => new TextBlock
             {
                 Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-                Classes = { "alignment-left-center", "h3" },
+                Classes = { "align-left-center", "h3" },
             },
             IHeader header => header.Header,
             _ => new TextBlock
             {
                 Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-                Classes = { "alignment-left-center", "h3" },
+                Classes = { "align-left-center", "h3" },
             },
         };
 
