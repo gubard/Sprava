@@ -45,10 +45,7 @@ public class ViewLocator : IDataTemplate
             return builder();
         }
 
-        return new TextBlock
-        {
-            Text = $"Not found \"{type}\"",
-        };
+        return new TextBlock { Text = $"Not found \"{type}\"" };
     }
 
     public bool Match(object? data)

@@ -12,7 +12,7 @@ public partial class App : InannaApplication
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
+
     public override void OnFrameworkInitializationCompleted()
     {
         var viewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
@@ -21,17 +21,11 @@ public partial class App : InannaApplication
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = viewModel,
-                };
+                desktop.MainWindow = new MainWindow { DataContext = viewModel };
 
                 break;
             case ISingleViewApplicationLifetime singleViewPlatform:
-                singleViewPlatform.MainView = new MainView
-                {
-                    DataContext = viewModel,
-                };
+                singleViewPlatform.MainView = new MainView { DataContext = viewModel };
 
                 break;
         }

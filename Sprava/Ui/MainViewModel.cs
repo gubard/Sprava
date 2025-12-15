@@ -7,7 +7,8 @@ namespace Sprava.Ui;
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty] private bool _isShowPane;
+    [ObservableProperty]
+    private bool _isShowPane;
 
     public MainViewModel(
         StackViewModel stack,

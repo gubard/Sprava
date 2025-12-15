@@ -31,22 +31,20 @@ namespace Sprava.Services;
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(AppSettingViewModel))]
-[Transient(typeof(ISettingsService<CromwellSettings>),
-    Factory = nameof(GetSettingsService))]
-[Transient(typeof(ISettingsService<SpravaSettings>),
-    Factory = nameof(GetSettingsService))]
+[Transient(typeof(ISettingsService<CromwellSettings>), Factory = nameof(GetSettingsService))]
+[Transient(typeof(ISettingsService<SpravaSettings>), Factory = nameof(GetSettingsService))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
-[Transient(typeof(ISettingsService<MelnikovSettings>),
-    Factory = nameof(GetMelnikovSettingsService))]
+[Transient(
+    typeof(ISettingsService<MelnikovSettings>),
+    Factory = nameof(GetMelnikovSettingsService)
+)]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(JwtSecurityTokenHandler))]
 [Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
-[Transient(typeof(AuthenticationServiceOptions),
-    Factory = nameof(GetAuthenticationServiceOptions))]
-[Transient(typeof(CredentialServiceOptions),
-    Factory = nameof(GetCredentialServiceOptions))]
+[Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
+[Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
 [Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
 public partial class SpravaServiceProvider : IServiceProvider
@@ -56,52 +54,53 @@ public partial class SpravaServiceProvider : IServiceProvider
         return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
     }
 
-    public static SettingsService GetSettingsService(AppState appState, IStorageService storageService)
+    public static SettingsService GetSettingsService(
+        AppState appState,
+        IStorageService storageService
+    )
     {
         return new(
             new FileInfo(
-                    $"{storageService.GetAppDirectory()}/settings/{appState.User.ThrowIfNull().Id}.db")
-               .InitDbContext());
+                $"{storageService.GetAppDirectory()}/settings/{appState.User.ThrowIfNull().Id}.db"
+            ).InitDbContext()
+        );
     }
 
-    public static ISettingsService<MelnikovSettings>
-        GetMelnikovSettingsService(IStorageService storageService)
+    public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService(
+        IStorageService storageService
+    )
     {
         return new MelnikovSettingsSettingsService(
-            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext());
+            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext()
+        );
     }
 
     public static SignInViewModel GetSignInViewModel(
         IUiAuthenticationService uiAuthenticationService,
-        ISettingsService<MelnikovSettings> settingsService)
+        ISettingsService<MelnikovSettings> settingsService
+    )
     {
-        return new(uiAuthenticationService,
+        return new(
+            uiAuthenticationService,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
-            UiHelper.NavigateToAsync<RootToDosViewModel>, settingsService);
+            UiHelper.NavigateToAsync<RootToDosViewModel>,
+            settingsService
+        );
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions()
     {
-        return new()
-        {
-            Url = "https://localhost:7027",
-        };
+        return new() { Url = "https://localhost:7027" };
     }
 
     public static CredentialServiceOptions GetCredentialServiceOptions()
     {
-        return new()
-        {
-            Url = "https://localhost:7089",
-        };
+        return new() { Url = "https://localhost:7089" };
     }
 
     public static ToDoServiceOptions GetToDoServiceOptions()
     {
-        return new()
-        {
-            Url = "https://localhost:7039",
-        };
+        return new() { Url = "https://localhost:7039" };
     }
 
     public static ITryPolicyService GetTryPolicyService()

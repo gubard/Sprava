@@ -12,13 +12,19 @@ namespace Sprava.Ui;
 
 public partial class AppSettingViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _generalKey;
-    [ObservableProperty] private ThemeVariantType _theme;
+    [ObservableProperty]
+    private string _generalKey;
+
+    [ObservableProperty]
+    private ThemeVariantType _theme;
 
     private readonly ISettingsService<SpravaSettings> _settingsService;
     private readonly Application _application;
 
-    public AppSettingViewModel(Application application, ISettingsService<SpravaSettings> settingsService)
+    public AppSettingViewModel(
+        Application application,
+        ISettingsService<SpravaSettings> settingsService
+    )
     {
         _application = application;
         _settingsService = settingsService;

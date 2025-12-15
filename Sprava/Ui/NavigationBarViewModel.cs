@@ -20,8 +20,11 @@ public partial class NavigationBarViewModel : ViewModelBase
     private readonly IServiceProvider _serviceProvider;
     private readonly IAppResourceService _appResourceService;
 
-    [ObservableProperty] private bool _isOnline;
-    [ObservableProperty] private bool _isSingIn;
+    [ObservableProperty]
+    private bool _isOnline;
+
+    [ObservableProperty]
+    private bool _isSingIn;
 
     public NavigationBarViewModel(
         INavigator navigator,
@@ -31,7 +34,8 @@ public partial class NavigationBarViewModel : ViewModelBase
         IUiAuthenticationService authenticationService,
         ITryPolicyService tryPolicyService,
         AppState appState,
-        JwtSecurityTokenHandler jwtSecurityTokenHandler)
+        JwtSecurityTokenHandler jwtSecurityTokenHandler
+    )
     {
         _navigator = navigator;
         _dialogService = dialogService;
@@ -85,39 +89,42 @@ public partial class NavigationBarViewModel : ViewModelBase
     public bool IsCanBack => !_navigator.IsEmpty;
     public bool IsVisible => _navigator.CurrentView is not INonHeader;
 
-    public object Header => _navigator.CurrentView switch
-    {
-        null => new TextBlock
+    public object Header =>
+        _navigator.CurrentView switch
         {
-            Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-            Classes =
+            null => new TextBlock
             {
-                "alignment-left-center",
-                "h3",
+                Text = _appResourceService.GetResource<string>("Lang.Sprava"),
+                Classes = { "alignment-left-center", "h3" },
             },
-        },
-        IHeader header => header.Header,
-        _ => new TextBlock
-        {
-            Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-            Classes =
+            IHeader header => header.Header,
+            _ => new TextBlock
             {
-                "alignment-left-center",
-                "h3",
+                Text = _appResourceService.GetResource<string>("Lang.Sprava"),
+                Classes = { "alignment-left-center", "h3" },
             },
-        },
-    };
+        };
 
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)
     {
         var setting = _serviceProvider.GetService<AppSettingViewModel>();
 
-        await WrapCommand(() => _dialogService.ShowMessageBoxAsync(new(
-            _appResourceService.GetResource<string>("Lang.Settings"),
-            _serviceProvider.GetService<AppSettingViewModel>(),
-            new DialogButton(_appResourceService.GetResource<string>("Lang.Save"), SaveSettingsCommand, setting,
-                DialogButtonType.Primary), UiHelper.CancelButton)));
+        await WrapCommand(() =>
+            _dialogService.ShowMessageBoxAsync(
+                new(
+                    _appResourceService.GetResource<string>("Lang.Settings"),
+                    _serviceProvider.GetService<AppSettingViewModel>(),
+                    new DialogButton(
+                        _appResourceService.GetResource<string>("Lang.Save"),
+                        SaveSettingsCommand,
+                        setting,
+                        DialogButtonType.Primary
+                    ),
+                    UiHelper.CancelButton
+                )
+            )
+        );
     }
 
     [RelayCommand]
@@ -135,15 +142,20 @@ public partial class NavigationBarViewModel : ViewModelBase
     {
         await WrapCommand(async () =>
         {
-            await DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>().SaveSettingsAsync(new()
-            {
-                CromwellSettings = new()
-                {
-                    GeneralKey = setting.GeneralKey,
-                    Id = Guid.Empty,
-                    Theme = setting.Theme,
-                },
-            }, ct);
+            await DiHelper
+                .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
+                .SaveSettingsAsync(
+                    new()
+                    {
+                        CromwellSettings = new()
+                        {
+                            GeneralKey = setting.GeneralKey,
+                            Id = Guid.Empty,
+                            Theme = setting.Theme,
+                        },
+                    },
+                    ct
+                );
 
             _dialogService.CloseMessageBox();
         });

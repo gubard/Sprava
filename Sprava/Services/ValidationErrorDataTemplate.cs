@@ -24,56 +24,57 @@ public class ValidationErrorDataTemplate : IDataTemplate
             PropertyZeroValidationError zero => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>(
-                        "Lang.PropertyZeroValidationError"),
-                    _appResourceService.GetResource<string>(
-                        $"Lang.{zero.PropertyName}")),
+                    _appResourceService.GetResource<string>("Lang.PropertyZeroValidationError"),
+                    _appResourceService.GetResource<string>($"Lang.{zero.PropertyName}")
+                ),
             },
             PropertyEmptyValidationError empty => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>(
-                        "Lang.PropertyEmptyValidationError"),
-                    _appResourceService.GetResource<string>(
-                        $"Lang.{empty.PropertyName}")),
+                    _appResourceService.GetResource<string>("Lang.PropertyEmptyValidationError"),
+                    _appResourceService.GetResource<string>($"Lang.{empty.PropertyName}")
+                ),
             },
             NotFoundValidationError userNotFound => new()
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.NotFound"),
-                    userNotFound.Identity),
+                    userNotFound.Identity
+                ),
             },
             AlreadyExistsValidationError alreadyExists => new()
             {
                 Text = _stringFormater.Format(
-                    _appResourceService.GetResource<string>(
-                        "Lang.AlreadyExists"),
-                    alreadyExists.Identity),
+                    _appResourceService.GetResource<string>("Lang.AlreadyExists"),
+                    alreadyExists.Identity
+                ),
             },
             InvalidPasswordValidationError => new()
             {
-                Text = _appResourceService.GetResource<string>(
-                    "Lang.InvalidPassword"),
+                Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
             },
             ExceptionsValidationError exceptions => new()
             {
-                Text = string.Join(Environment.NewLine,
-                    exceptions.Exceptions.Select(e => e.Message).Distinct()),
+                Text = string.Join(
+                    Environment.NewLine,
+                    exceptions.Exceptions.Select(e => e.Message).Distinct()
+                ),
             },
             PropertyInvalidValidationError propertyInvalid => new()
             {
-                Text = _stringFormater.Format(_appResourceService.GetResource<string>(
-                    "Lang.InvalidValue"), propertyInvalid.PropertyName),
+                Text = _stringFormater.Format(
+                    _appResourceService.GetResource<string>("Lang.InvalidValue"),
+                    propertyInvalid.PropertyName
+                ),
             },
             PropertyMaxSizeValidationError propertyMaxSize => new()
             {
-                Text = _stringFormater.Format(_appResourceService.GetResource<string>(
-                    "Lang.MaxSizeReached"), propertyMaxSize),
+                Text = _stringFormater.Format(
+                    _appResourceService.GetResource<string>("Lang.MaxSizeReached"),
+                    propertyMaxSize
+                ),
             },
-            _ => new TextBlock
-            {
-                Text = $"Not found \"{param.GetType()}\"",
-            },
+            _ => new TextBlock { Text = $"Not found \"{param.GetType()}\"" },
         };
     }
 

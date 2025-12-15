@@ -23,13 +23,12 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
 
     public async ValueTask SaveSettingsAsync(MelnikovSettings settings, CancellationToken ct)
     {
-        await MelnikovSettings.EditEntitiesAsync(_dbContext, "App", [
-            new(Guid.Empty)
-            {
-                Token = settings.Token,
-                IsEditToken = true,
-            },
-        ], ct);
+        await MelnikovSettings.EditEntitiesAsync(
+            _dbContext,
+            "App",
+            [new(Guid.Empty) { Token = settings.Token, IsEditToken = true }],
+            ct
+        );
 
         await _dbContext.SaveChangesAsync(ct);
     }
@@ -44,9 +43,15 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         _dbContext = dbContext;
     }
 
-    async ValueTask<CromwellSettings> ISettingsService<CromwellSettings>.GetSettingsAsync(CancellationToken ct)
+    async ValueTask<CromwellSettings> ISettingsService<CromwellSettings>.GetSettingsAsync(
+        CancellationToken ct
+    )
     {
-        var settings = await CromwellSettings.FindEntityAsync(Guid.Empty, _dbContext.Set<EventEntity>(), ct);
+        var settings = await CromwellSettings.FindEntityAsync(
+            Guid.Empty,
+            _dbContext.Set<EventEntity>(),
+            ct
+        );
 
         return settings ?? new();
     }
@@ -58,24 +63,33 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
 
     public async ValueTask SaveSettingsAsync(CromwellSettings settings, CancellationToken ct)
     {
-        await CromwellSettings.EditEntitiesAsync(_dbContext, "App", [
-            new(Guid.Empty)
-            {
-                GeneralKey = settings.GeneralKey,
-                IsEditGeneralKey = true,
-                IsEditTheme = true,
-                Theme = settings.Theme,
-            },
-        ], ct);
+        await CromwellSettings.EditEntitiesAsync(
+            _dbContext,
+            "App",
+            [
+                new(Guid.Empty)
+                {
+                    GeneralKey = settings.GeneralKey,
+                    IsEditGeneralKey = true,
+                    IsEditTheme = true,
+                    Theme = settings.Theme,
+                },
+            ],
+            ct
+        );
 
         await _dbContext.SaveChangesAsync(ct);
     }
 
-    async ValueTask<SpravaSettings> ISettingsService<SpravaSettings>.GetSettingsAsync(CancellationToken ct)
+    async ValueTask<SpravaSettings> ISettingsService<SpravaSettings>.GetSettingsAsync(
+        CancellationToken ct
+    )
     {
         return new()
         {
-            CromwellSettings = await ((ISettingsService<CromwellSettings>)this).GetSettingsAsync(ct),
+            CromwellSettings = await ((ISettingsService<CromwellSettings>)this).GetSettingsAsync(
+                ct
+            ),
         };
     }
 }
