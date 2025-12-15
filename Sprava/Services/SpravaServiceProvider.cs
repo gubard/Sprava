@@ -38,6 +38,7 @@ namespace Sprava.Services;
     typeof(ISettingsService<MelnikovSettings>),
     Factory = nameof(GetMelnikovSettingsService)
 )]
+[Transient(typeof(ISpravaViewModelFactory), typeof(SpravaViewModelFactory))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]

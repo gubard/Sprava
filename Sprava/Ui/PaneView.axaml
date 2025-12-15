@@ -28,6 +28,9 @@
                         Content="{DynamicResource Lang.Credentials}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                         CommandParameter="{x:Type cui:RootCredentialsViewModel}" />
+                <Button Classes="align-stretch"
+                        Content="{DynamicResource Lang.Settings}"
+                        Command="{Binding ShowSettingsViewCommand}" />
             </StackPanel>
         </controls:GroupBoxControl>
     </ScrollViewer>

@@ -9,7 +9,7 @@
              x:Class="Sprava.Ui.NavigationBarView"
              x:DataType="ui:NavigationBarViewModel"
              IsVisible="{Binding IsVisible}">
-    <Grid ColumnDefinitions="Auto,*,Auto">
+    <Grid ColumnDefinitions="Auto,*">
         <StackPanel Grid.Column="0" Classes="horizontal">
             <Button Content="{ip:MaterialDesign Menu}"
                     Command="{x:Static h:SpravaCommands.ShowPaneCommand}" />
@@ -19,9 +19,5 @@
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding Header}" />
-
-        <Button Grid.Column="2"
-                Content="{ip:MaterialDesign Settings}"
-                Command="{Binding ShowSettingsViewCommand}" />
     </Grid>
 </UserControl>

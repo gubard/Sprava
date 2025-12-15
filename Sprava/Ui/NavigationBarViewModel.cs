@@ -16,8 +16,6 @@ namespace Sprava.Ui;
 public partial class NavigationBarViewModel : ViewModelBase
 {
     private readonly INavigator _navigator;
-    private readonly IDialogService _dialogService;
-    private readonly IServiceProvider _serviceProvider;
     private readonly IAppResourceService _appResourceService;
 
     [ObservableProperty]
@@ -28,8 +26,6 @@ public partial class NavigationBarViewModel : ViewModelBase
 
     public NavigationBarViewModel(
         INavigator navigator,
-        IDialogService dialogService,
-        IServiceProvider serviceProvider,
         IAppResourceService appResourceService,
         IUiAuthenticationService authenticationService,
         ITryPolicyService tryPolicyService,
@@ -38,8 +34,6 @@ public partial class NavigationBarViewModel : ViewModelBase
     )
     {
         _navigator = navigator;
-        _dialogService = dialogService;
-        _serviceProvider = serviceProvider;
         _appResourceService = appResourceService;
 
         tryPolicyService.OnSuccess += () =>
@@ -106,58 +100,12 @@ public partial class NavigationBarViewModel : ViewModelBase
         };
 
     [RelayCommand]
-    private async Task ShowSettingsViewAsync(CancellationToken ct)
-    {
-        var setting = _serviceProvider.GetService<AppSettingViewModel>();
-
-        await WrapCommand(() =>
-            _dialogService.ShowMessageBoxAsync(
-                new(
-                    _appResourceService.GetResource<string>("Lang.Settings"),
-                    _serviceProvider.GetService<AppSettingViewModel>(),
-                    new DialogButton(
-                        _appResourceService.GetResource<string>("Lang.Save"),
-                        SaveSettingsCommand,
-                        setting,
-                        DialogButtonType.Primary
-                    ),
-                    UiHelper.CancelButton
-                )
-            )
-        );
-    }
-
-    [RelayCommand]
     private async Task BackAsync(CancellationToken ct)
     {
         await WrapCommand(async () =>
         {
             await _navigator.NavigateBackOrNullAsync(ct);
             OnPropertyChanged(nameof(IsCanBack));
-        });
-    }
-
-    [RelayCommand]
-    private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken ct)
-    {
-        await WrapCommand(async () =>
-        {
-            await DiHelper
-                .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
-                .SaveSettingsAsync(
-                    new()
-                    {
-                        CromwellSettings = new()
-                        {
-                            GeneralKey = setting.GeneralKey,
-                            Id = Guid.Empty,
-                            Theme = setting.Theme,
-                        },
-                    },
-                    ct
-                );
-
-            _dialogService.CloseMessageBox();
         });
     }
 }
