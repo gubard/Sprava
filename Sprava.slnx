@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Aya/">
+    <Project Path="../Aya/Aya.Contract/Aya.Contract.csproj" />
+    <Project Path="../Aya/Aya/Aya.csproj" />
+  </Folder>
   <Folder Name="/Cai/">
     <Project Path="../Cai/Cai/Cai.csproj" />
   </Folder>
