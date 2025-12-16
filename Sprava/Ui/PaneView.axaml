@@ -8,6 +8,7 @@
              xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
              xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
              xmlns:dui="clr-namespace:Diocles.Ui;assembly=Diocles"
+             xmlns:cu="clr-namespace:Cai.Ui;assembly=Cai"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
@@ -28,6 +29,10 @@
                         Content="{DynamicResource Lang.Credentials}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                         CommandParameter="{x:Type cui:RootCredentialsViewModel}" />
+                <Button Classes="align-stretch"
+                        Content="{DynamicResource Lang.Files}"
+                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                        CommandParameter="{x:Type cu:FilesPanelViewModel}" />
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Settings}"
                         Command="{Binding ShowSettingsViewCommand}" />

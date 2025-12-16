@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Cai/">
+    <Project Path="../Cai/Cai/Cai.csproj" />
+  </Folder>
   <Folder Name="/Cromwell/">
     <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
   </Folder>

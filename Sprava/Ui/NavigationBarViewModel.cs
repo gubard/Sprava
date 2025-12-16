@@ -4,12 +4,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Gaia.Helpers;
 using Gaia.Services;
-using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Melnikov.Services;
-using Sprava.Models;
-using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Ui;
 

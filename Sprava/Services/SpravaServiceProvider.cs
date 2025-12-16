@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Cai.Services;
 using Cromwell.Models;
 using Cromwell.Services;
 using Diocles.Models;
@@ -26,6 +27,7 @@ namespace Sprava.Services;
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
+[Import(typeof(ICaiServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(AppState))]
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]

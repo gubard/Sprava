@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cai\Cai\Cai.csproj" />
     <ProjectReference Include="..\..\Cromwell\Cromwell\Cromwell.csproj" />
     <ProjectReference Include="..\..\Diocles\Diocles\Diocles.csproj" />
     <ProjectReference
