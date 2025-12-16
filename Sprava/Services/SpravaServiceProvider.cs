@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Cai.Models;
 using Cai.Services;
 using Cromwell.Models;
 using Cromwell.Services;
@@ -28,6 +29,7 @@ namespace Sprava.Services;
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
 [Import(typeof(ICaiServiceProvider))]
+[Import(typeof(ICaiServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(AppState))]
 [Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
@@ -50,8 +52,15 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
 [Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
+[Transient(typeof(FilesServiceOptions), Factory = nameof(GetFilesServiceOptions))]
+[Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 public partial class SpravaServiceProvider : IServiceProvider
 {
+    public static IStringFormater GetStringFormater()
+    {
+        return StringFormater.Instance;
+    }
+
     public static GaiaValues GetGaiaValues(AppState appState)
     {
         return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
@@ -104,6 +113,11 @@ public partial class SpravaServiceProvider : IServiceProvider
     public static ToDoServiceOptions GetToDoServiceOptions()
     {
         return new() { Url = "https://localhost:7039" };
+    }
+
+    public static FilesServiceOptions GetFilesServiceOptions()
+    {
+        return new() { Url = "https://localhost:7194" };
     }
 
     public static ITryPolicyService GetTryPolicyService()
