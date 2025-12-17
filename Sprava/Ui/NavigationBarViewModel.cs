@@ -99,10 +99,13 @@ public partial class NavigationBarViewModel : ViewModelBase
     [RelayCommand]
     private async Task BackAsync(CancellationToken ct)
     {
-        await WrapCommand(async () =>
-        {
-            await _navigator.NavigateBackOrNullAsync(ct);
-            OnPropertyChanged(nameof(IsCanBack));
-        });
+        await WrapCommandAsync(
+            async () =>
+            {
+                await _navigator.NavigateBackOrNullAsync(ct);
+                OnPropertyChanged(nameof(IsCanBack));
+            },
+            ct
+        );
     }
 }

@@ -30,44 +30,50 @@ public partial class PaneViewModel : ViewModelBase
     {
         var setting = _spravaViewModelFactory.Create();
 
-        await WrapCommand(() =>
-            _dialogService.ShowMessageBoxAsync(
-                new(
-                    _appResourceService.GetResource<string>("Lang.Settings"),
-                    setting,
-                    new DialogButton(
-                        _appResourceService.GetResource<string>("Lang.Save"),
-                        SaveSettingsCommand,
+        await WrapCommandAsync(
+            () =>
+                _dialogService.ShowMessageBoxAsync(
+                    new(
+                        _appResourceService.GetResource<string>("Lang.Settings"),
                         setting,
-                        DialogButtonType.Primary
+                        new DialogButton(
+                            _appResourceService.GetResource<string>("Lang.Save"),
+                            SaveSettingsCommand,
+                            setting,
+                            DialogButtonType.Primary
+                        ),
+                        UiHelper.CancelButton
                     ),
-                    UiHelper.CancelButton
-                )
-            )
+                    ct
+                ),
+            ct
         );
     }
 
     [RelayCommand]
     private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken ct)
     {
-        await WrapCommand(async () =>
-        {
-            await DiHelper
-                .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
-                .SaveSettingsAsync(
-                    new()
-                    {
-                        CromwellSettings = new()
+        await WrapCommandAsync(
+            async () =>
+            {
+                await DiHelper
+                    .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
+                    .SaveSettingsAsync(
+                        new()
                         {
-                            GeneralKey = setting.GeneralKey,
-                            Id = Guid.Empty,
-                            Theme = setting.Theme,
+                            CromwellSettings = new()
+                            {
+                                GeneralKey = setting.GeneralKey,
+                                Id = Guid.Empty,
+                                Theme = setting.Theme,
+                            },
                         },
-                    },
-                    ct
-                );
+                        ct
+                    );
 
-            _dialogService.CloseMessageBox();
-        });
+                _dialogService.CloseMessageBox();
+            },
+            ct
+        );
     }
 }

@@ -34,12 +34,15 @@ public partial class AppSettingViewModel : ViewModelBase
     [RelayCommand]
     private async Task InitializedAsync(CancellationToken ct)
     {
-        await WrapCommand(async () =>
-        {
-            var settings = await _settingsService.GetSettingsAsync(ct);
-            GeneralKey = settings.CromwellSettings.GeneralKey;
-            Theme = settings.CromwellSettings.Theme;
-        });
+        await WrapCommandAsync(
+            async () =>
+            {
+                var settings = await _settingsService.GetSettingsAsync(ct);
+                GeneralKey = settings.CromwellSettings.GeneralKey;
+                Theme = settings.CromwellSettings.Theme;
+            },
+            ct
+        );
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
