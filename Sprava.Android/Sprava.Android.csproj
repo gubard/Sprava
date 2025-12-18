@@ -10,10 +10,10 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidSdkDirectory>C:\Users\memse\AppData\Local\Android\sdk</AndroidSdkDirectory>
     <JavaSdkDirectory>C:\Program Files\Java\jdk-21</JavaSdkDirectory>
+    <StripSymbols>false</StripSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
     <Optimize>true</Optimize>

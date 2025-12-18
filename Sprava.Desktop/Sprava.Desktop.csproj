@@ -8,6 +8,7 @@
     <PublishAot>true</PublishAot>
     <PublishReadyToRun>true</PublishReadyToRun>
     <PublishTrimmed>true</PublishTrimmed>
+    <StripSymbols>false</StripSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">

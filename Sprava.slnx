@@ -1,46 +1,48 @@
 <Solution>
-  <Folder Name="/Aya/">
-    <Project Path="../Aya/Aya.Contract/Aya.Contract.csproj" />
-    <Project Path="../Aya/Aya/Aya.csproj" />
-  </Folder>
-  <Folder Name="/Cai/">
-    <Project Path="../Cai/Cai/Cai.csproj" />
-  </Folder>
-  <Folder Name="/Cromwell/">
-    <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
-  </Folder>
-  <Folder Name="/Diocles/">
-    <Project Path="../Diocles/Diocles/Diocles.csproj" />
-  </Folder>
   <Folder Name="/Gaia/">
     <Project Path="../Gaia/Gaia/Gaia.csproj" />
-  </Folder>
-  <Folder Name="/Hestia/">
-    <Project Path="../Hestia/Hestia.Contract/Hestia.Contract.csproj" />
-    <Project Path="../Hestia/Hestia/Hestia.csproj" />
   </Folder>
   <Folder Name="/Inanna/">
     <Project Path="../Inanna/Inanna.SourceGenerator/Inanna.SourceGenerator.csproj" />
     <Project Path="../Inanna/Inanna/Inanna.csproj" />
-  </Folder>
-  <Folder Name="/Manis/">
-    <Project Path="../Manis/Manis.Contract/Manis.Contract.csproj" />
-    <Project Path="../Manis/Manis/Manis.csproj" />
-  </Folder>
-  <Folder Name="/Melnikov/">
-    <Project Path="../Melnikov/Melnikov/Melnikov.csproj" />
   </Folder>
   <Folder Name="/Nestor/">
     <Project Path="../Nestor/Nestor.Db.Sqlite/Nestor.Db.Sqlite.csproj" />
     <Project Path="../Nestor/Nestor.Db/Nestor.Db.csproj" />
     <Project Path="../Nestor/Nestor.SourceGenerator/Nestor.SourceGenerator.csproj" />
   </Folder>
+  <Folder Name="/Services/" />
+  <Folder Name="/Services/Aya/">
+    <Project Path="../Aya/Aya.Contract/Aya.Contract.csproj" />
+    <Project Path="../Aya/Aya/Aya.csproj" />
+  </Folder>
+  <Folder Name="/Services/Hestia/">
+    <Project Path="../Hestia/Hestia.Contract/Hestia.Contract.csproj" />
+    <Project Path="../Hestia/Hestia/Hestia.csproj" />
+  </Folder>
+  <Folder Name="/Services/Manis/">
+    <Project Path="../Manis/Manis.Contract/Manis.Contract.csproj" />
+    <Project Path="../Manis/Manis/Manis.csproj" />
+  </Folder>
+  <Folder Name="/Services/Turtle/">
+    <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />
+    <Project Path="../Turtle/Turtle/Turtle.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Packages.props" />
   </Folder>
-  <Folder Name="/Turtle/">
-    <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />
-    <Project Path="../Turtle/Turtle/Turtle.csproj" />
+  <Folder Name="/Ui/" />
+  <Folder Name="/Ui/Cai/">
+    <Project Path="../Cai/Cai/Cai.csproj" />
+  </Folder>
+  <Folder Name="/Ui/Cromwell/">
+    <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
+  </Folder>
+  <Folder Name="/Ui/Diocles/">
+    <Project Path="../Diocles/Diocles/Diocles.csproj" />
+  </Folder>
+  <Folder Name="/Ui/Melnikov/">
+    <Project Path="../Melnikov/Melnikov/Melnikov.csproj" />
   </Folder>
   <Folder Name="/Zeus/">
     <Project Path="../Zeus/Zeus/Zeus.csproj" />
