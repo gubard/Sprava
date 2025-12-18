@@ -9,6 +9,7 @@ namespace Sprava.Android.Services;
 
 [ServiceProvider]
 [Import(typeof(ISpravaServiceProvider))]
+[Singleton(typeof(IConfiguration), Factory = nameof(GetConfiguration))]
 public partial class AndroidSpravaServiceProvider : IServiceProvider
 {
     public static IConfiguration GetConfiguration()
