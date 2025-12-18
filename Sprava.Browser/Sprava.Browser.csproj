@@ -9,9 +9,14 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
     <PackageReference Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="appsettings.json" />
   </ItemGroup>
 </Project>

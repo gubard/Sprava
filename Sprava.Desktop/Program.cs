@@ -1,7 +1,7 @@
 ﻿using System;
 using Avalonia;
 using Gaia.Helpers;
-using Sprava.Services;
+using Sprava.Desktop.Services;
 
 namespace Sprava.Desktop;
 
@@ -19,7 +19,7 @@ internal sealed class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
     {
-        DiHelper.ServiceProvider = new SpravaServiceProvider();
+        DiHelper.ServiceProvider = new DesktopSpravaServiceProvider();
 
         return AppBuilder.Configure<App>().UsePlatformDetect().WithInterFont().LogToTrace();
     }

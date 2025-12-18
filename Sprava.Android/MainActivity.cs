@@ -3,7 +3,7 @@ using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
 using Gaia.Helpers;
-using Sprava.Services;
+using Sprava.Android.Services;
 
 namespace Sprava.Android;
 
@@ -20,7 +20,7 @@ public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
-        DiHelper.ServiceProvider = new SpravaServiceProvider();
+        DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
 
         return base.CustomizeAppBuilder(builder).WithInterFont();
     }

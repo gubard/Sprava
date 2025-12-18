@@ -17,6 +17,7 @@ using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
+using Microsoft.Extensions.Configuration;
 using Nestor.Db.Sqlite.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
@@ -24,7 +25,7 @@ using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Services;
 
-[ServiceProvider]
+[ServiceProviderModule]
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
@@ -54,7 +55,7 @@ namespace Sprava.Services;
 [Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
 [Transient(typeof(FilesServiceOptions), Factory = nameof(GetFilesServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
-public partial class SpravaServiceProvider : IServiceProvider
+public interface ISpravaServiceProvider : IServiceProvider
 {
     public static IStringFormater GetStringFormater()
     {
@@ -100,33 +101,34 @@ public partial class SpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static AuthenticationServiceOptions GetAuthenticationServiceOptions()
+    public static AuthenticationServiceOptions GetAuthenticationServiceOptions(
+        IConfiguration configuration
+    )
     {
-        return new() { Url = "https://localhost:7027" };
+        return configuration.GetSection("AuthenticationService").Get<AuthenticationServiceOptions>()
+            ?? throw new InvalidOperationException("AuthenticationService not found");
     }
 
-    public static CredentialServiceOptions GetCredentialServiceOptions()
+    public static CredentialServiceOptions GetCredentialServiceOptions(IConfiguration configuration)
     {
-        return new() { Url = "https://localhost:7089" };
+        return configuration.GetSection("CredentialService").Get<CredentialServiceOptions>()
+            ?? throw new InvalidOperationException("CredentialService not found");
     }
 
-    public static ToDoServiceOptions GetToDoServiceOptions()
+    public static ToDoServiceOptions GetToDoServiceOptions(IConfiguration configuration)
     {
-        return new() { Url = "https://localhost:7039" };
+        return configuration.GetSection("ToDoService").Get<ToDoServiceOptions>()
+            ?? throw new InvalidOperationException("ToDoService not found");
     }
 
-    public static FilesServiceOptions GetFilesServiceOptions()
+    public static FilesServiceOptions GetFilesServiceOptions(IConfiguration configuration)
     {
-        return new() { Url = "https://localhost:7194" };
+        return configuration.GetSection("FilesService").Get<FilesServiceOptions>()
+            ?? throw new InvalidOperationException("FilesService not found");
     }
 
     public static ITryPolicyService GetTryPolicyService()
     {
         return new TryPolicyService(3, TimeSpan.FromSeconds(1));
-    }
-
-    public object GetService(Type type)
-    {
-        return ((System.IServiceProvider)this).GetService(type).ThrowIfNull();
     }
 }
