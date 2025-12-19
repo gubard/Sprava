@@ -4,6 +4,7 @@ using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell;
+using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
 using Sprava.Models;
@@ -20,14 +21,17 @@ public partial class AppSettingViewModel : ViewModelBase
 
     private readonly ISettingsService<SpravaSettings> _settingsService;
     private readonly Application _application;
+    private readonly IStorageService _storageService;
 
     public AppSettingViewModel(
         Application application,
-        ISettingsService<SpravaSettings> settingsService
+        ISettingsService<SpravaSettings> settingsService,
+        IStorageService storageService
     )
     {
         _application = application;
         _settingsService = settingsService;
+        _storageService = storageService;
         _generalKey = string.Empty;
     }
 
@@ -43,6 +47,25 @@ public partial class AppSettingViewModel : ViewModelBase
             },
             ct
         );
+    }
+
+    [RelayCommand]
+    private void ClearCache()
+    {
+        WrapCommand(() =>
+        {
+            var appDir = _storageService.GetAppDirectory();
+
+            foreach (var dir in appDir.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            foreach (var file in appDir.GetFiles())
+            {
+                file.Delete();
+            }
+        });
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)

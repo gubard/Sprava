@@ -55,8 +55,14 @@ namespace Sprava.Services;
 [Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
 [Transient(typeof(FilesServiceOptions), Factory = nameof(GetFilesServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
+[Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IStorageService GetStorageService()
+    {
+        return new StorageService("Sprava");
+    }
+
     public static IStringFormater GetStringFormater()
     {
         return StringFormater.Instance;

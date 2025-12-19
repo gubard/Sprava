@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.ClearCache">Clear cache</s:String>
     <s:String x:Key="Lang.Name">Name</s:String>
     <s:String x:Key="Lang.CopyFullPath">Copy full path</s:String>
     <s:String x:Key="Lang.Path">Path</s:String>
