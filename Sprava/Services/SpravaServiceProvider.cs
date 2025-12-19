@@ -96,14 +96,16 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static SignInViewModel GetSignInViewModel(
         IUiAuthenticationService uiAuthenticationService,
-        ISettingsService<MelnikovSettings> settingsService
+        ISettingsService<MelnikovSettings> settingsService,
+        AppState appState
     )
     {
         return new(
             uiAuthenticationService,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
-            settingsService
+            settingsService,
+            appState
         );
     }
 

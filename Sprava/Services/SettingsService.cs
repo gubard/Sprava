@@ -16,9 +16,11 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
         _dbContext = dbContext;
     }
 
-    public ValueTask<MelnikovSettings> GetSettingsAsync(CancellationToken ct)
+    public async ValueTask<MelnikovSettings> GetSettingsAsync(CancellationToken ct)
     {
-        return new(new MelnikovSettings());
+        var settings = await MelnikovSettings.FindEntityAsync(Guid.Empty, _dbContext.Set<EventEntity>(), ct);
+
+        return settings ?? new();
     }
 
     public async ValueTask SaveSettingsAsync(MelnikovSettings settings, CancellationToken ct)
