@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PublishAot>true</PublishAot>
+    <!--<PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>-->
     <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishTrimmed>true</PublishTrimmed>
+    <RunAOTCompilation>true</RunAOTCompilation>
     <StripSymbols>false</StripSymbols>
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
-    <RunAOTCompilation>true</RunAOTCompilation>
     <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
   </PropertyGroup>
