@@ -51,8 +51,6 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <Resource Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="appsettings.json" />
   </ItemGroup>
 </Project>
