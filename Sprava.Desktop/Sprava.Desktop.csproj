@@ -15,8 +15,6 @@
     <StripSymbols>false</StripSymbols>
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>None</DebugType>
   </PropertyGroup>
 
   <PropertyGroup>
