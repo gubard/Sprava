@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <!--<PublishTrimmed>true</PublishTrimmed>
-    <PublishAot>true</PublishAot>-->
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>
     <PublishReadyToRun>true</PublishReadyToRun>
     <RunAOTCompilation>true</RunAOTCompilation>
     <StripSymbols>false</StripSymbols>
