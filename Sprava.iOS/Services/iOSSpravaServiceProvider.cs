@@ -1,7 +1,6 @@
 ﻿using System;
 using Gaia.Helpers;
 using Jab;
-using Microsoft.Extensions.Configuration;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
