@@ -17,7 +17,6 @@ using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
-using Microsoft.Extensions.Configuration;
 using Nestor.Db.Sqlite.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
@@ -110,29 +109,25 @@ public interface ISpravaServiceProvider : IServiceProvider
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions(
-        IConfiguration configuration
+        ISpravaConfig configuration
     )
     {
-        return configuration.GetSection("AuthenticationService").Get<AuthenticationServiceOptions>()
-            ?? throw new InvalidOperationException("AuthenticationService not found");
+        return configuration.AuthenticationService;
     }
 
-    public static CredentialServiceOptions GetCredentialServiceOptions(IConfiguration configuration)
+    public static CredentialServiceOptions GetCredentialServiceOptions(ISpravaConfig configuration)
     {
-        return configuration.GetSection("CredentialService").Get<CredentialServiceOptions>()
-            ?? throw new InvalidOperationException("CredentialService not found");
+        return configuration.CredentialService;
     }
 
-    public static ToDoServiceOptions GetToDoServiceOptions(IConfiguration configuration)
+    public static ToDoServiceOptions GetToDoServiceOptions(ISpravaConfig configuration)
     {
-        return configuration.GetSection("ToDoService").Get<ToDoServiceOptions>()
-            ?? throw new InvalidOperationException("ToDoService not found");
+        return configuration.ToDoService;
     }
 
-    public static FilesServiceOptions GetFilesServiceOptions(IConfiguration configuration)
+    public static FilesServiceOptions GetFilesServiceOptions(ISpravaConfig configuration)
     {
-        return configuration.GetSection("FilesService").Get<FilesServiceOptions>()
-            ?? throw new InvalidOperationException("FilesService not found");
+        return configuration.FilesService;
     }
 
     public static ITryPolicyService GetTryPolicyService()

@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Gaia.Helpers;
 using Sprava.Desktop.Services;
 

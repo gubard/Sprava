@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Android" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" />
   </ItemGroup>
 

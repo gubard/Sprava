@@ -1,7 +1,5 @@
-﻿using System;
-using Gaia.Helpers;
+﻿using Gaia.Helpers;
 using Jab;
-using Microsoft.Extensions.Configuration;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
@@ -9,12 +7,14 @@ namespace Sprava.Desktop.Services;
 
 [ServiceProvider]
 [Import(typeof(ISpravaServiceProvider))]
-[Singleton(typeof(IConfiguration), Factory = nameof(GetConfiguration))]
+[Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 public partial class DesktopSpravaServiceProvider : IServiceProvider
 {
-    public static IConfiguration GetConfiguration()
+    public static ISpravaConfig GetSpravaConfig()
     {
-        return new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        using var stream = File.OpenRead("appsettings.json");
+
+        return new SpravaConfig(stream);
     }
 
     public object GetService(Type type)

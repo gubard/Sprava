@@ -31,7 +31,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
     <PackageReference Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
   </ItemGroup>
 
   <ItemGroup>

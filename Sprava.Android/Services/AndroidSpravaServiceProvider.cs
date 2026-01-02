@@ -1,7 +1,6 @@
 ﻿using System;
 using Gaia.Helpers;
 using Jab;
-using Microsoft.Extensions.Configuration;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
@@ -9,16 +8,16 @@ namespace Sprava.Android.Services;
 
 [ServiceProvider]
 [Import(typeof(ISpravaServiceProvider))]
-[Singleton(typeof(IConfiguration), Factory = nameof(GetConfiguration))]
+[Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 public partial class AndroidSpravaServiceProvider : IServiceProvider
 {
-    public static IConfiguration GetConfiguration()
+    public static ISpravaConfig GetSpravaConfig()
     {
-        var stream = typeof(AndroidSpravaServiceProvider)
+        using var stream = typeof(AndroidSpravaServiceProvider)
             .Assembly.GetManifestResourceStream("appsettings.json")
             .ThrowIfNull();
 
-        return new ConfigurationBuilder().AddJsonStream(stream).Build();
+        return new SpravaConfig(stream);
     }
 
     public object GetService(Type type)
