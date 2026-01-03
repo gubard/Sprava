@@ -18,7 +18,11 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
 
     public async ValueTask<MelnikovSettings> GetSettingsAsync(CancellationToken ct)
     {
-        var settings = await MelnikovSettings.FindEntityAsync(Guid.Empty, _dbContext.Set<EventEntity>(), ct);
+        var settings = await MelnikovSettings.FindEntityAsync(
+            Guid.Empty,
+            _dbContext.Set<EventEntity>(),
+            ct
+        );
 
         return settings ?? new();
     }
@@ -33,6 +37,24 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
         );
 
         await _dbContext.SaveChangesAsync(ct);
+    }
+
+    public MelnikovSettings GetSettings()
+    {
+        var settings = MelnikovSettings.FindEntity(Guid.Empty, _dbContext.Set<EventEntity>());
+
+        return settings ?? new();
+    }
+
+    public void SaveSettings(MelnikovSettings settings)
+    {
+        MelnikovSettings.EditEntities(
+            _dbContext,
+            "App",
+            [new(Guid.Empty) { Token = settings.Token, IsEditToken = true }]
+        );
+
+        _dbContext.SaveChanges();
     }
 }
 
@@ -63,6 +85,19 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         return SaveSettingsAsync(settings.CromwellSettings, ct);
     }
 
+    SpravaSettings ISettingsService<SpravaSettings>.GetSettings()
+    {
+        return new()
+        {
+            CromwellSettings = ((ISettingsService<CromwellSettings>)this).GetSettings(),
+        };
+    }
+
+    public void SaveSettings(SpravaSettings settings)
+    {
+        SaveSettings(settings.CromwellSettings);
+    }
+
     public async ValueTask SaveSettingsAsync(CromwellSettings settings, CancellationToken ct)
     {
         await CromwellSettings.EditEntitiesAsync(
@@ -81,6 +116,32 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         );
 
         await _dbContext.SaveChangesAsync(ct);
+    }
+
+    CromwellSettings ISettingsService<CromwellSettings>.GetSettings()
+    {
+        var settings = CromwellSettings.FindEntity(Guid.Empty, _dbContext.Set<EventEntity>());
+
+        return settings ?? new();
+    }
+
+    public void SaveSettings(CromwellSettings settings)
+    {
+        CromwellSettings.EditEntities(
+            _dbContext,
+            "App",
+            [
+                new(Guid.Empty)
+                {
+                    GeneralKey = settings.GeneralKey,
+                    IsEditGeneralKey = true,
+                    IsEditTheme = true,
+                    Theme = settings.Theme,
+                },
+            ]
+        );
+
+        _dbContext.SaveChanges();
     }
 
     async ValueTask<SpravaSettings> ISettingsService<SpravaSettings>.GetSettingsAsync(
