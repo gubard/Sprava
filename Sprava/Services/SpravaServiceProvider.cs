@@ -17,6 +17,7 @@ using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
+using Nestor.Db.Services;
 using Nestor.Db.Sqlite.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
@@ -55,8 +56,14 @@ namespace Sprava.Services;
 [Transient(typeof(FilesServiceOptions), Factory = nameof(GetFilesServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
+[Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IMigrator GetMigrator()
+    {
+        return new Migrator(SqliteMigration.Migrations);
+    }
+
     public static IStorageService GetStorageService()
     {
         return new StorageService("Sprava");
@@ -74,22 +81,24 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static SettingsService GetSettingsService(
         AppState appState,
-        IStorageService storageService
+        IStorageService storageService,
+        IMigrator migrator
     )
     {
         return new(
             new FileInfo(
                 $"{storageService.GetAppDirectory()}/settings/{appState.User.ThrowIfNull().Id}.db"
-            ).InitDbContext()
+            ).InitDbContext(migrator)
         );
     }
 
     public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService(
-        IStorageService storageService
+        IStorageService storageService,
+        IMigrator migrator
     )
     {
         return new MelnikovSettingsSettingsService(
-            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext()
+            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext(migrator)
         );
     }
 
