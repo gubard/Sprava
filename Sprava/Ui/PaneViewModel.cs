@@ -53,27 +53,26 @@ public partial class PaneViewModel : ViewModelBase
     [RelayCommand]
     private async Task SaveSettingsAsync(AppSettingViewModel setting, CancellationToken ct)
     {
-        await WrapCommandAsync(
-            async () =>
-            {
-                await DiHelper
-                    .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
-                    .SaveSettingsAsync(
-                        new()
-                        {
-                            CromwellSettings = new()
-                            {
-                                GeneralKey = setting.GeneralKey,
-                                Id = Guid.Empty,
-                                Theme = setting.Theme,
-                            },
-                        },
-                        ct
-                    );
+        await WrapCommandAsync(() => SaveSettingsCore(setting, ct).ConfigureAwait(false), ct);
+    }
 
-                _dialogService.CloseMessageBox();
-            },
-            ct
-        );
+    private async ValueTask SaveSettingsCore(AppSettingViewModel setting, CancellationToken ct)
+    {
+        await DiHelper
+            .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
+            .SaveSettingsAsync(
+                new()
+                {
+                    CromwellSettings = new()
+                    {
+                        GeneralKey = setting.GeneralKey,
+                        Id = Guid.Empty,
+                        Theme = setting.Theme,
+                    },
+                },
+                ct
+            );
+
+        _dialogService.CloseMessageBox();
     }
 }

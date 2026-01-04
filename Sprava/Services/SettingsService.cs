@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Cromwell.Models;
 using Gaia.Helpers;
 using Inanna.Services;
@@ -23,7 +24,12 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
         }
     }
 
-    public async ValueTask<MelnikovSettings> GetSettingsAsync(CancellationToken ct)
+    public ConfiguredValueTaskAwaitable<MelnikovSettings> GetSettingsAsync(CancellationToken ct)
+    {
+        return GetSettingsCore(ct).ConfigureAwait(false);
+    }
+
+    private async ValueTask<MelnikovSettings> GetSettingsCore(CancellationToken ct)
     {
         var result = await _dir.ToFile("Melnikov.json")
             .DeserializeJsonAsync<MelnikovSettings>(_jsonOptions, ct);
@@ -31,7 +37,10 @@ public class MelnikovSettingsSettingsService : ISettingsService<MelnikovSettings
         return result ?? new();
     }
 
-    public ValueTask SaveSettingsAsync(MelnikovSettings settings, CancellationToken ct)
+    public ConfiguredValueTaskAwaitable SaveSettingsAsync(
+        MelnikovSettings settings,
+        CancellationToken ct
+    )
     {
         return _dir.ToFile("Melnikov.json").SerializeJsonAsync(settings, _jsonOptions, ct);
     }
@@ -60,9 +69,14 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         _jsonOptions = jsonOptions;
     }
 
-    async ValueTask<CromwellSettings> ISettingsService<CromwellSettings>.GetSettingsAsync(
+    ConfiguredValueTaskAwaitable<CromwellSettings> ISettingsService<CromwellSettings>.GetSettingsAsync(
         CancellationToken ct
     )
+    {
+        return GetCromwellSettingsCore(ct).ConfigureAwait(false);
+    }
+
+    private async ValueTask<CromwellSettings> GetCromwellSettingsCore(CancellationToken ct)
     {
         var result = await _dir.ToFile("Cromwell.json")
             .DeserializeJsonAsync<CromwellSettings>(_jsonOptions, ct);
@@ -70,7 +84,10 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         return result ?? new();
     }
 
-    public ValueTask SaveSettingsAsync(SpravaSettings settings, CancellationToken ct)
+    public ConfiguredValueTaskAwaitable SaveSettingsAsync(
+        SpravaSettings settings,
+        CancellationToken ct
+    )
     {
         return SaveSettingsAsync(settings.CromwellSettings, ct);
     }
@@ -88,7 +105,10 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         SaveSettings(settings.CromwellSettings);
     }
 
-    public ValueTask SaveSettingsAsync(CromwellSettings settings, CancellationToken ct)
+    public ConfiguredValueTaskAwaitable SaveSettingsAsync(
+        CromwellSettings settings,
+        CancellationToken ct
+    )
     {
         return _dir.ToFile("Cromwell.json").SerializeJsonAsync(settings, _jsonOptions, ct);
     }
@@ -105,9 +125,14 @@ public class SettingsService : ISettingsService<CromwellSettings>, ISettingsServ
         _dir.ToFile("Cromwell.json").SerializeJson(settings, _jsonOptions);
     }
 
-    async ValueTask<SpravaSettings> ISettingsService<SpravaSettings>.GetSettingsAsync(
+    ConfiguredValueTaskAwaitable<SpravaSettings> ISettingsService<SpravaSettings>.GetSettingsAsync(
         CancellationToken ct
     )
+    {
+        return GetSpravaSettingsCore(ct).ConfigureAwait(false);
+    }
+
+    private async ValueTask<SpravaSettings> GetSpravaSettingsCore(CancellationToken ct)
     {
         return new()
         {

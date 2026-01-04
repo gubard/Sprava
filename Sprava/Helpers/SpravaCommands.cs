@@ -20,14 +20,14 @@ public static class SpravaCommands
         {
             mainViewModel.IsShowPane = true;
 
-            return ValueTask.CompletedTask;
+            return TaskHelper.ConfiguredCompletedTask;
         });
 
         HidePaneCommand = UiHelper.CreateCommand(_ =>
         {
             mainViewModel.IsShowPane = false;
 
-            return ValueTask.CompletedTask;
+            return TaskHelper.ConfiguredCompletedTask;
         });
 
         LogoutCommand = UiHelper.CreateCommand(ct =>
