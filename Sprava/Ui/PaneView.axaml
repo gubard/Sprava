@@ -37,9 +37,6 @@
                         Content="{DynamicResource Lang.Settings}"
                         Command="{Binding ShowSettingsViewCommand}" />
                 <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Offline}"
-                        Command="{x:Static sh:SpravaCommands.OfflineCommand}" />
-                <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Logout}"
                         Command="{x:Static sh:SpravaCommands.LogoutCommand}" />
             </StackPanel>
