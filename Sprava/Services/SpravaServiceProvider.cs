@@ -87,7 +87,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         return new(
             new FileInfo(
-                $"{storageService.GetAppDirectory()}/settings/{appState.User.ThrowIfNull().Id}.db"
+                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
             ).InitDbContext(migrator)
         );
     }
