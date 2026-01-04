@@ -29,7 +29,6 @@
     <AndroidUseAssemblyStore>true</AndroidUseAssemblyStore>
     <AndroidEnableAssemblyCompression>true</AndroidEnableAssemblyCompression>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <EFPrecompileQueriesStage>Build</EFPrecompileQueriesStage>
   </PropertyGroup>
 
   <ItemGroup>

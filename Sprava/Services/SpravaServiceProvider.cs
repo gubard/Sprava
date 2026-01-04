@@ -1,4 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
+using Aya.Contract.Models;
+using Aya.Contract.Services;
 using Cai.Models;
 using Cai.Services;
 using Cromwell.Models;
@@ -9,6 +12,8 @@ using Diocles.Ui;
 using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
+using Hestia.Contract.Models;
+using Hestia.Contract.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
@@ -19,8 +24,11 @@ using Melnikov.Services;
 using Melnikov.Ui;
 using Nestor.Db.Services;
 using Nestor.Db.Sqlite.Helpers;
+using Sprava.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
+using Turtle.Contract.Models;
+using Turtle.Contract.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Services;
@@ -57,8 +65,122 @@ namespace Sprava.Services;
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
+[Transient(typeof(IUiFilesService), Factory = nameof(GetUiFilesService))]
+[Transient(typeof(IUiCredentialService), Factory = nameof(GetUiCredentialService))]
+[Transient(typeof(IUiToDoService), Factory = nameof(GetUiToDoService))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IUiToDoService GetUiToDoService(
+        ToDoServiceOptions options,
+        ITryPolicyService tryPolicyService,
+        IFactory<Memory<HttpHeader>> headersFactory,
+        AppState appState,
+        ToDoParametersFillerService toDoParametersFillerService,
+        IToDoCache toDoCache,
+        INavigator navigator,
+        IStorageService storageService,
+        IToDoValidator toDoValidator,
+        IMigrator migrator
+    )
+    {
+        var user = appState.User.ThrowIfNull();
+
+        return new UiToDoService(
+            new HttpToDoService(
+                new() { BaseAddress = new(options.Url) },
+                new()
+                {
+                    TypeInfoResolver = HestiaJsonContext.Resolver,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                },
+                tryPolicyService,
+                headersFactory
+            ),
+            new EfToDoService(
+                new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
+                    migrator
+                ),
+                new(DateTimeOffset.UtcNow.Offset, user.Id),
+                toDoParametersFillerService,
+                toDoValidator
+            ),
+            appState,
+            toDoCache,
+            navigator
+        );
+    }
+
+    public static IUiCredentialService GetUiCredentialService(
+        CredentialServiceOptions options,
+        ITryPolicyService tryPolicyService,
+        IFactory<Memory<HttpHeader>> headersFactory,
+        AppState appState,
+        ICredentialCache cache,
+        INavigator navigator,
+        IStorageService storageService,
+        GaiaValues gaiaValues,
+        IMigrator migrator
+    )
+    {
+        return new UiCredentialService(
+            new HttpCredentialService(
+                new() { BaseAddress = new(options.Url) },
+                new()
+                {
+                    TypeInfoResolver = TurtleJsonContext.Resolver,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                },
+                tryPolicyService,
+                headersFactory
+            ),
+            new EfCredentialService(
+                new FileInfo(
+                    $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
+                ).InitDbContext(migrator),
+                gaiaValues
+            ),
+            appState,
+            cache,
+            navigator
+        );
+    }
+
+    public static IUiFilesService GetUiFilesService(
+        FilesServiceOptions options,
+        ITryPolicyService tryPolicyService,
+        IFactory<Memory<HttpHeader>> headersFactory,
+        AppState appState,
+        IFilesCache toDoCache,
+        INavigator navigator,
+        IStorageService storageService,
+        IMigrator migrator
+    )
+    {
+        var user = appState.User.ThrowIfNull();
+
+        return new UiFilesService(
+            new HttpFilesService(
+                new() { BaseAddress = new(options.Url) },
+                new()
+                {
+                    TypeInfoResolver = AysJsonContext.Resolver,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                },
+                tryPolicyService,
+                headersFactory
+            ),
+            new EfFilesService(
+                new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
+                    migrator
+                ),
+                new(DateTimeOffset.UtcNow.Offset, user.Id)
+            ),
+            appState,
+            toDoCache,
+            navigator
+        );
+    }
+
     public static IMigrator GetMigrator()
     {
         return new Migrator(SqliteMigration.Migrations);

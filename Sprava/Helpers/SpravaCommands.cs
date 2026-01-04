@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
-using Diocles.Ui;
 using Gaia.Helpers;
 using Inanna.Helpers;
-using Inanna.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
 using Sprava.Ui;

@@ -16,7 +16,6 @@
     <StripSymbols>false</StripSymbols>
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
-    <EFPrecompileQueriesStage>Build</EFPrecompileQueriesStage>
   </PropertyGroup>
 
   <PropertyGroup>
