@@ -21,7 +21,7 @@ public class SpravaConfig : ISpravaConfig
     public SpravaConfig(Stream stream)
     {
         var options = JsonSerializer
-            .Deserialize<SpravaOptions>(stream, SpravaJsonContext.Default.Options)
+            .Deserialize<SpravaOptions>(stream, OptionsJsonContext.Default.Options)
             .ThrowIfNull();
 
         AuthenticationService = options.AuthenticationService;

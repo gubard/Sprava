@@ -1,5 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Frozen;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using Aya.Contract.Helpers;
 using Aya.Contract.Models;
 using Aya.Contract.Services;
 using Cai.Models;
@@ -12,6 +14,7 @@ using Diocles.Ui;
 using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
+using Hestia.Contract.Helpers;
 using Hestia.Contract.Models;
 using Hestia.Contract.Services;
 using Inanna.Helpers;
@@ -27,6 +30,7 @@ using Nestor.Db.Sqlite.Helpers;
 using Sprava.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
+using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
 using Turtle.Contract.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
@@ -183,7 +187,29 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IMigrator GetMigrator()
     {
-        return new Migrator(SqliteMigration.Migrations);
+        var migration = new Dictionary<long, string>();
+
+        foreach (var (key, value) in SqliteMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
+        foreach (var (key, value) in AyaMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
+        foreach (var (key, value) in HestiaMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
+        foreach (var (key, value) in TurtleMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
+        return new Migrator(migration.ToFrozenDictionary());
     }
 
     public static IStorageService GetStorageService()
@@ -203,24 +229,22 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static SettingsService GetSettingsService(
         AppState appState,
-        IStorageService storageService,
-        IMigrator migrator
+        IStorageService storageService
     )
     {
         return new(
-            new FileInfo(
-                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
-            ).InitDbContext(migrator)
+            $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}".ToDir(),
+            SettingsJsonContext.Default.Options
         );
     }
 
     public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService(
-        IStorageService storageService,
-        IMigrator migrator
+        IStorageService storageService
     )
     {
         return new MelnikovSettingsSettingsService(
-            new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext(migrator)
+            storageService.GetAppDirectory(),
+            SettingsJsonContext.Default.Options
         );
     }
 

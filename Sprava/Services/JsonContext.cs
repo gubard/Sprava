@@ -12,4 +12,9 @@ namespace Sprava.Services;
 [JsonSerializable(typeof(ToDoServiceOptions))]
 [JsonSerializable(typeof(SpravaOptions))]
 [JsonSerializable(typeof(FilesServiceOptions))]
-public partial class SpravaJsonContext : JsonSerializerContext;
+public partial class OptionsJsonContext : JsonSerializerContext;
+
+[JsonSerializable(typeof(CromwellSettings))]
+[JsonSerializable(typeof(SpravaSettings))]
+[JsonSerializable(typeof(MelnikovSettings))]
+public partial class SettingsJsonContext : JsonSerializerContext;
