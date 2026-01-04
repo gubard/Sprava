@@ -1,8 +1,11 @@
-﻿using Aya.Contract.Services;
+﻿using Aya.Contract.Models;
+using Aya.Contract.Services;
 using Gaia.Services;
+using Hestia.Contract.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Nestor.Db.Services;
+using Turtle.Contract.Models;
 
 namespace Sprava.Services;
 
@@ -14,6 +17,10 @@ public sealed class SpravaDbContext
 
     public SpravaDbContext(DbContextOptions options)
         : base(options) { }
+
+    public DbSet<FileEntity> Files { get; set; }
+    public DbSet<ToDoEntity> ToDos { get; set; }
+    public DbSet<CredentialEntity> Credentials { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
