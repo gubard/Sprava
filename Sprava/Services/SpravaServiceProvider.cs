@@ -91,7 +91,7 @@ public interface ISpravaServiceProvider : IServiceProvider
 
         return new UiToDoService(
             new HttpToDoService(
-                new() { BaseAddress = new(options.Url) },
+                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
                 new()
                 {
                     TypeInfoResolver = HestiaJsonContext.Resolver,
@@ -128,7 +128,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         return new UiCredentialService(
             new HttpCredentialService(
-                new() { BaseAddress = new(options.Url) },
+                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
                 new()
                 {
                     TypeInfoResolver = TurtleJsonContext.Resolver,
@@ -164,7 +164,7 @@ public interface ISpravaServiceProvider : IServiceProvider
 
         return new UiFilesService(
             new HttpFilesService(
-                new() { BaseAddress = new(options.Url) },
+                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
                 new()
                 {
                     TypeInfoResolver = AysJsonContext.Resolver,
