@@ -16,15 +16,12 @@
     <StripSymbols>false</StripSymbols>
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
+    <EFPrecompileQueriesStage>Build</EFPrecompileQueriesStage>
   </PropertyGroup>
 
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
-
-  <ItemGroup>
-    <TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" />

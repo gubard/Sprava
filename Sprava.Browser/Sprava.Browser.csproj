@@ -26,11 +26,8 @@
     <EmccLinkOptimizationFlag>-O3</EmccLinkOptimizationFlag>
     <WasmNativeStrip>true</WasmNativeStrip>
     <Optimize>true</Optimize>
+    <EFPrecompileQueriesStage>Build</EFPrecompileQueriesStage>
   </PropertyGroup>
-
-  <ItemGroup>
-    <TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
