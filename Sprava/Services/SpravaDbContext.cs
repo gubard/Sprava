@@ -6,7 +6,9 @@ using Nestor.Db.Services;
 
 namespace Sprava.Services;
 
-public sealed class SpravaDbContext : NestorDbContext, IStaticFactory<DbContextOptions, DbContext>
+public sealed class SpravaDbContext
+    : NestorDbContext,
+        IStaticFactory<DbContextOptions, NestorDbContext>
 {
     public SpravaDbContext() { }
 
@@ -25,7 +27,7 @@ public sealed class SpravaDbContext : NestorDbContext, IStaticFactory<DbContextO
         base.OnModelCreating(modelBuilder);
     }
 
-    public static DbContext Create(DbContextOptions input)
+    public static NestorDbContext Create(DbContextOptions input)
     {
         return new SpravaDbContext(input);
     }
