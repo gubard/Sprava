@@ -12,7 +12,11 @@ public partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
     {
-        using var stream = File.OpenRead("appsettings.json");
+        var appSettingsFile = AppDomain
+            .CurrentDomain.BaseDirectory.ToDir()
+            .ToFile("appsettings.json");
+
+        using var stream = File.OpenRead(appSettingsFile.FullName);
 
         return new SpravaConfig(stream);
     }
