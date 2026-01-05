@@ -27,7 +27,7 @@ namespace Sprava
                 typeof(long),
                 propertyInfo: typeof(MigrationEntity).GetProperty("Id", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(MigrationEntity).GetField("<Id>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                valueGenerated: ValueGenerated.OnAdd,
+                valueGenerated: ValueGenerated.Never,
                 afterSaveBehavior: PropertySaveBehavior.Throw,
                 sentinel: 0L);
 
