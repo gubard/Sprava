@@ -53,4 +53,5 @@
   <Project Path="Sprava.Desktop/Sprava.Desktop.csproj" />
   <Project Path="Sprava.iOS/Sprava.iOS.csproj" />
   <Project Path="Sprava/Sprava.csproj" />
+  <Project Path="TestHelper/TestHelper.csproj" />
 </Solution>
