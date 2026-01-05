@@ -67,7 +67,6 @@ public partial class PaneViewModel : ViewModelBase
                     CromwellSettings = new()
                     {
                         GeneralKey = setting.GeneralKey,
-                        Id = Guid.Empty,
                         Theme = setting.Theme,
                     },
                 },

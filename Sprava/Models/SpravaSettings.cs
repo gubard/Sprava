@@ -2,7 +2,7 @@
 
 namespace Sprava.Models;
 
-public class SpravaSettings
+public sealed class SpravaSettings
 {
     public CromwellSettings CromwellSettings { get; set; } = new();
 }
