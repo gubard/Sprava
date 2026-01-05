@@ -187,7 +187,7 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IMigrator GetMigrator()
     {
-        var migration = new Dictionary<long, string>();
+        var migration = new Dictionary<int, string>();
 
         foreach (var (key, value) in SqliteMigration.Migrations)
         {

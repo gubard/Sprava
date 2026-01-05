@@ -6,6 +6,7 @@ using Hestia.Contract.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Nestor.Db.Services;
+using Sprava.CompiledModels;
 using Turtle.Contract.Models;
 using Turtle.Contract.Services;
 

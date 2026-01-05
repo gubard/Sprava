@@ -6,24 +6,28 @@ using Microsoft.EntityFrameworkCore.Metadata;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace Sprava
+namespace Sprava.CompiledModels
 {
     public partial class SpravaDbContextModel
     {
         private SpravaDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("a503dc15-842e-4c8d-b8d8-d5e759960b53"), entityTypeCount: 3)
+            : base(skipDetectChanges: false, modelId: new Guid("d1f08d09-b00d-4230-8c88-184100958bf4"), entityTypeCount: 5)
         {
         }
 
         partial void Initialize()
         {
             var fileEntity = FileEntityEntityType.Create(this);
+            var toDoEntity = ToDoEntityEntityType.Create(this);
             var eventEntity = EventEntityEntityType.Create(this);
             var migrationEntity = MigrationEntityEntityType.Create(this);
+            var credentialEntity = CredentialEntityEntityType.Create(this);
 
             FileEntityEntityType.CreateAnnotations(fileEntity);
+            ToDoEntityEntityType.CreateAnnotations(toDoEntity);
             EventEntityEntityType.CreateAnnotations(eventEntity);
             MigrationEntityEntityType.CreateAnnotations(migrationEntity);
+            CredentialEntityEntityType.CreateAnnotations(credentialEntity);
 
             AddAnnotation("ProductVersion", "10.0.1");
         }

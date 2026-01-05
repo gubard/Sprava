@@ -6,7 +6,7 @@ using Sprava.Services;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace Sprava
+namespace Sprava.CompiledModels
 {
     [DbContext(typeof(SpravaDbContext))]
     public partial class SpravaDbContextModel : RuntimeModel
