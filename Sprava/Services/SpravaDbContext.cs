@@ -32,10 +32,10 @@ public sealed class SpravaDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new FileEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ToDoEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CredentialEntityTypeConfiguration());
-        base.OnModelCreating(modelBuilder);
     }
 
     public static NestorDbContext Create(DbContextOptions input)
