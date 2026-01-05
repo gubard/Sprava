@@ -1,3 +1,4 @@
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Gaia.Helpers;
 using Inanna.Helpers;
@@ -73,6 +74,6 @@ public partial class PaneViewModel : ViewModelBase
                 ct
             );
 
-        _dialogService.CloseMessageBox();
+        Dispatcher.UIThread.Post(() => _dialogService.CloseMessageBox());
     }
 }
