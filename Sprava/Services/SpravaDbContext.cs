@@ -14,7 +14,10 @@ namespace Sprava.Services;
 
 public sealed class SpravaDbContext
     : NestorDbContext,
-        IStaticFactory<DbContextOptions, NestorDbContext>
+        IStaticFactory<DbContextOptions, NestorDbContext>,
+        ICredentialDbContext,
+        IFileDbContext,
+        IToDoDbContext
 {
     public SpravaDbContext() { }
 

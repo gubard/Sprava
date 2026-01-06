@@ -100,7 +100,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfToDoService(
+            new EfToDoService<SpravaDbContext>(
                 new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
                     migrator
                 ),
@@ -137,7 +137,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfCredentialService(
+            new EfCredentialService<SpravaDbContext>(
                 new FileInfo(
                     $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
                 ).InitDbContext(migrator),
@@ -173,7 +173,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfFilesService(
+            new EfFilesService<SpravaDbContext>(
                 new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
                     migrator
                 ),

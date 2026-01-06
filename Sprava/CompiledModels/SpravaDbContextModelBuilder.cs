@@ -15,7 +15,7 @@ namespace Sprava.CompiledModels
     public partial class SpravaDbContextModel
     {
         private SpravaDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("e73d057d-4c00-457b-a666-13f03d53e6a3"), entityTypeCount: 5)
+            : base(skipDetectChanges: false, modelId: new Guid("f631b8b8-c2d3-4ae2-a92d-0c6a1b6b497d"), entityTypeCount: 5)
         {
         }
 
@@ -492,8 +492,8 @@ namespace Sprava.CompiledModels
             nestorDbModelsEventEntityTableBase.Columns.Add("EntityUInt64Value", entityUInt64ValueColumnBase);
             var idColumnBase1 = new ColumnBase<ColumnMappingBase>("Id", "INTEGER", nestorDbModelsEventEntityTableBase);
             nestorDbModelsEventEntityTableBase.Columns.Add("Id", idColumnBase1);
-            var isLastColumnBase = new ColumnBase<ColumnMappingBase>("IsLast", "INTEGER", nestorDbModelsEventEntityTableBase);
-            nestorDbModelsEventEntityTableBase.Columns.Add("IsLast", isLastColumnBase);
+            var transactionIdColumnBase = new ColumnBase<ColumnMappingBase>("TransactionId", "TEXT", nestorDbModelsEventEntityTableBase);
+            nestorDbModelsEventEntityTableBase.Columns.Add("TransactionId", transactionIdColumnBase);
             var userIdColumnBase = new ColumnBase<ColumnMappingBase>("UserId", "TEXT", nestorDbModelsEventEntityTableBase);
             nestorDbModelsEventEntityTableBase.Columns.Add("UserId", userIdColumnBase);
             relationalModel.DefaultTables.Add("Nestor.Db.Models.EventEntity", nestorDbModelsEventEntityTableBase);
@@ -526,7 +526,7 @@ namespace Sprava.CompiledModels
             RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)entityUInt16ValueColumnBase, eventEntity.FindProperty("EntityUInt16Value")!, nestorDbModelsEventEntityMappingBase);
             RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)entityUInt32ValueColumnBase, eventEntity.FindProperty("EntityUInt32Value")!, nestorDbModelsEventEntityMappingBase);
             RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)entityUInt64ValueColumnBase, eventEntity.FindProperty("EntityUInt64Value")!, nestorDbModelsEventEntityMappingBase);
-            RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)isLastColumnBase, eventEntity.FindProperty("IsLast")!, nestorDbModelsEventEntityMappingBase);
+            RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)transactionIdColumnBase, eventEntity.FindProperty("TransactionId")!, nestorDbModelsEventEntityMappingBase);
             RelationalModel.CreateColumnMapping((ColumnBase<ColumnMappingBase>)userIdColumnBase, eventEntity.FindProperty("UserId")!, nestorDbModelsEventEntityMappingBase);
 
             var tableMappings1 = new List<TableMapping>();
@@ -673,9 +673,9 @@ namespace Sprava.CompiledModels
             };
             eventsTable.Columns.Add("EntityUInt64Value", entityUInt64ValueColumn);
             entityUInt64ValueColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<ulong>(entityUInt64ValueColumn);
-            var isLastColumn = new Column("IsLast", "INTEGER", eventsTable);
-            eventsTable.Columns.Add("IsLast", isLastColumn);
-            isLastColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<bool>(isLastColumn);
+            var transactionIdColumn = new Column("TransactionId", "TEXT", eventsTable);
+            eventsTable.Columns.Add("TransactionId", transactionIdColumn);
+            transactionIdColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<Guid>(transactionIdColumn);
             var userIdColumn = new Column("UserId", "TEXT", eventsTable);
             eventsTable.Columns.Add("UserId", userIdColumn);
             userIdColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<string>(userIdColumn);
@@ -709,7 +709,7 @@ namespace Sprava.CompiledModels
             RelationalModel.CreateColumnMapping(entityUInt16ValueColumn, eventEntity.FindProperty("EntityUInt16Value")!, eventsTableMapping);
             RelationalModel.CreateColumnMapping(entityUInt32ValueColumn, eventEntity.FindProperty("EntityUInt32Value")!, eventsTableMapping);
             RelationalModel.CreateColumnMapping(entityUInt64ValueColumn, eventEntity.FindProperty("EntityUInt64Value")!, eventsTableMapping);
-            RelationalModel.CreateColumnMapping(isLastColumn, eventEntity.FindProperty("IsLast")!, eventsTableMapping);
+            RelationalModel.CreateColumnMapping(transactionIdColumn, eventEntity.FindProperty("TransactionId")!, eventsTableMapping);
             RelationalModel.CreateColumnMapping(userIdColumn, eventEntity.FindProperty("UserId")!, eventsTableMapping);
             var pK_Events = new UniqueConstraint("PK_Events", eventsTable, new[] { idColumn1 });
             eventsTable.PrimaryKey = pK_Events;
