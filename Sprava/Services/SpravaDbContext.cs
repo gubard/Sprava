@@ -1,14 +1,11 @@
 ﻿using Aya.Contract.Models;
-using Aya.Contract.Services;
 using Gaia.Services;
 using Hestia.Contract.Models;
-using Hestia.Contract.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Nestor.Db.Services;
 using Sprava.CompiledModels;
 using Turtle.Contract.Models;
-using Turtle.Contract.Services;
 
 namespace Sprava.Services;
 
@@ -29,14 +26,6 @@ public sealed class SpravaDbContext
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseModel(SpravaDbContextModel.Instance);
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfiguration(new FileEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new ToDoEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new CredentialEntityTypeConfiguration());
     }
 
     public static NestorDbContext Create(DbContextOptions input)
