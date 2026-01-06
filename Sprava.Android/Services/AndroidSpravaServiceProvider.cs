@@ -13,8 +13,10 @@ public partial class AndroidSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
     {
-        using var stream = typeof(AndroidSpravaServiceProvider)
-            .Assembly.GetManifestResourceStream("appsettings.json")
+        using var stream = MainActivity
+            .Activity.ThrowIfNull()
+            .Assets.ThrowIfNull()
+            .Open("appsettings.json")
             .ThrowIfNull();
 
         return new SpravaConfig(stream);

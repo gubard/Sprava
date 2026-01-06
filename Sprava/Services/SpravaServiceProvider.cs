@@ -72,8 +72,20 @@ namespace Sprava.Services;
 [Transient(typeof(IUiFilesService), Factory = nameof(GetUiFilesService))]
 [Transient(typeof(IUiCredentialService), Factory = nameof(GetUiCredentialService))]
 [Transient(typeof(IUiToDoService), Factory = nameof(GetUiToDoService))]
+[Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static HttpClient GetHttpClient()
+    {
+        var handler = new HttpClientHandler();
+
+#if DEBUG
+        handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+#endif
+
+        return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
+    }
+
     public static IUiToDoService GetUiToDoService(
         ToDoServiceOptions options,
         ITryPolicyService tryPolicyService,
@@ -84,14 +96,16 @@ public interface ISpravaServiceProvider : IServiceProvider
         INavigator navigator,
         IStorageService storageService,
         IToDoValidator toDoValidator,
-        IMigrator migrator
+        IMigrator migrator,
+        HttpClient httpClient
     )
     {
         var user = appState.User.ThrowIfNull();
+        httpClient.BaseAddress = new(options.Url);
 
         return new UiToDoService(
             new HttpToDoService(
-                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
+                httpClient,
                 new()
                 {
                     TypeInfoResolver = HestiaJsonContext.Resolver,
@@ -123,12 +137,15 @@ public interface ISpravaServiceProvider : IServiceProvider
         INavigator navigator,
         IStorageService storageService,
         GaiaValues gaiaValues,
-        IMigrator migrator
+        IMigrator migrator,
+        HttpClient httpClient
     )
     {
+        httpClient.BaseAddress = new(options.Url);
+
         return new UiCredentialService(
             new HttpCredentialService(
-                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
+                httpClient,
                 new()
                 {
                     TypeInfoResolver = TurtleJsonContext.Resolver,
@@ -157,14 +174,16 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFilesCache toDoCache,
         INavigator navigator,
         IStorageService storageService,
-        IMigrator migrator
+        IMigrator migrator,
+        HttpClient httpClient
     )
     {
+        httpClient.BaseAddress = new(options.Url);
         var user = appState.User.ThrowIfNull();
 
         return new UiFilesService(
             new HttpFilesService(
-                new() { BaseAddress = new(options.Url), Timeout = TimeSpan.FromSeconds(10) },
+                httpClient,
                 new()
                 {
                     TypeInfoResolver = AysJsonContext.Resolver,

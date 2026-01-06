@@ -18,8 +18,11 @@ namespace Sprava.Android;
 )]
 public class MainActivity : AvaloniaMainActivity<App>
 {
+    public static MainActivity? Activity;
+
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        Activity = this;
         DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
 
         return base.CustomizeAppBuilder(builder).WithInterFont();

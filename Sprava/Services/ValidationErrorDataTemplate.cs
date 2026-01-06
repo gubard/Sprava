@@ -21,53 +21,56 @@ public class ValidationErrorDataTemplate : IDataTemplate
         return param switch
         {
             null => null,
-            PropertyZeroValidationError zero => new()
+            PropertyZeroValidationError zero => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.PropertyZeroValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{zero.PropertyName}")
                 ),
             },
-            PropertyEmptyValidationError empty => new()
+            PropertyEmptyValidationError empty => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.PropertyEmptyValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{empty.PropertyName}")
                 ),
             },
-            NotFoundValidationError userNotFound => new()
+            NotFoundValidationError userNotFound => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.NotFound"),
                     userNotFound.Identity
                 ),
             },
-            AlreadyExistsValidationError alreadyExists => new()
+            AlreadyExistsValidationError alreadyExists => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.AlreadyExists"),
                     alreadyExists.Identity
                 ),
             },
-            InvalidPasswordValidationError => new()
+            InvalidPasswordValidationError => new TextBox
             {
                 Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
             },
-            ExceptionsValidationError exceptions => new()
+            ExceptionsValidationError exceptions => new TextBox
             {
                 Text = string.Join(
                     Environment.NewLine,
-                    exceptions.Exceptions.Select(e => e.Message).Distinct()
+                    exceptions
+                        .Exceptions.Select(e => $"{e.Message}{Environment.NewLine}{e.StackTrace}")
+                        .Distinct()
                 ),
+                IsReadOnly = true,
             },
-            PropertyInvalidValidationError propertyInvalid => new()
+            PropertyInvalidValidationError propertyInvalid => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.InvalidValue"),
                     propertyInvalid.PropertyName
                 ),
             },
-            PropertyMaxSizeValidationError propertyMaxSize => new()
+            PropertyMaxSizeValidationError propertyMaxSize => new TextBox
             {
                 Text = _stringFormater.Format(
                     _appResourceService.GetResource<string>("Lang.MaxSizeReached"),
