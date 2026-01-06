@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Nestor.Db.Services;
+using Nestor.Db.Sqlite.Services;
 using Sprava.Services;
 
 namespace Sprava.Helpers;
