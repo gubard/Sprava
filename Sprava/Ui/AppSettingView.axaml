@@ -3,10 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
-             xmlns:ui1="clr-namespace:Sprava.Ui"
+             xmlns:ui="clr-namespace:Sprava.Ui"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.AppSettingView"
-             x:DataType="ui1:AppSettingViewModel">
+             x:DataType="ui:AppSettingViewModel">
     <Interaction.Behaviors>
         <EventTriggerBehavior EventName="Loaded">
             <InvokeCommandAction Command="{Binding InitializedCommand}" />
@@ -14,10 +14,10 @@
     </Interaction.Behaviors>
 
     <StackPanel>
+        <TextBlock Text="{x:Static ui:AppSettingViewModel.FullAppName}" />
         <TextBlock Classes="field" Text="{StaticResource Lang.GeneralKey}" />
         <TextBox Text="{Binding GeneralKey}" />
         <TextBlock Classes="field" Text="{StaticResource Lang.Theme}" />
         <c:EnumSelectorControl SelectedEnum="{Binding Theme}" />
-        <Button Command="{Binding ClearCacheCommand}" Content="{StaticResource Lang.ClearCache}" />
     </StackPanel>
 </UserControl>

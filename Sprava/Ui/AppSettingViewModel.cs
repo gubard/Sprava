@@ -13,6 +13,9 @@ namespace Sprava.Ui;
 
 public partial class AppSettingViewModel : ViewModelBase
 {
+    public static readonly string FullAppName =
+        $"Sprava {typeof(AppSettingViewModel).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"}";
+
     [ObservableProperty]
     private string _generalKey;
 
@@ -46,25 +49,6 @@ public partial class AppSettingViewModel : ViewModelBase
         var settings = await _settingsService.GetSettingsAsync(ct);
         GeneralKey = settings.CromwellSettings.GeneralKey;
         Theme = settings.CromwellSettings.Theme;
-    }
-
-    [RelayCommand]
-    private void ClearCache()
-    {
-        WrapCommand(() =>
-        {
-            var appDir = _storageService.GetAppDirectory();
-
-            foreach (var dir in appDir.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-
-            foreach (var file in appDir.GetFiles())
-            {
-                file.Delete();
-            }
-        });
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
