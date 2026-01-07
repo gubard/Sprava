@@ -15,7 +15,7 @@ namespace Sprava.CompiledModels
     public partial class SpravaDbContextModel
     {
         private SpravaDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("e1027eb0-46ba-49f4-baca-63924b13dec8"), entityTypeCount: 5)
+            : base(skipDetectChanges: false, modelId: new Guid("9efc4554-9eed-4526-be0c-2b48226b1694"), entityTypeCount: 5)
         {
         }
 
