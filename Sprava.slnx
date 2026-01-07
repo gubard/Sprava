@@ -3,8 +3,8 @@
     <Project Path="../Gaia/Gaia/Gaia.csproj" />
   </Folder>
   <Folder Name="/Git/">
-    <Project Path="../IconPacks.Avalonia/src/IconPacks.Avalonia.Core/IconPacks.Avalonia.Core.csproj" />
-    <Project Path="../IconPacks.Avalonia/src/IconPacks.Avalonia.MaterialDesign/IconPacks.Avalonia.MaterialDesign.csproj" />
+    <Project Path="../IconPacks.Avalonia.Aot/src/IconPacks.Avalonia.Core/IconPacks.Avalonia.Core.csproj" />
+    <Project Path="../IconPacks.Avalonia.Aot/src/IconPacks.Avalonia.MaterialDesign/IconPacks.Avalonia.MaterialDesign.csproj" />
   </Folder>
   <Folder Name="/Inanna/">
     <Project Path="../Inanna/Inanna.SourceGenerator/Inanna.SourceGenerator.csproj" />
