@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <WasmEnableThreads>true</WasmEnableThreads>
-    <RunAOTCompilation>true</RunAOTCompilation>
+    <!--<WasmEnableThreads>true</WasmEnableThreads>-->
+    <!--<RunAOTCompilation>true</RunAOTCompilation>-->
     <WasmEnableMemory64Bit>true</WasmEnableMemory64Bit>
     <SelfContained>true</SelfContained>
     <WasmEnableInstructionSetOptimization>true</WasmEnableInstructionSetOptimization>
