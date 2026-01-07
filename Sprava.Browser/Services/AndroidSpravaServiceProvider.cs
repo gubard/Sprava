@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Gaia.Helpers;
 using Jab;
 using Sprava.Services;
@@ -11,11 +12,13 @@ namespace Sprava.Browser.Services;
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 public partial class BrowserSpravaServiceProvider : IServiceProvider
 {
-    public static ISpravaConfig GetSpravaConfig()
+    public static ISpravaConfig GetSpravaConfig(HttpClient httpClient)
     {
-        var stream = typeof(BrowserSpravaServiceProvider)
-            .Assembly.GetManifestResourceStream("appsettings.json")
-            .ThrowIfNull();
+        using var stream = httpClient
+            .GetStreamAsync("appsettings.json")
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
 
         return new SpravaConfig(stream);
     }
