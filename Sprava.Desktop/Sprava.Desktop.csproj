@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PublishAot>true</PublishAot>
+    <!--<PublishAot>true</PublishAot>-->
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
     <PublishTrimmed>true</PublishTrimmed>
