@@ -4,7 +4,6 @@ using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell;
-using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
 using Sprava.Models;

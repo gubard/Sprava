@@ -15,7 +15,7 @@ namespace Sprava.CompiledModels
     public partial class SpravaDbContextModel
     {
         private SpravaDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("7b31c040-47ec-4717-86b3-e6e2a47664ed"), entityTypeCount: 5)
+            : base(skipDetectChanges: false, modelId: new Guid("163ae7e5-861e-44e3-b4c0-a4d8f2b98e84"), entityTypeCount: 5)
         {
         }
 
@@ -537,7 +537,7 @@ namespace Sprava.CompiledModels
             idColumn1.Accessors = ColumnAccessorsFactory.CreateGeneric<long>(idColumn1);
             var createdAtColumn = new Column("CreatedAt", "TEXT", eventsTable);
             eventsTable.Columns.Add("CreatedAt", createdAtColumn);
-            createdAtColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<DateTimeOffset>(createdAtColumn);
+            createdAtColumn.Accessors = ColumnAccessorsFactory.CreateGeneric<DateTime>(createdAtColumn);
             var entityBooleanValueColumn = new Column("EntityBooleanValue", "INTEGER", eventsTable)
             {
                 IsNullable = true
