@@ -12,20 +12,17 @@ public interface ISpravaViewModelFactory : IFactory<AppSettingViewModel>;
 public class SpravaViewModelFactory : ISpravaViewModelFactory
 {
     private readonly Application _application;
-    private readonly IStorageService _storageService;
 
-    public SpravaViewModelFactory(Application application, IStorageService storageService)
+    public SpravaViewModelFactory(Application application)
     {
         _application = application;
-        _storageService = storageService;
     }
 
     public AppSettingViewModel Create()
     {
         return new(
             _application,
-            DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>(),
-            _storageService
+            DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
         );
     }
 }

@@ -24,17 +24,14 @@ public partial class AppSettingViewModel : ViewModelBase
 
     private readonly ISettingsService<SpravaSettings> _settingsService;
     private readonly Application _application;
-    private readonly IStorageService _storageService;
 
     public AppSettingViewModel(
         Application application,
-        ISettingsService<SpravaSettings> settingsService,
-        IStorageService storageService
+        ISettingsService<SpravaSettings> settingsService
     )
     {
         _application = application;
         _settingsService = settingsService;
-        _storageService = storageService;
         _generalKey = string.Empty;
     }
 
