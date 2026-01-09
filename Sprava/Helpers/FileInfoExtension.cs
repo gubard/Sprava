@@ -7,7 +7,7 @@ public static class FileInfoExtension
 {
     public static IDbConnectionFactory InitDbContext(this FileInfo file, IMigrator migrator)
     {
-        var factory = new SqliteDbConnectionFactory(new() { DataSource = $"Data Source={file}" });
+        var factory = new SqliteDbConnectionFactory(file);
         migrator.Migrate(factory);
 
         return factory;
