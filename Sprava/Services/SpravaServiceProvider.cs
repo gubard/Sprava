@@ -25,8 +25,8 @@ using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
-using Nestor.Db.Sqlite.Helpers;
-using Nestor.Db.Sqlite.Services;
+using Nestor.Db.Helpers;
+using Nestor.Db.Services;
 using Sprava.Helpers;
 using Sprava.Models;
 using Sprava.Ui;
@@ -114,7 +114,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfToDoService<SpravaDbContext>(
+            new DbToDoService(
                 new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
                     migrator
                 ),
@@ -154,7 +154,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfCredentialService<SpravaDbContext>(
+            new DbCredentialService(
                 new FileInfo(
                     $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
                 ).InitDbContext(migrator),
@@ -192,7 +192,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 tryPolicyService,
                 headersFactory
             ),
-            new EfFilesService<SpravaDbContext>(
+            new DbFilesService(
                 new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
                     migrator
                 ),

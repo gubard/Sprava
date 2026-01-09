@@ -1,20 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Nestor.Db.Sqlite.Services;
-using Sprava.Services;
+﻿using Nestor.Db.Models;
+using Nestor.Db.Services;
 
 namespace Sprava.Helpers;
 
 public static class FileInfoExtension
 {
-    public static SpravaDbContext InitDbContext(this FileInfo file, IMigrator migrator)
+    public static IDbConnectionFactory InitDbContext(this FileInfo file, IMigrator migrator)
     {
-        var options = new DbContextOptionsBuilder<SpravaDbContext>()
-            .UseSqlite($"Data Source={file}")
-            .Options;
+        var factory = new SqliteDbConnectionFactory(new() { DataSource = $"Data Source={file}" });
+        migrator.Migrate(factory);
 
-        var context = new SpravaDbContext(options);
-        migrator.Migrate(context);
-
-        return context;
+        return factory;
     }
 }

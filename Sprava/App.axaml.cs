@@ -6,7 +6,7 @@ using Sprava.Ui;
 
 namespace Sprava;
 
-public partial class App : InannaApplication
+public class App : InannaApplication
 {
     public override void Initialize()
     {

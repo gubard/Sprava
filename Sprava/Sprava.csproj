@@ -20,22 +20,25 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cai\Cai\Cai.csproj" />
     <ProjectReference Include="..\..\Cromwell\Cromwell\Cromwell.csproj" />
     <ProjectReference Include="..\..\Diocles\Diocles\Diocles.csproj" />
+    <ProjectReference Include="..\..\Melnikov\Melnikov\Melnikov.csproj" />
+
     <ProjectReference
       Include="..\..\Inanna\Inanna.SourceGenerator\Inanna.SourceGenerator.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />
-    <ProjectReference Include="..\..\Melnikov\Melnikov\Melnikov.csproj" />
+
+    <ProjectReference
+      Include="..\..\Nestor\Nestor.SourceGenerator\Nestor.SourceGenerator.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
   </ItemGroup>
 
   <ItemGroup>
