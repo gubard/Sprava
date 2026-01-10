@@ -99,7 +99,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         ToDoParametersFillerService toDoParametersFillerService,
-        IToDoCache toDoCache,
+        IToDoMemoryCache toDoMemoryCache,
         INavigator navigator,
         IStorageService storageService,
         IToDoValidator toDoValidator,
@@ -135,7 +135,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new DbServiceOptionsUiFactory(appState, nameof(UiToDoService))
             ),
             appState,
-            toDoCache,
+            toDoMemoryCache,
             navigator,
             nameof(UiToDoService)
         );
@@ -145,7 +145,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         CredentialServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        ICredentialCache cache,
+        ICredentialMemoryCache memoryCache,
         INavigator navigator,
         IStorageService storageService,
         GaiaValues gaiaValues,
@@ -178,7 +178,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
             ),
             appState,
-            cache,
+            memoryCache,
             navigator,
             nameof(UiCredentialService)
         );
@@ -188,7 +188,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         FilesServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        IFilesCache toDoCache,
+        IFilesMemoryCache toDoMemoryCache,
         INavigator navigator,
         IStorageService storageService,
         IMigrator migrator,
@@ -221,7 +221,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new DbServiceOptionsUiFactory(appState, nameof(UiFilesService))
             ),
             appState,
-            toDoCache,
+            toDoMemoryCache,
             navigator,
             nameof(UiFilesService)
         );

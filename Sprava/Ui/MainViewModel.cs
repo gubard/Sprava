@@ -1,29 +1,49 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Diocles.Services;
+using Gaia.Helpers;
 using Inanna.Models;
+using Inanna.Services;
 using Inanna.Ui;
-using Melnikov.Ui;
+using Melnikov.Services;
 
 namespace Sprava.Ui;
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private bool _isShowPane;
-
     public MainViewModel(
         StackViewModel stack,
         NavigationBarViewModel navigationBar,
-        SignInViewModel signInViewModel,
-        PaneViewModel pane
+        INavigator navigator,
+        PaneViewModel pane,
+        IMelnikovViewModelFactory melnikovFactory
     )
     {
         Stack = stack;
         NavigationBar = navigationBar;
+        _navigator = navigator;
         Pane = pane;
-        Stack.PushView(signInViewModel);
+
+        navigator.NavigateToAsync(
+            melnikovFactory.CreateSignIn(SignInAsync),
+            CancellationToken.None
+        );
     }
 
     public StackViewModel Stack { get; }
     public NavigationBarViewModel NavigationBar { get; }
     public PaneViewModel Pane { get; }
+
+    [ObservableProperty]
+    private bool _isShowPane;
+
+    private readonly INavigator _navigator;
+
+    private ConfiguredValueTaskAwaitable SignInAsync(CancellationToken ct)
+    {
+        return _navigator.NavigateToAsync(
+            DiHelper.ServiceProvider.GetService<IDioclesViewModelFactory>().CreateRootToDos(),
+            ct
+        );
+    }
 }
