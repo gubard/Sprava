@@ -34,6 +34,7 @@ using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
 using Turtle.Contract.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
+using JsonSerializer = Gaia.Services.JsonSerializer;
 
 namespace Sprava.Services;
 
@@ -73,8 +74,23 @@ namespace Sprava.Services;
 [Transient(typeof(IUiCredentialService), Factory = nameof(GetUiCredentialService))]
 [Transient(typeof(IUiToDoService), Factory = nameof(GetUiToDoService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
+[Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
+[Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static ISerializer GetSerializer()
+    {
+        return new JsonSerializer(SettingsJsonContext.Default.Options);
+    }
+
+    public static IObjectStorage GetObjectStorage(
+        IStorageService storageService,
+        ISerializer serializer
+    )
+    {
+        return new FileObjectStorage(storageService.GetAppDirectory(), serializer);
+    }
+
     public static HttpClient GetHttpClient()
     {
         var handler = new HttpClientHandler();
