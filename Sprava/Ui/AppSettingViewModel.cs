@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Cromwell;
+using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
 using Sprava.Models;
@@ -21,20 +22,17 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     [ObservableProperty]
     private ThemeVariantType _theme;
 
-    private readonly ISettingsService<SpravaSettings> _settingsService;
+    private readonly IObjectStorage _objectStorage;
     private readonly Application _application;
 
-    public AppSettingViewModel(
-        Application application,
-        ISettingsService<SpravaSettings> settingsService
-    )
+    public AppSettingViewModel(Application application, IObjectStorage objectStorage)
     {
         _application = application;
-        _settingsService = settingsService;
+        _objectStorage = objectStorage;
         _generalKey = string.Empty;
     }
 
-    public ConfiguredValueTaskAwaitable InitAsync(CancellationToken ct)
+    public ConfiguredValueTaskAwaitable InitUiAsync(CancellationToken ct)
     {
         return WrapCommandAsync(() => InitializedCore(ct).ConfigureAwait(false), ct);
     }
@@ -57,7 +55,16 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     private async ValueTask InitializedCore(CancellationToken ct)
     {
-        var settings = await _settingsService.GetSettingsAsync(ct);
+        var settings = await _objectStorage.LoadAsync<SpravaSettings>(
+            $"{typeof(SpravaSettings).FullName}",
+            ct
+        );
+
+        if (settings is null)
+        {
+            return;
+        }
+
         GeneralKey = settings.CromwellSettings.GeneralKey;
         Theme = settings.CromwellSettings.Theme;
     }

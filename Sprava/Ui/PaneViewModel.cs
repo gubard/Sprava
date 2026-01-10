@@ -1,6 +1,6 @@
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
-using Gaia.Helpers;
+using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
@@ -11,20 +11,23 @@ namespace Sprava.Ui;
 
 public partial class PaneViewModel : ViewModelBase
 {
-    private readonly IDialogService _dialogService;
-    private readonly ISpravaViewModelFactory _spravaViewModelFactory;
-    private readonly IAppResourceService _appResourceService;
-
     public PaneViewModel(
         IDialogService dialogService,
         ISpravaViewModelFactory spravaViewModelFactory,
-        IAppResourceService appResourceService
+        IAppResourceService appResourceService,
+        IObjectStorage objectStorage
     )
     {
         _dialogService = dialogService;
         _spravaViewModelFactory = spravaViewModelFactory;
         _appResourceService = appResourceService;
+        _objectStorage = objectStorage;
     }
+
+    private readonly IDialogService _dialogService;
+    private readonly ISpravaViewModelFactory _spravaViewModelFactory;
+    private readonly IAppResourceService _appResourceService;
+    private readonly IObjectStorage _objectStorage;
 
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)
@@ -59,19 +62,14 @@ public partial class PaneViewModel : ViewModelBase
 
     private async ValueTask SaveSettingsCore(AppSettingViewModel setting, CancellationToken ct)
     {
-        await DiHelper
-            .ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
-            .SaveSettingsAsync(
-                new()
-                {
-                    CromwellSettings = new()
-                    {
-                        GeneralKey = setting.GeneralKey,
-                        Theme = setting.Theme,
-                    },
-                },
-                ct
-            );
+        await _objectStorage.SaveAsync(
+            $"{typeof(SpravaSettings).FullName}",
+            new SpravaSettings
+            {
+                CromwellSettings = new() { GeneralKey = setting.GeneralKey, Theme = setting.Theme },
+            },
+            ct
+        );
 
         Dispatcher.UIThread.Post(() => _dialogService.CloseMessageBox());
     }

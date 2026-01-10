@@ -28,7 +28,6 @@ using Melnikov.Ui;
 using Nestor.Db.Helpers;
 using Nestor.Db.Services;
 using Sprava.Helpers;
-using Sprava.Models;
 using Sprava.Ui;
 using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
@@ -48,13 +47,7 @@ namespace Sprava.Services;
 [Singleton(typeof(AppState))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(AppSettingViewModel))]
-[Transient(typeof(ISettingsService<CromwellSettings>), Factory = nameof(GetSettingsService))]
-[Transient(typeof(ISettingsService<SpravaSettings>), Factory = nameof(GetSettingsService))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
-[Transient(
-    typeof(ISettingsService<MelnikovSettings>),
-    Factory = nameof(GetMelnikovSettingsService)
-)]
 [Transient(typeof(ISpravaViewModelFactory), typeof(SpravaViewModelFactory))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(NavigationBarViewModel))]
@@ -276,36 +269,15 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
     }
 
-    public static SettingsService GetSettingsService(
-        AppState appState,
-        IStorageService storageService
-    )
-    {
-        return new(
-            $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}".ToDir(),
-            SettingsJsonContext.Default.Options
-        );
-    }
-
-    public static ISettingsService<MelnikovSettings> GetMelnikovSettingsService(
-        IStorageService storageService
-    )
-    {
-        return new MelnikovSettingsSettingsService(
-            storageService.GetAppDirectory(),
-            SettingsJsonContext.Default.Options
-        );
-    }
-
     public static SignInViewModel GetSignInViewModel(
         IUiAuthenticationService uiAuthenticationService,
-        ISettingsService<MelnikovSettings> settingsService
+        IObjectStorage objectStorage
     )
     {
         return new(
             uiAuthenticationService,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
-            settingsService
+            objectStorage
         );
     }
 

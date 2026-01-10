@@ -16,6 +16,7 @@ public partial class OptionsJsonContext : JsonSerializerContext;
 
 [JsonSerializable(typeof(CromwellSettings))]
 [JsonSerializable(typeof(SpravaSettings))]
-[JsonSerializable(typeof(MelnikovSettings))]
-[JsonSerializable(typeof(ToDosViewModelSetting))]
+[JsonSerializable(typeof(AuthenticationSettings))]
+[JsonSerializable(typeof(ToDosSetting))]
+[JsonSerializable(typeof(SignInSettings))]
 public partial class SettingsJsonContext : JsonSerializerContext;
