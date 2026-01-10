@@ -14,8 +14,8 @@
     <SelfContained>true</SelfContained>
     <TrimMode>full</TrimMode>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <RunAOTCompilation>true</RunAOTCompilation>
+    <!--<PublishReadyToRun>true</PublishReadyToRun>
+    <RunAOTCompilation>true</RunAOTCompilation>-->
   </PropertyGroup>
 
   <PropertyGroup>
