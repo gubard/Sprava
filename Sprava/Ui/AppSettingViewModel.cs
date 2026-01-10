@@ -1,8 +1,8 @@
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Cromwell;
 using Inanna.Models;
 using Inanna.Services;
@@ -10,7 +10,7 @@ using Sprava.Models;
 
 namespace Sprava.Ui;
 
-public partial class AppSettingViewModel : ViewModelBase
+public partial class AppSettingViewModel : ViewModelBase, IInitUi
 {
     public static readonly string FullAppName =
         $"Sprava {typeof(AppSettingViewModel).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"}";
@@ -34,17 +34,9 @@ public partial class AppSettingViewModel : ViewModelBase
         _generalKey = string.Empty;
     }
 
-    [RelayCommand]
-    private async Task InitializedAsync(CancellationToken ct)
+    public ConfiguredValueTaskAwaitable InitAsync(CancellationToken ct)
     {
-        await WrapCommandAsync(() => InitializedCore(ct).ConfigureAwait(false), ct);
-    }
-
-    private async ValueTask InitializedCore(CancellationToken ct)
-    {
-        var settings = await _settingsService.GetSettingsAsync(ct);
-        GeneralKey = settings.CromwellSettings.GeneralKey;
-        Theme = settings.CromwellSettings.Theme;
+        return WrapCommandAsync(() => InitializedCore(ct).ConfigureAwait(false), ct);
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -61,5 +53,12 @@ public partial class AppSettingViewModel : ViewModelBase
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
+    }
+
+    private async ValueTask InitializedCore(CancellationToken ct)
+    {
+        var settings = await _settingsService.GetSettingsAsync(ct);
+        GeneralKey = settings.CromwellSettings.GeneralKey;
+        Theme = settings.CromwellSettings.Theme;
     }
 }
