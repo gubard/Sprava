@@ -15,20 +15,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishAot>true</PublishAot>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
-    <Optimize>true</Optimize>
-    <AndroidPackageFormat>aab</AndroidPackageFormat>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <RunAOTCompilation>true</RunAOTCompilation>
-    <EnableProguard>true</EnableProguard>
-    <UseLatestPlatformSdk>true</UseLatestPlatformSdk>
-    <AndroidLinkMode>Full</AndroidLinkMode>
-    <AndroidLinkTool>r8</AndroidLinkTool>
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
-    <AndroidStripILAfterAOT>true</AndroidStripILAfterAOT>
-    <AndroidUseAssemblyStore>true</AndroidUseAssemblyStore>
-    <AndroidEnableAssemblyCompression>true</AndroidEnableAssemblyCompression>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
 
