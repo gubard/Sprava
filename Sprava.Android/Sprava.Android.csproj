@@ -11,6 +11,7 @@
     <AndroidSdkDirectory>C:\Users\memse\AppData\Local\Android\sdk</AndroidSdkDirectory>
     <JavaSdkDirectory>C:\Program Files\Java\jdk-21</JavaSdkDirectory>
     <StripSymbols>false</StripSymbols>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
