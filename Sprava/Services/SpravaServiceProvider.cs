@@ -46,7 +46,6 @@ namespace Sprava.Services;
 [Import(typeof(ICaiServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(AppState))]
-[Singleton(typeof(ITryPolicyService), Factory = nameof(GetTryPolicyService))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(AppSettingViewModel))]
 [Transient(typeof(ISettingsService<CromwellSettings>), Factory = nameof(GetSettingsService))]
@@ -104,7 +103,6 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IUiToDoService GetUiToDoService(
         ToDoServiceOptions options,
-        ITryPolicyService tryPolicyService,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         ToDoParametersFillerService toDoParametersFillerService,
@@ -127,7 +125,11 @@ public interface ISpravaServiceProvider : IServiceProvider
                     TypeInfoResolver = HestiaJsonContext.Resolver,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 },
-                tryPolicyService,
+                new TryPolicyService(
+                    3,
+                    TimeSpan.FromSeconds(1),
+                    _ => appState.SetServiceMode(nameof(UiToDoService), ServiceMode.Offline)
+                ),
                 headersFactory
             ),
             new DbToDoService(
@@ -136,17 +138,18 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 new(DateTimeOffset.UtcNow.Offset, user.Id),
                 toDoParametersFillerService,
-                toDoValidator
+                toDoValidator,
+                new DbServiceOptionsUiFactory(appState, nameof(UiToDoService))
             ),
             appState,
             toDoCache,
-            navigator
+            navigator,
+            nameof(UiToDoService)
         );
     }
 
     public static IUiCredentialService GetUiCredentialService(
         CredentialServiceOptions options,
-        ITryPolicyService tryPolicyService,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         ICredentialCache cache,
@@ -167,24 +170,29 @@ public interface ISpravaServiceProvider : IServiceProvider
                     TypeInfoResolver = TurtleJsonContext.Resolver,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 },
-                tryPolicyService,
+                new TryPolicyService(
+                    3,
+                    TimeSpan.FromSeconds(1),
+                    _ => appState.SetServiceMode(nameof(UiCredentialService), ServiceMode.Offline)
+                ),
                 headersFactory
             ),
             new DbCredentialService(
                 new FileInfo(
                     $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
                 ).InitDbContext(migrator),
-                gaiaValues
+                gaiaValues,
+                new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
             ),
             appState,
             cache,
-            navigator
+            navigator,
+            nameof(UiCredentialService)
         );
     }
 
     public static IUiFilesService GetUiFilesService(
         FilesServiceOptions options,
-        ITryPolicyService tryPolicyService,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         IFilesCache toDoCache,
@@ -205,18 +213,24 @@ public interface ISpravaServiceProvider : IServiceProvider
                     TypeInfoResolver = AysJsonContext.Resolver,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 },
-                tryPolicyService,
+                new TryPolicyService(
+                    3,
+                    TimeSpan.FromSeconds(1),
+                    _ => appState.SetServiceMode(nameof(UiFilesService), ServiceMode.Offline)
+                ),
                 headersFactory
             ),
             new DbFilesService(
                 new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
                     migrator
                 ),
-                new(DateTimeOffset.UtcNow.Offset, user.Id)
+                new(DateTimeOffset.UtcNow.Offset, user.Id),
+                new DbServiceOptionsUiFactory(appState, nameof(UiFilesService))
             ),
             appState,
             toDoCache,
-            navigator
+            navigator,
+            nameof(UiFilesService)
         );
     }
 
@@ -315,10 +329,5 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static FilesServiceOptions GetFilesServiceOptions(ISpravaConfig configuration)
     {
         return configuration.FilesService;
-    }
-
-    public static ITryPolicyService GetTryPolicyService()
-    {
-        return new TryPolicyService(3, TimeSpan.FromSeconds(1));
     }
 }

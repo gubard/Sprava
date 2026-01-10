@@ -11,8 +11,6 @@ public interface ISpravaViewModelFactory : IFactory<AppSettingViewModel>;
 
 public class SpravaViewModelFactory : ISpravaViewModelFactory
 {
-    private readonly Application _application;
-
     public SpravaViewModelFactory(Application application)
     {
         _application = application;
@@ -25,4 +23,6 @@ public class SpravaViewModelFactory : ISpravaViewModelFactory
             DiHelper.ServiceProvider.GetService<ISettingsService<SpravaSettings>>()
         );
     }
+
+    private readonly Application _application;
 }
