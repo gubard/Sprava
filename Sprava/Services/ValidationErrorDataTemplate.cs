@@ -27,7 +27,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.PropertyZeroValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{zero.PropertyName}")
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             PropertyEmptyValidationError empty => new()
             {
@@ -35,7 +35,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.PropertyEmptyValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{empty.PropertyName}")
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             NotFoundValidationError userNotFound => new()
             {
@@ -43,7 +43,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.NotFound"),
                     userNotFound.Identity
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             AlreadyExistsValidationError alreadyExists => new()
             {
@@ -51,12 +51,12 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.AlreadyExists"),
                     alreadyExists.Identity
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             InvalidPasswordValidationError => new()
             {
                 Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             ExceptionsValidationError exceptions => new()
             {
@@ -66,7 +66,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                         .Exceptions.Select(e => $"{e.Message}{Environment.NewLine}{e.StackTrace}")
                         .Distinct()
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             PropertyInvalidValidationError propertyInvalid => new()
             {
@@ -74,7 +74,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.InvalidValue"),
                     propertyInvalid.PropertyName
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             PropertyMaxSizeValidationError propertyMaxSize => new()
             {
@@ -82,7 +82,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.MaxSizeReached"),
                     propertyMaxSize
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             PropertyMinSizeValidationError propertyMinSize => new()
             {
@@ -90,7 +90,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.MinSizeNotReached"),
                     propertyMinSize
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
             PropertyNotEqualValidationError propertyNotEqualValidationError => new()
             {
@@ -98,12 +98,12 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.NotEqualError"),
                     propertyNotEqualValidationError
                 ),
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
-            _ => new TextBlock
+            _ => new TextBox
             {
                 Text = $"Not found \"{param.GetType()}\"",
-                Classes = { "text-wrap" },
+                Classes = { "plain-text" },
             },
         };
     }
