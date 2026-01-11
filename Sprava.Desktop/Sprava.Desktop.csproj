@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <PublishAot>true</PublishAot>
     <SelfContained>true</SelfContained>
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>full</TrimMode>
