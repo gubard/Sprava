@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ss="clr-namespace:Sprava.Services"
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
+             xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
@@ -9,12 +10,15 @@
         <ss:ValidationErrorDataTemplate />
 
         <DataTemplate x:DataType="m:InannaCommand">
-            <Button
-                Classes.danger="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Danger}}"
-                Classes.primary="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Primary}}"
-                IsEnabled="{Binding IsEnable}" Content="{Binding Content}" 
-                Command="{Binding Command}"
-                CommandParameter="{Binding Parameter}" />
+            <Button Command="{Binding Command}"
+                    Classes.danger="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Danger}}"
+                    Classes.primary="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Primary}}"
+                    IsEnabled="{Binding IsEnable}" Content="{Binding Content}"
+                    CommandParameter="{Binding Parameter}" />
+        </DataTemplate>
+
+        <DataTemplate x:DataType="ip:PackIconMaterialDesignKind">
+            <ip:PackIconMaterialDesign Kind="{Binding}" />
         </DataTemplate>
     </Application.DataTemplates>
 
