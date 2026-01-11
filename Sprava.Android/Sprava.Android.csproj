@@ -7,7 +7,6 @@
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidSdkDirectory>C:\Users\memse\AppData\Local\Android\sdk</AndroidSdkDirectory>
     <JavaSdkDirectory>C:\Program Files\Java\jdk-21</JavaSdkDirectory>
     <StripSymbols>false</StripSymbols>
@@ -15,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <PublishAot>true</PublishAot>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
