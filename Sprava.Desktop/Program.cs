@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Gaia.Helpers;
 using Sprava.Desktop.Services;
+using Sprava.Helpers;
 
 namespace Sprava.Desktop;
 
@@ -20,6 +21,10 @@ internal sealed class Program
     {
         DiHelper.ServiceProvider = new DesktopSpravaServiceProvider();
 
-        return AppBuilder.Configure<App>().UsePlatformDetect().WithInterFont().LogToTrace();
+        return AppBuilder
+            .Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .WithJetBrainsMonoFont();
     }
 }

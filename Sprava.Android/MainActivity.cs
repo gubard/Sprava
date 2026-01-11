@@ -8,6 +8,7 @@ using Avalonia.Android;
 using Gaia.Helpers;
 using Inanna.Services;
 using Sprava.Android.Services;
+using Sprava.Helpers;
 
 namespace Sprava.Android;
 
@@ -29,7 +30,7 @@ public class MainActivity : AvaloniaMainActivity<App>
         Activity = this;
         DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
 
-        return base.CustomizeAppBuilder(builder).WithInterFont();
+        return base.CustomizeAppBuilder(builder).WithInterFont().WithJetBrainsMonoFont();
     }
 
     public override void OnBackPressed()

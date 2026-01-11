@@ -40,27 +40,4 @@
       OutputItemType="Analyzer"
     />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Ui\MainView.axaml.cs">
-      <DependentUpon>MainView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Ui\MainWindow.axaml.cs">
-      <DependentUpon>MainWindow.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Ui\NavigationBarView.axaml.cs">
-      <DependentUpon>NavigationBarView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Ui\PaneView.axaml.cs">
-      <DependentUpon>PaneView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Ui\AppSettingView.axaml.cs">
-      <DependentUpon>AppSettingView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
 </Project>

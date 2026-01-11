@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.iOS;
 using Foundation;
+using Sprava.Helpers;
 
 namespace Sprava.iOS;
 
@@ -14,6 +15,6 @@ public class AppDelegate : AvaloniaAppDelegate<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
-        return base.CustomizeAppBuilder(builder).WithInterFont();
+        return base.CustomizeAppBuilder(builder).WithInterFont().WithJetBrainsMonoFont();
     }
 }
