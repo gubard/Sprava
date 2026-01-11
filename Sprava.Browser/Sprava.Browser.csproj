@@ -11,22 +11,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <!--<WasmEnableThreads>true</WasmEnableThreads>-->
-    <!--<RunAOTCompilation>true</RunAOTCompilation>-->
-    <WasmEnableMemory64Bit>true</WasmEnableMemory64Bit>
-    <SelfContained>true</SelfContained>
-    <WasmEnableInstructionSetOptimization>true</WasmEnableInstructionSetOptimization>
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>full</TrimMode>
-    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <WasmEnableWebcil>false</WasmEnableWebcil>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>None</DebugType>
-    <WasmBuildNative>true</WasmBuildNative>
-    <EmccCompileOptimizationFlag>-O3</EmccCompileOptimizationFlag>
-    <EmccLinkOptimizationFlag>-O3</EmccLinkOptimizationFlag>
-    <WasmNativeStrip>true</WasmNativeStrip>
-    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
