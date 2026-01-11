@@ -1,8 +1,12 @@
-﻿using Android.App;
+﻿using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Android.App;
 using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
 using Gaia.Helpers;
+using Inanna.Services;
 using Sprava.Android.Services;
 
 namespace Sprava.Android;
@@ -26,5 +30,25 @@ public class MainActivity : AvaloniaMainActivity<App>
         DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
 
         return base.CustomizeAppBuilder(builder).WithInterFont();
+    }
+
+    public override void OnBackPressed()
+    {
+        NavigateBackOrNullAsync();
+    }
+
+    private ConfiguredValueTaskAwaitable NavigateBackOrNullAsync()
+    {
+        return NavigateBackOrNullCore().ConfigureAwait(false);
+    }
+
+    private async ValueTask NavigateBackOrNullCore()
+    {
+        var navigator = DiHelper.ServiceProvider.GetService<INavigator>();
+
+        if (await navigator.NavigateBackOrNullAsync(CancellationToken.None) is null)
+        {
+            base.OnBackPressed();
+        }
     }
 }

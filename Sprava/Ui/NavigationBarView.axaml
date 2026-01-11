@@ -15,7 +15,8 @@
                     Command="{x:Static h:SpravaCommands.ShowPaneCommand}" />
             <Button Content="{ip:MaterialDesign ArrowBack}"
                     Command="{Binding BackCommand}"
-                    IsEnabled="{Binding IsCanBack}" />
+                    IsEnabled="{Binding IsCanBack}"
+                    IsVisible="{OnPlatform Android=false, iOS=false, Default=true}" />
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding Header}" />
