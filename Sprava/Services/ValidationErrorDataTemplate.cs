@@ -27,6 +27,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.PropertyZeroValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{zero.PropertyName}")
                 ),
+                Classes = { "text-wrap" },
             },
             PropertyEmptyValidationError empty => new()
             {
@@ -34,6 +35,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.PropertyEmptyValidationError"),
                     _appResourceService.GetResource<string>($"Lang.{empty.PropertyName}")
                 ),
+                Classes = { "text-wrap" },
             },
             NotFoundValidationError userNotFound => new()
             {
@@ -41,6 +43,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.NotFound"),
                     userNotFound.Identity
                 ),
+                Classes = { "text-wrap" },
             },
             AlreadyExistsValidationError alreadyExists => new()
             {
@@ -48,10 +51,12 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.AlreadyExists"),
                     alreadyExists.Identity
                 ),
+                Classes = { "text-wrap" },
             },
             InvalidPasswordValidationError => new()
             {
                 Text = _appResourceService.GetResource<string>("Lang.InvalidPassword"),
+                Classes = { "text-wrap" },
             },
             ExceptionsValidationError exceptions => new()
             {
@@ -61,6 +66,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                         .Exceptions.Select(e => $"{e.Message}{Environment.NewLine}{e.StackTrace}")
                         .Distinct()
                 ),
+                Classes = { "text-wrap" },
             },
             PropertyInvalidValidationError propertyInvalid => new()
             {
@@ -68,6 +74,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.InvalidValue"),
                     propertyInvalid.PropertyName
                 ),
+                Classes = { "text-wrap" },
             },
             PropertyMaxSizeValidationError propertyMaxSize => new()
             {
@@ -75,6 +82,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.MaxSizeReached"),
                     propertyMaxSize
                 ),
+                Classes = { "text-wrap" },
             },
             PropertyMinSizeValidationError propertyMinSize => new()
             {
@@ -82,6 +90,7 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.MinSizeNotReached"),
                     propertyMinSize
                 ),
+                Classes = { "text-wrap" },
             },
             PropertyNotEqualValidationError propertyNotEqualValidationError => new()
             {
@@ -89,8 +98,13 @@ public class ValidationErrorDataTemplate : IDataTemplate
                     _appResourceService.GetResource<string>("Lang.NotEqualError"),
                     propertyNotEqualValidationError
                 ),
+                Classes = { "text-wrap" },
             },
-            _ => new TextBlock { Text = $"Not found \"{param.GetType()}\"" },
+            _ => new TextBlock
+            {
+                Text = $"Not found \"{param.GetType()}\"",
+                Classes = { "text-wrap" },
+            },
         };
     }
 

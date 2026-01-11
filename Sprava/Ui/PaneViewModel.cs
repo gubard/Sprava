@@ -38,7 +38,7 @@ public partial class PaneViewModel : ViewModelBase
             () =>
                 _dialogService.ShowMessageBoxAsync(
                     new(
-                        _appResourceService.GetResource<string>("Lang.Settings"),
+                        _appResourceService.GetResource<string>("Lang.Settings").ToDialogHeader(),
                         setting,
                         new DialogButton(
                             _appResourceService.GetResource<string>("Lang.Save"),
