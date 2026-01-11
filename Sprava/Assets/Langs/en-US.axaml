@@ -108,10 +108,12 @@
     <s:String x:Key="Lang.InvalidPassword">Invalid password</s:String>
     <s:String x:Key="Lang.EditItem">Edit "{}"</s:String>
     <s:String x:Key="Lang.InvalidValue">"{}" has invalid value</s:String>
-    <s:String x:Key="Lang.MaxSizeReached"> Max size "{MaxSize}" reached</s:String>
+    <s:String x:Key="Lang.MaxSizeReached">Max size "{MaxSize}" reached</s:String>
+    <s:String x:Key="Lang.MinSizeNotReached">Min size "{MinSize}" not reached</s:String>
     <s:String x:Key="Lang.Reference">Reference</s:String>
     <s:String x:Key="Lang.Tasks">Tasks</s:String>
     <s:String x:Key="Lang.GroupBy">Group by</s:String>
     <s:String x:Key="Lang.Logout">Logout</s:String>
     <s:String x:Key="Lang.SwitchToOnline">Switch to online</s:String>
+    <s:String x:Key="Lang.NotEqualError">"{PropertyName}" not equal "{SecondPropertyName}"</s:String>
 </ResourceDictionary>

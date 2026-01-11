@@ -68,8 +68,88 @@ namespace Sprava.Services;
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
+[Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
+[Transient(typeof(DbToDoService), Factory = nameof(GetDbToDoService))]
+[Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
+[Transient(typeof(DbCredentialService), Factory = nameof(GetDbCredentialService))]
+[Transient(typeof(IFilesUiCache), Factory = nameof(GetFilesUiCache))]
+[Transient(typeof(DbFilesService), Factory = nameof(GetDbFilesService))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static DbFilesService GetDbFilesService(
+        AppState appState,
+        IStorageService storageService,
+        IMigrator migrator,
+        GaiaValues gaiaValues
+    )
+    {
+        return new(
+            new FileInfo(
+                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
+            ).InitDbContext(migrator),
+            gaiaValues,
+            new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
+        );
+    }
+
+    public static IFilesUiCache GetFilesUiCache(
+        IFilesMemoryCache memoryCache,
+        DbFilesService dbService
+    )
+    {
+        return new FilesUiCache(dbService, memoryCache);
+    }
+
+    public static DbCredentialService GetDbCredentialService(
+        AppState appState,
+        IStorageService storageService,
+        IMigrator migrator,
+        GaiaValues gaiaValues
+    )
+    {
+        return new(
+            new FileInfo(
+                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
+            ).InitDbContext(migrator),
+            gaiaValues,
+            new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
+        );
+    }
+
+    public static ICredentialUiCache GetCredentialUiCache(
+        ICredentialMemoryCache memoryCache,
+        DbCredentialService dbService
+    )
+    {
+        return new CredentialUiCache(dbService, memoryCache);
+    }
+
+    public static DbToDoService GetDbToDoService(
+        AppState appState,
+        ToDoParametersFillerService toDoParametersFillerService,
+        IStorageService storageService,
+        IToDoValidator toDoValidator,
+        IMigrator migrator
+    )
+    {
+        var user = appState.User.ThrowIfNull();
+
+        return new(
+            new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
+                migrator
+            ),
+            new(DateTimeOffset.UtcNow.Offset, user.Id),
+            toDoParametersFillerService,
+            toDoValidator,
+            new DbServiceOptionsUiFactory(appState, nameof(UiToDoService))
+        );
+    }
+
+    public static IToDoUiCache GetToDoUiCache(IToDoMemoryCache memoryCache, DbToDoService dbService)
+    {
+        return new ToDoUiCache(dbService, memoryCache);
+    }
+
     public static ISerializer GetSerializer()
     {
         return new JsonSerializer(SettingsJsonContext.Default.Options);
@@ -98,13 +178,10 @@ public interface ISpravaServiceProvider : IServiceProvider
         ToDoServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        ToDoParametersFillerService toDoParametersFillerService,
-        IToDoMemoryCache toDoMemoryCache,
+        IToDoUiCache uiCache,
         INavigator navigator,
-        IStorageService storageService,
-        IToDoValidator toDoValidator,
-        IMigrator migrator,
-        HttpClient httpClient
+        HttpClient httpClient,
+        DbToDoService dbToDoService
     )
     {
         var user = appState.User.ThrowIfNull();
@@ -125,17 +202,9 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            new DbToDoService(
-                new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
-                    migrator
-                ),
-                new(DateTimeOffset.UtcNow.Offset, user.Id),
-                toDoParametersFillerService,
-                toDoValidator,
-                new DbServiceOptionsUiFactory(appState, nameof(UiToDoService))
-            ),
+            dbToDoService,
             appState,
-            toDoMemoryCache,
+            uiCache,
             navigator,
             nameof(UiToDoService)
         );
@@ -145,11 +214,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         CredentialServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        ICredentialMemoryCache memoryCache,
+        ICredentialUiCache uiCache,
         INavigator navigator,
-        IStorageService storageService,
-        GaiaValues gaiaValues,
-        IMigrator migrator,
+        DbCredentialService dbService,
         HttpClient httpClient
     )
     {
@@ -170,15 +237,9 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            new DbCredentialService(
-                new FileInfo(
-                    $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
-                ).InitDbContext(migrator),
-                gaiaValues,
-                new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
-            ),
+            dbService,
             appState,
-            memoryCache,
+            uiCache,
             navigator,
             nameof(UiCredentialService)
         );
@@ -188,9 +249,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         FilesServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        IFilesMemoryCache toDoMemoryCache,
+        IFilesUiCache uiCache,
         INavigator navigator,
-        IStorageService storageService,
+        DbFilesService dbService,
         IMigrator migrator,
         HttpClient httpClient
     )
@@ -213,15 +274,9 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            new DbFilesService(
-                new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
-                    migrator
-                ),
-                new(DateTimeOffset.UtcNow.Offset, user.Id),
-                new DbServiceOptionsUiFactory(appState, nameof(UiFilesService))
-            ),
+            dbService,
             appState,
-            toDoMemoryCache,
+            uiCache,
             navigator,
             nameof(UiFilesService)
         );
