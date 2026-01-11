@@ -1,13 +1,35 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Aya.Contract.Models;
 using Gaia.Helpers;
+using Hestia.Contract.Models;
 using Inanna.Services;
+using Nestor.Db.Helpers;
 using Sprava.Ui;
+using Turtle.Contract.Models;
 
 namespace Sprava;
 
 public class App : InannaApplication
 {
+    static App()
+    {
+        InsertHelper.AddDefaultInsert(
+            nameof(FileEntity),
+            id => new FileEntity[] { new() { Id = id } }.CreateInsertQuery()
+        );
+
+        InsertHelper.AddDefaultInsert(
+            nameof(ToDoEntity),
+            id => new ToDoEntity[] { new() { Id = id } }.CreateInsertQuery()
+        );
+
+        InsertHelper.AddDefaultInsert(
+            nameof(CredentialEntity),
+            id => new CredentialEntity[] { new() { Id = id } }.CreateInsertQuery()
+        );
+    }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
