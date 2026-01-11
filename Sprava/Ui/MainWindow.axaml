@@ -6,6 +6,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Sprava.Ui.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Cromwell">
+        Title="{DynamicResource Lang.Sprava}">
         <ui:MainView />
 </Window>

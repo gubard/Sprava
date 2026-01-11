@@ -81,6 +81,7 @@
     <s:String x:Key="Lang.CreateUser">Create user</s:String>
     <s:String x:Key="Lang.LoginOrEmail">Login or email</s:String>
     <s:String x:Key="Lang.WelcomeToCromwell">Welcome to Cromwell</s:String>
+    <s:String x:Key="Lang.WelcomeToSprava">Welcome to Sprava</s:String>
     <s:String x:Key="Lang.NotFound">Not found "{}"</s:String>
     <s:String x:Key="Lang.AlreadyExists">"{}" already exists</s:String>
     <s:String x:Key="Lang.SignIn">Sign In</s:String>
