@@ -19,6 +19,8 @@
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
   </PropertyGroup>
 
   <ItemGroup>
