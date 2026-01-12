@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
+        xmlns:m="clr-namespace:Diocles.Models;assembly=Diocles"
+        xmlns:hm="clr-namespace:Hestia.Contract.Models;assembly=Hestia.Contract">
+    <Style Selector="ListBox.change-order">
+        <Setter Property="ItemTemplate">
+            <s:SelectorDataTemplate>
+                <DataTemplate x:DataType="m:ToDoNotify">
+                    <TextBlock Text="{Binding Name}"
+                               Classes.miss="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.Miss}}"
+                               Classes.ready-for-complete="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.ReadyForComplete}}"
+                               Classes.planned="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.Planned}}"
+                               Classes.completed="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.Completed}}"
+                               Classes.coming-soon="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.ComingSoon}}" />
+                </DataTemplate>
+            </s:SelectorDataTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -37,5 +37,6 @@
         <StyleInclude Source="avares://Inanna/Styles/Theme.axaml" />
         <StyleInclude Source="avares://Cromwell/Styles/Theme.axaml" />
         <StyleInclude Source="avares://Diocles/Styles/Theme.axaml" />
+        <StyleInclude Source="Styles/Theme.axaml" />
     </Application.Styles>
 </Application>
