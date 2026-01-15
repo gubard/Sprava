@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.ClearCache">Clear cache</s:String>
+    <s:String x:Key="Lang.Refresh">Refresh</s:String>
+    <s:String x:Key="Lang.Developer">Developer</s:String>
+    <s:String x:Key="Lang.MaterialDesignSizeType">Material design size type</s:String>
     <s:String x:Key="Lang.ChangeParent">Change parent</s:String>
     <s:String x:Key="Lang.ChangeParentItem">Change parent for "{}"</s:String>
     <s:String x:Key="Lang.IsRoot">Is root</s:String>

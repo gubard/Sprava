@@ -41,6 +41,11 @@
                         Command="{Binding ShowSettingsViewCommand}"
                         Click="PaneButtonOnClick" />
                 <Button Classes="align-stretch"
+                        Content="{DynamicResource Lang.Developer}"
+                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                        CommandParameter="{x:Type ui:DeveloperViewModel}"
+                        Click="PaneButtonOnClick" />
+                <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Logout}"
                         Command="{x:Static sh:SpravaCommands.LogoutCommand}"
                         Click="PaneButtonOnClick" />
