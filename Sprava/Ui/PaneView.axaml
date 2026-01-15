@@ -24,21 +24,26 @@
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.ToDos}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type dui:RootToDosViewModel}" />
+                        CommandParameter="{x:Type dui:RootToDosViewModel}"
+                        Click="PaneButtonOnClick" />
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Credentials}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type cui:RootCredentialsViewModel}" />
+                        CommandParameter="{x:Type cui:RootCredentialsViewModel}"
+                        Click="PaneButtonOnClick" />
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Files}"
                         Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type cu:FilesPanelViewModel}" />
+                        CommandParameter="{x:Type cu:FilesPanelViewModel}"
+                        Click="PaneButtonOnClick" />
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Settings}"
-                        Command="{Binding ShowSettingsViewCommand}" />
+                        Command="{Binding ShowSettingsViewCommand}"
+                        Click="PaneButtonOnClick" />
                 <Button Classes="align-stretch"
                         Content="{DynamicResource Lang.Logout}"
-                        Command="{x:Static sh:SpravaCommands.LogoutCommand}" />
+                        Command="{x:Static sh:SpravaCommands.LogoutCommand}"
+                        Click="PaneButtonOnClick" />
             </StackPanel>
         </controls:GroupBoxControl>
     </ScrollViewer>

@@ -1,14 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content.PM;
-using Avalonia;
-using Avalonia.Android;
-using Gaia.Helpers;
-using Inanna.Services;
-using Sprava.Android.Services;
-using Sprava.Helpers;
+﻿using Sprava.Android.Services;
 
 namespace Sprava.Android;
 

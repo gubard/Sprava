@@ -1,5 +1,3 @@
-using Gaia.Helpers;
-using UIKit;
 using iOSSpravaServiceProvider = Sprava.iOS.Services.iOSSpravaServiceProvider;
 
 namespace Sprava.iOS;
