@@ -184,7 +184,6 @@ public interface ISpravaServiceProvider : IServiceProvider
         DbToDoService dbToDoService
     )
     {
-        var user = appState.User.ThrowIfNull();
         httpClient.BaseAddress = new(options.Url);
 
         return new UiToDoService(
@@ -252,12 +251,10 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFilesUiCache uiCache,
         INavigator navigator,
         DbFilesService dbService,
-        IMigrator migrator,
         HttpClient httpClient
     )
     {
         httpClient.BaseAddress = new(options.Url);
-        var user = appState.User.ThrowIfNull();
 
         return new UiFilesService(
             new HttpFilesService(
