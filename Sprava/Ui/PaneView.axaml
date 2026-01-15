@@ -9,14 +9,15 @@
              xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
              xmlns:dui="clr-namespace:Diocles.Ui;assembly=Diocles"
              xmlns:cu="clr-namespace:Cai.Ui;assembly=Cai"
+             xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
     <ScrollViewer>
         <controls:GroupBoxControl>
             <controls:GroupBoxControl.Header>
-                <Button Classes="align-right"
-                        Content="{DynamicResource Lang.Close}"
+                <Button Classes="align-right mini p-5"
+                        Content="{ip:MaterialDesign Close}"
                         Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
             </controls:GroupBoxControl.Header>
 
