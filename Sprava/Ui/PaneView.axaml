@@ -4,53 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:sh="clr-namespace:Sprava.Helpers"
-             xmlns:controls="clr-namespace:Inanna.Controls;assembly=Inanna"
+             xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
              xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
              xmlns:dui="clr-namespace:Diocles.Ui;assembly=Diocles"
              xmlns:cu="clr-namespace:Cai.Ui;assembly=Cai"
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:dh="clr-namespace:Diocles.Helpers;assembly=Diocles"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
-    <ScrollViewer>
-        <controls:GroupBoxControl>
-            <controls:GroupBoxControl.Header>
-                <Button Classes="align-right mini p-5"
-                        Content="{ip:MaterialDesign Close}"
-                        Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
-            </controls:GroupBoxControl.Header>
+    <ScrollViewer Classes="vertical-scroll">
+        <StackPanel>
+            <c:GroupBoxControl>
+                <c:GroupBoxControl.Header>
+                    <Button Classes="align-right mini p-5"
+                            Content="{ip:MaterialDesign Close}"
+                            Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
+                </c:GroupBoxControl.Header>
 
-            <StackPanel>
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.ToDos}"
-                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type dui:RootToDosViewModel}"
-                        Click="PaneButtonOnClick" />
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Credentials}"
-                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type cui:RootCredentialsViewModel}"
-                        Click="PaneButtonOnClick" />
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Files}"
-                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type cu:FilesPanelViewModel}"
-                        Click="PaneButtonOnClick" />
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Settings}"
-                        Command="{Binding ShowSettingsViewCommand}"
-                        Click="PaneButtonOnClick" />
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Developer}"
-                        Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                        CommandParameter="{x:Type ui:DeveloperViewModel}"
-                        Click="PaneButtonOnClick" />
-                <Button Classes="align-stretch"
-                        Content="{DynamicResource Lang.Logout}"
-                        Command="{x:Static sh:SpravaCommands.LogoutCommand}"
-                        Click="PaneButtonOnClick" />
-            </StackPanel>
-        </controls:GroupBoxControl>
+                <StackPanel>
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.ToDos}"
+                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            CommandParameter="{x:Type dui:RootToDosViewModel}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.Credentials}"
+                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            CommandParameter="{x:Type cui:RootCredentialsViewModel}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.Files}"
+                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            CommandParameter="{x:Type cu:FilesPanelViewModel}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.Settings}"
+                            Command="{Binding ShowSettingsViewCommand}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.Developer}"
+                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            CommandParameter="{x:Type ui:DeveloperViewModel}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{DynamicResource Lang.Logout}"
+                            Command="{x:Static sh:SpravaCommands.LogoutCommand}"
+                            Click="PaneButtonOnClick" />
+                </StackPanel>
+            </c:GroupBoxControl>
+
+            <c:GroupBoxControl Header="{DynamicResource Lang.ToDos}"
+                               IsVisible="{Binding ToDos.Count, Converter={StaticResource IsNotValueConverter}, ConverterParameter={x:Static ih:Numbers.Int32_0}}">
+                <ItemsControl ItemsSource="{Binding ToDos}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Classes="align-stretch"
+                                    Command="{x:Static dh:DioclesCommands.OpenToDosCommand}"
+                                    CommandParameter="{Binding}">
+                                <TextBlock Classes="align-left" Text="{Binding Name}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </c:GroupBoxControl>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

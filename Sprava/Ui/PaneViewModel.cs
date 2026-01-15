@@ -1,5 +1,8 @@
+using Avalonia.Collections;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using Diocles.Models;
+using Diocles.Services;
 using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
@@ -15,14 +18,18 @@ public partial class PaneViewModel : ViewModelBase
         IDialogService dialogService,
         ISpravaViewModelFactory spravaViewModelFactory,
         IAppResourceService appResourceService,
-        IObjectStorage objectStorage
+        IObjectStorage objectStorage,
+        IToDoMemoryCache toDoMemoryCache
     )
     {
         _dialogService = dialogService;
         _spravaViewModelFactory = spravaViewModelFactory;
         _appResourceService = appResourceService;
         _objectStorage = objectStorage;
+        ToDos = toDoMemoryCache.Bookmarks;
     }
+
+    public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
 
     private readonly IDialogService _dialogService;
     private readonly ISpravaViewModelFactory _spravaViewModelFactory;
