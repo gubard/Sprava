@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Avalonia.Threading;
 using Gaia.Helpers;
 using Inanna.Helpers;
 using Melnikov.Services;
@@ -18,14 +19,14 @@ public static class SpravaCommands
 
         ShowPaneCommand = UiHelper.CreateCommand(_ =>
         {
-            mainViewModel.IsShowPane = true;
+            Dispatcher.UIThread.Post(() => mainViewModel.IsShowPane = true);
 
             return TaskHelper.ConfiguredCompletedTask;
         });
 
         HidePaneCommand = UiHelper.CreateCommand(_ =>
         {
-            mainViewModel.IsShowPane = false;
+            Dispatcher.UIThread.Post(() => mainViewModel.IsShowPane = false);
 
             return TaskHelper.ConfiguredCompletedTask;
         });
