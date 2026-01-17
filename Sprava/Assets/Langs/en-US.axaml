@@ -3,6 +3,9 @@
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.ClearCache">Clear cache</s:String>
     <s:String x:Key="Lang.Refresh">Refresh</s:String>
+    <s:String x:Key="Lang.Search">Search</s:String>
+    <s:String x:Key="Lang.SearchToDos">Search ToDos</s:String>
+    <s:String x:Key="Lang.SearchText">Search text</s:String>
     <s:String x:Key="Lang.Developer">Developer</s:String>
     <s:String x:Key="Lang.MaterialDesignSizeType">Material design size type</s:String>
     <s:String x:Key="Lang.ChangeParent">Change parent</s:String>

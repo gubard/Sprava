@@ -24,11 +24,20 @@
                 </c:GroupBoxControl.Header>
 
                 <StackPanel>
-                    <Button Classes="align-stretch"
-                            Content="{DynamicResource Lang.ToDos}"
-                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                            CommandParameter="{x:Type dui:RootToDosViewModel}"
-                            Click="PaneButtonOnClick" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Button Classes="align-stretch"
+                                Content="{DynamicResource Lang.ToDos}"
+                                Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                                CommandParameter="{x:Type dui:RootToDosViewModel}"
+                                Click="PaneButtonOnClick" />
+
+                        <Button Grid.Column="1"
+                                Content="{ip:MaterialDesign Search}"
+                                Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                                CommandParameter="{x:Type dui:SearchToDoViewModel}"
+                                Click="PaneButtonOnClick" />
+                    </Grid>
+
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.Credentials}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
