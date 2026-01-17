@@ -13,7 +13,25 @@
             <TextBlock Text="{Binding DesignSizeType}" />
         </StackPanel>
 
-        <Button Content="{DynamicResource Lang.Refresh}" 
+        <StackPanel Classes="horizontal">
+            <TextBlock Text="{DynamicResource Lang.TopLevelType}" />
+            <TextBlock Text=": " />
+            <TextBlock Text="{Binding TopLevelType}" />
+        </StackPanel>
+
+        <StackPanel Classes="horizontal">
+            <TextBlock Text="{DynamicResource Lang.TopLevelClasses}" />
+            <TextBlock Text=":" />
+            <ItemsControl Classes="horizontal-wrap" ItemsSource="{Binding Classes}" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Classes="m-h-3" Text="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <Button Content="{DynamicResource Lang.Refresh}"
                 Command="{Binding RefreshCommand}"
                 CommandParameter="{Binding $self}" />
     </StackPanel>

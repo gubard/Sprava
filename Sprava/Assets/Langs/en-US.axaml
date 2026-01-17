@@ -3,6 +3,8 @@
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="Lang.ClearCache">Clear cache</s:String>
     <s:String x:Key="Lang.Refresh">Refresh</s:String>
+    <s:String x:Key="Lang.TopLevelType">Top level type</s:String>
+    <s:String x:Key="Lang.TopLevelClasses">Top level classes</s:String>
     <s:String x:Key="Lang.AskDelete">You want delete "{}"?</s:String>
     <s:String x:Key="Lang.Search">Search</s:String>
     <s:String x:Key="Lang.SearchToDos">Search ToDos</s:String>
