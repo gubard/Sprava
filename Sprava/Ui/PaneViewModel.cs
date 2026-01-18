@@ -1,5 +1,6 @@
 using Avalonia.Collections;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Diocles.Models;
 using Diocles.Services;
@@ -19,7 +20,8 @@ public partial class PaneViewModel : ViewModelBase
         ISpravaViewModelFactory spravaViewModelFactory,
         IAppResourceService appResourceService,
         IObjectStorage objectStorage,
-        IToDoMemoryCache toDoMemoryCache
+        IToDoMemoryCache toDoMemoryCache,
+        AppState appState
     )
     {
         _dialogService = dialogService;
@@ -27,9 +29,11 @@ public partial class PaneViewModel : ViewModelBase
         _appResourceService = appResourceService;
         _objectStorage = objectStorage;
         ToDos = toDoMemoryCache.Bookmarks;
+        AppState = appState;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
+    public AppState AppState { get; }
 
     private readonly IDialogService _dialogService;
     private readonly ISpravaViewModelFactory _spravaViewModelFactory;

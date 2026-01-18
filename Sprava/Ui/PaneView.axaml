@@ -18,9 +18,13 @@
         <StackPanel>
             <c:GroupBoxControl>
                 <c:GroupBoxControl.Header>
-                    <Button Classes="align-right mini p-5"
-                            Content="{ip:MaterialDesign Close}"
-                            Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="align-left-center text-wrap" Text="{Binding AppState.User.Login}" />
+                        <Button Grid.Column="1"
+                                Classes="mini p-5"
+                                Content="{ip:MaterialDesign Close}"
+                                Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
+                    </Grid>
                 </c:GroupBoxControl.Header>
 
                 <StackPanel>
@@ -71,7 +75,8 @@
                         <DataTemplate>
                             <Button Classes="align-stretch"
                                     Command="{x:Static dh:DioclesCommands.OpenToDosCommand}"
-                                    CommandParameter="{Binding}">
+                                    CommandParameter="{Binding}"
+                                    Click="PaneButtonOnClick">
                                 <TextBlock Classes="align-left" Text="{Binding Name}" />
                             </Button>
                         </DataTemplate>
