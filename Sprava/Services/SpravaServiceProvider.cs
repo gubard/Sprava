@@ -75,6 +75,7 @@ namespace Sprava.Services;
 [Transient(typeof(IFilesUiCache), Factory = nameof(GetFilesUiCache))]
 [Transient(typeof(DbFilesService), Factory = nameof(GetDbFilesService))]
 [Transient(typeof(DeveloperViewModel))]
+[Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
     public static DbFilesService GetDbFilesService(
