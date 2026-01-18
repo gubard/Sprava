@@ -82,6 +82,6 @@ public partial class PaneViewModel : ViewModelBase
             ct
         );
 
-        Dispatcher.UIThread.Post(() => _dialogService.CloseMessageBox());
+        _dialogService.DispatchCloseMessageBox();
     }
 }
