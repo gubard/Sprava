@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Inanna.Helpers;
 using Inanna.Models;
-using Inanna.Services;
 
 namespace Sprava.Ui;
 

@@ -1,6 +1,4 @@
 using Avalonia.Collections;
-using Avalonia.Threading;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Diocles.Models;
 using Diocles.Services;
@@ -49,11 +47,9 @@ public partial class PaneViewModel : ViewModelBase
             () =>
                 _dialogService.ShowMessageBoxAsync(
                     new(
-                        Dispatcher.UIThread.Invoke(() =>
-                            _appResourceService
-                                .GetResource<string>("Lang.Settings")
-                                .ToDialogHeader()
-                        ),
+                        _appResourceService
+                            .GetResource<string>("Lang.Settings")
+                            .DispatchToDialogHeader(),
                         setting,
                         new DialogButton(
                             _appResourceService.GetResource<string>("Lang.Save"),

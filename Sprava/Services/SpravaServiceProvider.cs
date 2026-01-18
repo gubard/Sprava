@@ -64,7 +64,7 @@ namespace Sprava.Services;
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
 [Transient(typeof(IUiFilesService), Factory = nameof(GetUiFilesService))]
 [Transient(typeof(IUiCredentialService), Factory = nameof(GetUiCredentialService))]
-[Transient(typeof(IUiToDoService), Factory = nameof(GetUiToDoService))]
+[Transient(typeof(IToDoUiService), Factory = nameof(GetUiToDoService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
@@ -143,7 +143,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             new(DateTimeOffset.UtcNow.Offset, user.Id),
             toDoParametersFillerService,
             toDoValidator,
-            new DbServiceOptionsUiFactory(appState, nameof(UiToDoService))
+            new DbServiceOptionsUiFactory(appState, nameof(ToDoUiService))
         );
     }
 
@@ -176,7 +176,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
     }
 
-    public static IUiToDoService GetUiToDoService(
+    public static IToDoUiService GetUiToDoService(
         ToDoServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
@@ -188,7 +188,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new UiToDoService(
+        return new ToDoUiService(
             new HttpToDoService(
                 httpClient,
                 new()
@@ -199,7 +199,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
-                    _ => appState.SetServiceMode(nameof(UiToDoService), ServiceMode.Offline)
+                    _ => appState.SetServiceMode(nameof(ToDoUiService), ServiceMode.Offline)
                 ),
                 headersFactory
             ),
@@ -207,7 +207,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             appState,
             uiCache,
             navigator,
-            nameof(UiToDoService)
+            nameof(ToDoUiService)
         );
     }
 
