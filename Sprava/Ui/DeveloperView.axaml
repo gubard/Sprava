@@ -6,33 +6,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.DeveloperView"
              x:DataType="ui:DeveloperViewModel">
-    <StackPanel>
-        <StackPanel Classes="horizontal">
-            <TextBlock Text="{DynamicResource Lang.MaterialDesignSizeType}" />
-            <TextBlock Text=": " />
-            <TextBlock Text="{Binding DesignSizeType}" />
-        </StackPanel>
+    <Grid RowDefinitions="*,Auto">
+        <ScrollViewer Classes="vertical-scroll">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                <TextBlock Text="{DynamicResource Lang.MaterialDesignSizeType}" />
+                <TextBlock Grid.Column="1" Text="{Binding DesignSizeType}" />
+                <TextBlock Grid.Row="1" Text="{DynamicResource Lang.TopLevelType}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Classes="text-wrap" Text="{Binding TopLevelType}" />
+                <TextBlock Grid.Row="2" Text="{DynamicResource Lang.TopLevelClasses}" />
 
-        <StackPanel Classes="horizontal">
-            <TextBlock Text="{DynamicResource Lang.TopLevelType}" />
-            <TextBlock Text=": " />
-            <TextBlock Text="{Binding TopLevelType}" />
-        </StackPanel>
+                <ItemsControl Grid.Row="2" Grid.Column="1" Classes="horizontal-wrap" ItemsSource="{Binding Classes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="m-h-3" Text="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
 
-        <StackPanel Classes="horizontal">
-            <TextBlock Text="{DynamicResource Lang.TopLevelClasses}" />
-            <TextBlock Text=":" />
-            <ItemsControl Classes="horizontal-wrap" ItemsSource="{Binding Classes}" >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Classes="m-h-3" Text="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-
-        <Button Content="{DynamicResource Lang.Refresh}"
+        <Button Grid.Row="1"
+                Classes="align-stretch content-align-center h1"
+                Content="{DynamicResource Lang.Refresh}"
                 Command="{Binding RefreshCommand}"
                 CommandParameter="{Binding $self}" />
-    </StackPanel>
+    </Grid>
 </UserControl>
