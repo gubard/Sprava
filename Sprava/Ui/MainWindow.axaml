@@ -5,7 +5,7 @@
         xmlns:ui="clr-namespace:Sprava.Ui"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Sprava.Ui.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Images/Logo.ico"
         Title="{DynamicResource Lang.Sprava}">
         <ui:MainView />
 </Window>

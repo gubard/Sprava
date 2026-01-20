@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AndroidResource Include="Icon.png">
+    <AndroidResource Include="Logo.png">
       <Link>Resources\drawable\Icon.png</Link>
     </AndroidResource>
   </ItemGroup>
@@ -42,5 +42,9 @@
     <AndroidAsset Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Logo.png" />
   </ItemGroup>
 </Project>

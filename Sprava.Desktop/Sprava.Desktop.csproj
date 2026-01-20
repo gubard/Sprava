@@ -7,6 +7,7 @@
     <RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
     <ImplicitUsings>enable</ImplicitUsings>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
