@@ -7,7 +7,8 @@
         <Setter Property="ItemTemplate">
             <s:SelectorDataTemplate>
                 <DataTemplate x:DataType="m:ToDoNotify">
-                    <TextBlock Text="{Binding Name}"
+                    <TextBlock Classes="text-wrap"
+                               Text="{Binding Name}"
                                Classes.miss="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.Miss}}"
                                Classes.ready-for-complete="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.ReadyForComplete}}"
                                Classes.planned="{Binding Status, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static hm:ToDoStatus.Planned}}"
