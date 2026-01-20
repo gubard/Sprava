@@ -73,15 +73,12 @@ public partial class PaneViewModel : ViewModelBase
 
     private async ValueTask SaveSettingsCore(AppSettingViewModel setting, CancellationToken ct)
     {
-        await _objectStorage.SaveAsync(
-            $"{typeof(SpravaSettings).FullName}",
-            new SpravaSettings
-            {
-                CromwellSettings = new() { GeneralKey = setting.GeneralKey, Theme = setting.Theme },
-            },
-            ct
-        );
+        var settings = new SpravaSettings
+        {
+            CromwellSettings = new() { GeneralKey = setting.GeneralKey, Theme = setting.Theme },
+        };
 
-        _dialogService.DispatchCloseMessageBox();
+        await _dialogService.CloseMessageBoxAsync(ct);
+        await _objectStorage.SaveAsync($"{typeof(SpravaSettings).FullName}", settings, ct);
     }
 }
