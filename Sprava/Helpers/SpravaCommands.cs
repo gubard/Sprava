@@ -17,6 +17,12 @@ public static class SpravaCommands
         var uiAuthenticationService =
             DiHelper.ServiceProvider.GetService<IUiAuthenticationService>();
 
+        async ValueTask LogoutAsync(CancellationToken ct)
+        {
+            await uiAuthenticationService.LogoutAsync(ct);
+            await UiHelper.NavigateToAsync<SignInViewModel>(ct);
+        }
+
         ShowPaneCommand = UiHelper.CreateCommand(_ =>
         {
             Dispatcher.UIThread.Post(() => mainViewModel.IsShowPane = true);
@@ -31,12 +37,7 @@ public static class SpravaCommands
             return TaskHelper.ConfiguredCompletedTask;
         });
 
-        LogoutCommand = UiHelper.CreateCommand(ct =>
-        {
-            uiAuthenticationService.Logout();
-
-            return UiHelper.NavigateToAsync<SignInViewModel>(ct);
-        });
+        LogoutCommand = UiHelper.CreateCommand(ct => LogoutAsync(ct).ConfigureAwait(false));
     }
 
     public static readonly ICommand ShowPaneCommand;

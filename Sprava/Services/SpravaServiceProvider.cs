@@ -76,6 +76,7 @@ namespace Sprava.Services;
 [Transient(typeof(DbFilesService), Factory = nameof(GetDbFilesService))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
+[Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
     public static DbFilesService GetDbFilesService(
@@ -183,7 +184,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        DbToDoService dbToDoService
+        DbToDoService dbToDoService,
+        IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -207,7 +209,8 @@ public interface ISpravaServiceProvider : IServiceProvider
             appState,
             uiCache,
             navigator,
-            nameof(ToDoUiService)
+            nameof(ToDoUiService),
+            responseHandler
         );
     }
 
@@ -218,7 +221,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         ICredentialUiCache uiCache,
         INavigator navigator,
         DbCredentialService dbService,
-        HttpClient httpClient
+        HttpClient httpClient,
+        IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -242,7 +246,8 @@ public interface ISpravaServiceProvider : IServiceProvider
             appState,
             uiCache,
             navigator,
-            nameof(UiCredentialService)
+            nameof(UiCredentialService),
+            responseHandler
         );
     }
 
@@ -253,7 +258,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFilesUiCache uiCache,
         INavigator navigator,
         DbFilesService dbService,
-        HttpClient httpClient
+        HttpClient httpClient,
+        IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -277,7 +283,8 @@ public interface ISpravaServiceProvider : IServiceProvider
             appState,
             uiCache,
             navigator,
-            nameof(UiFilesService)
+            nameof(UiFilesService),
+            responseHandler
         );
     }
 
@@ -325,13 +332,15 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static SignInViewModel GetSignInViewModel(
         IUiAuthenticationService uiAuthenticationService,
-        IObjectStorage objectStorage
+        IObjectStorage objectStorage,
+        AppState appState
     )
     {
         return new(
             uiAuthenticationService,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
-            objectStorage
+            objectStorage,
+            appState
         );
     }
 
