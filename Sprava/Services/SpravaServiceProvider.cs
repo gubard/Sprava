@@ -26,6 +26,7 @@ using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
 using Nestor.Db.Helpers;
+using Nestor.Db.Models;
 using Nestor.Db.Services;
 using Sprava.Helpers;
 using Sprava.Ui;
@@ -74,22 +75,38 @@ namespace Sprava.Services;
 [Transient(typeof(DbCredentialService), Factory = nameof(GetDbCredentialService))]
 [Transient(typeof(IFilesUiCache), Factory = nameof(GetFilesUiCache))]
 [Transient(typeof(DbFilesService), Factory = nameof(GetDbFilesService))]
+[Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
-    public static DbFilesService GetDbFilesService(
+    public static IDbConnectionFactory GetDbConnectionFactory(
         AppState appState,
         IStorageService storageService,
-        IMigrator migrator,
+        IMigrator migrator
+    )
+    {
+        if (appState.User is null)
+        {
+            return new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext(
+                migrator
+            );
+        }
+
+        return new FileInfo(
+            $"{storageService.GetAppDirectory()}/{appState.User.Id}.db"
+        ).InitDbContext(migrator);
+    }
+
+    public static DbFilesService GetDbFilesService(
+        AppState appState,
+        IDbConnectionFactory factory,
         GaiaValues gaiaValues
     )
     {
         return new(
-            new FileInfo(
-                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
-            ).InitDbContext(migrator),
+            factory,
             gaiaValues,
             new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
         );
@@ -105,15 +122,12 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static DbCredentialService GetDbCredentialService(
         AppState appState,
-        IStorageService storageService,
-        IMigrator migrator,
+        IDbConnectionFactory factory,
         GaiaValues gaiaValues
     )
     {
         return new(
-            new FileInfo(
-                $"{storageService.GetAppDirectory()}/{appState.User.ThrowIfNull().Id}.db"
-            ).InitDbContext(migrator),
+            factory,
             gaiaValues,
             new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
         );
@@ -130,7 +144,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static DbToDoService GetDbToDoService(
         AppState appState,
         ToDoParametersFillerService toDoParametersFillerService,
-        IStorageService storageService,
+        IDbConnectionFactory factory,
         IToDoValidator toDoValidator,
         IMigrator migrator
     )
@@ -138,9 +152,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         var user = appState.User.ThrowIfNull();
 
         return new(
-            new FileInfo($"{storageService.GetAppDirectory()}/{user.Id}.db").InitDbContext(
-                migrator
-            ),
+            factory,
             new(DateTimeOffset.UtcNow.Offset, user.Id),
             toDoParametersFillerService,
             toDoValidator,
@@ -159,11 +171,11 @@ public interface ISpravaServiceProvider : IServiceProvider
     }
 
     public static IObjectStorage GetObjectStorage(
-        IStorageService storageService,
+        IDbConnectionFactory factory,
         ISerializer serializer
     )
     {
-        return new FileObjectStorage(storageService.GetAppDirectory(), serializer);
+        return new DbObjectStorage(factory, serializer);
     }
 
     public static HttpClient GetHttpClient()
