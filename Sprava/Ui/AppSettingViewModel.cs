@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Styling;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Cromwell;
 using Gaia.Services;
@@ -60,12 +61,10 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
             ct
         );
 
-        if (settings is null)
+        Dispatcher.UIThread.Post(() =>
         {
-            return;
-        }
-
-        GeneralKey = settings.CromwellSettings.GeneralKey;
-        Theme = settings.CromwellSettings.Theme;
+            GeneralKey = settings.CromwellSettings.GeneralKey;
+            Theme = settings.CromwellSettings.Theme;
+        });
     }
 }
