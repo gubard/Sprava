@@ -21,7 +21,7 @@ public class ViewLocator : IDataTemplate
             return builder();
         }
 
-        return new TextBlock { Text = $"Not found \"{type}\"" };
+        return new TextBlock { Text = $"Not found \"{type}\"", Classes = { "plain-text" } };
     }
 
     public bool Match(object? data)
