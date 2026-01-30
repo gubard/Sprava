@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Gaia\Gaia\Gaia.csproj" />
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
   </ItemGroup>
 </Project>

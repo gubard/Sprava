@@ -1,4 +1,5 @@
 ﻿using Gaia.Helpers;
+using Gaia.Services;
 using Jab;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
@@ -8,6 +9,7 @@ namespace Sprava.Desktop.Services;
 [ServiceProvider]
 [Import(typeof(ISpravaServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
+[Singleton(typeof(IOpenerLink), typeof(DesktopOpenerLink))]
 public partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
