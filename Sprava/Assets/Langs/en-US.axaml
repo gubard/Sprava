@@ -15,6 +15,7 @@
     <s:String x:Key="Lang.SearchText">Search text</s:String>
     <s:String x:Key="Lang.Developer">Developer</s:String>
     <s:String x:Key="Lang.MaterialDesignSizeType">Material design size type</s:String>
+    <s:String x:Key="Lang.SizeType">Size type</s:String>
     <s:String x:Key="Lang.ChangeParent">Change parent</s:String>
     <s:String x:Key="Lang.ChangeParentItem">Change parent for "{}"</s:String>
     <s:String x:Key="Lang.IsRoot">Is root</s:String>

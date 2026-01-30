@@ -8,17 +8,17 @@
              x:DataType="ui:DeveloperViewModel">
     <Grid RowDefinitions="*,Auto">
         <ScrollViewer Classes="vertical-scroll">
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
-                <TextBlock Text="{StaticResource Lang.MaterialDesignSizeType}" />
-                <TextBlock Grid.Column="1" Text="{Binding DesignSizeType}" />
+            <Grid ColumnDefinitions="Auto,5,*" RowDefinitions="Auto,Auto,Auto">
+                <TextBlock Text="{StaticResource Lang.SizeType}" />
+                <TextBlock Grid.Column="2" Classes="plain-text" Text="{Binding DesignSizeType}" />
                 <TextBlock Grid.Row="1" Text="{StaticResource Lang.TopLevelType}" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Classes="text-wrap" Text="{Binding TopLevelType}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Classes="plain-text" Text="{Binding TopLevelType}" />
                 <TextBlock Grid.Row="2" Text="{StaticResource Lang.TopLevelClasses}" />
 
-                <ItemsControl Grid.Row="2" Grid.Column="1" Classes="horizontal-wrap" ItemsSource="{Binding Classes}">
+                <ItemsControl Grid.Row="2" Grid.Column="2" Classes="horizontal-wrap" ItemsSource="{Binding Classes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Classes="m-h-3" Text="{Binding}" />
+                            <TextBlock Classes="m-h-3 plain-text" Text="{Binding}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
