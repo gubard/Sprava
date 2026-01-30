@@ -100,6 +100,11 @@ public class ValidationErrorDataTemplate : IDataTemplate
                 ),
                 Classes = { "plain-text" },
             },
+            UnauthorizedValidationError => new()
+            {
+                Text = _appResourceService.GetResource<string>("Lang.Unauthorized"),
+                Classes = { "plain-text" },
+            },
             _ => new TextBox
             {
                 Text = $"Not found \"{param.GetType()}\"",
