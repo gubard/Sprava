@@ -31,7 +31,7 @@ public sealed class DesktopOpenerLink : IOpenerLink
             case Os.Android:
             case Os.Browser:
             case Os.FreeBsd:
-            case Os.Ios:
+            case Os.iOS:
             case Os.MacCatalyst:
             case Os.TvOs:
             case Os.WatchOs:

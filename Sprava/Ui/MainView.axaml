@@ -18,15 +18,19 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <c:DialogControl Identifier="MessageBox" Classes="adaptive-dialog-control">
-            <c:NotificationPanel Identifier="Notifications">
-                <SplitView IsPaneOpen="{Binding IsShowPane}" Pane="{Binding Pane}">
-                    <Grid RowDefinitions="Auto,*">
-                        <ContentControl Content="{Binding NavigationBar}" />
-                        <ContentControl Grid.Row="1" Content="{Binding Stack}" />
-                    </Grid>
-                </SplitView>
-            </c:NotificationPanel>
-        </c:DialogControl>
+        <Grid RowDefinitions="*,Auto">
+            <c:DialogControl Identifier="MessageBox" Classes="adaptive-dialog-control">
+                <c:NotificationPanel Identifier="Notifications">
+                    <SplitView IsPaneOpen="{Binding IsShowPane}" Pane="{Binding Pane}">
+                        <Grid RowDefinitions="Auto,*">
+                            <ContentControl Content="{Binding NavigationBar}" />
+                            <ContentControl Grid.Row="1" Content="{Binding Stack}" />
+                        </Grid>
+                    </SplitView>
+                </c:NotificationPanel>
+            </c:DialogControl>
+
+            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="1" />
+        </Grid>
     </Panel>
 </UserControl>
