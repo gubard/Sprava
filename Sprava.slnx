@@ -27,6 +27,10 @@
     <Project Path="../Manis/Manis.Contract/Manis.Contract.csproj" />
     <Project Path="../Manis/Manis/Manis.csproj" />
   </Folder>
+  <Folder Name="/Services/Neotoma/">
+    <Project Path="../Neotoma/Neotoma.Contract/Neotoma.Contract.csproj" />
+    <Project Path="../Neotoma/Neotoma/Neotoma.csproj" />
+  </Folder>
   <Folder Name="/Services/Turtle/">
     <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />
     <Project Path="../Turtle/Turtle/Turtle.csproj" />
