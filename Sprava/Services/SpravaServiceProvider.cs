@@ -73,8 +73,8 @@ namespace Sprava.Services;
 [Transient(typeof(ToDoDbService), Factory = nameof(GetDbToDoService))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
 [Transient(typeof(CredentialDbService), Factory = nameof(GetDbCredentialService))]
-[Transient(typeof(IFilesUiCache), Factory = nameof(GetFilesUiCache))]
-[Transient(typeof(FilesDbService), Factory = nameof(GetDbFilesService))]
+[Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFilesUiCache))]
+[Transient(typeof(FileSystemSystemDbService), Factory = nameof(GetDbFilesService))]
 [Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
@@ -99,7 +99,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         ).InitDbContext(migrator);
     }
 
-    public static FilesDbService GetDbFilesService(
+    public static FileSystemSystemDbService GetDbFilesService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -112,12 +112,12 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static IFilesUiCache GetFilesUiCache(
-        IFilesMemoryCache memoryCache,
-        FilesDbService filesDbService
+    public static IFileSystemUiCache GetFilesUiCache(
+        IFileSystemMemoryCache memoryCache,
+        FileSystemSystemDbService fileSystemSystemDbService
     )
     {
-        return new FilesUiCache(filesDbService, memoryCache);
+        return new FileSystemSystemUiCache(fileSystemSystemDbService, memoryCache);
     }
 
     public static CredentialDbService GetDbCredentialService(
@@ -270,9 +270,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         FilesServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
-        IFilesUiCache uiCache,
+        IFileSystemUiCache uiCache,
         INavigator navigator,
-        FilesDbService filesDbService,
+        FileSystemSystemDbService fileSystemSystemDbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
@@ -280,7 +280,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         httpClient.BaseAddress = new(options.Url);
 
         return new FilesUiService(
-            new FilesHttpService(
+            new FileSystemHttpService(
                 httpClient,
                 new()
                 {
@@ -294,7 +294,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            filesDbService,
+            fileSystemSystemDbService,
             appState,
             uiCache,
             navigator,
