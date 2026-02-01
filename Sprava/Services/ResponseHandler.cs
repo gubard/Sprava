@@ -11,9 +11,9 @@ namespace Sprava.Services;
 
 public sealed class ResponseHandler : IResponseHandler
 {
-    public ResponseHandler(IUiAuthenticationService uiAuthenticationService)
+    public ResponseHandler(IAuthenticationUiService authenticationUiService)
     {
-        _uiAuthenticationService = uiAuthenticationService;
+        _authenticationUiService = authenticationUiService;
     }
 
     public ConfiguredValueTaskAwaitable HandleResponseAsync<TResponse>(
@@ -25,7 +25,7 @@ public sealed class ResponseHandler : IResponseHandler
         return HandleResponseCore(response, ct).ConfigureAwait(false);
     }
 
-    private readonly IUiAuthenticationService _uiAuthenticationService;
+    private readonly IAuthenticationUiService _authenticationUiService;
 
     private async ValueTask HandleResponseCore<TResponse>(TResponse response, CancellationToken ct)
         where TResponse : IResponse
@@ -35,7 +35,7 @@ public sealed class ResponseHandler : IResponseHandler
             return;
         }
 
-        await _uiAuthenticationService.LogoutAsync(ct);
+        await _authenticationUiService.LogoutAsync(ct);
         await UiHelper.NavigateToAsync<SignInViewModel>(ct);
     }
 }

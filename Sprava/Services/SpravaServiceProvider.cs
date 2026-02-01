@@ -63,18 +63,18 @@ namespace Sprava.Services;
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
-[Transient(typeof(IUiFilesService), Factory = nameof(GetUiFilesService))]
-[Transient(typeof(IUiCredentialService), Factory = nameof(GetUiCredentialService))]
+[Transient(typeof(IFilesUiService), Factory = nameof(GetUiFilesService))]
+[Transient(typeof(ICredentialUiService), Factory = nameof(GetUiCredentialService))]
 [Transient(typeof(IToDoUiService), Factory = nameof(GetUiToDoService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 [Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
-[Transient(typeof(DbToDoService), Factory = nameof(GetDbToDoService))]
+[Transient(typeof(ToDoDbService), Factory = nameof(GetDbToDoService))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
-[Transient(typeof(DbCredentialService), Factory = nameof(GetDbCredentialService))]
+[Transient(typeof(CredentialDbService), Factory = nameof(GetDbCredentialService))]
 [Transient(typeof(IFilesUiCache), Factory = nameof(GetFilesUiCache))]
-[Transient(typeof(DbFilesService), Factory = nameof(GetDbFilesService))]
+[Transient(typeof(FilesDbService), Factory = nameof(GetDbFilesService))]
 [Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
@@ -99,7 +99,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         ).InitDbContext(migrator);
     }
 
-    public static DbFilesService GetDbFilesService(
+    public static FilesDbService GetDbFilesService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -108,19 +108,19 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new(
             factory,
             gaiaValues,
-            new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
+            new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
         );
     }
 
     public static IFilesUiCache GetFilesUiCache(
         IFilesMemoryCache memoryCache,
-        DbFilesService dbService
+        FilesDbService filesDbService
     )
     {
-        return new FilesUiCache(dbService, memoryCache);
+        return new FilesUiCache(filesDbService, memoryCache);
     }
 
-    public static DbCredentialService GetDbCredentialService(
+    public static CredentialDbService GetDbCredentialService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -129,19 +129,19 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new(
             factory,
             gaiaValues,
-            new DbServiceOptionsUiFactory(appState, nameof(UiCredentialService))
+            new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
         );
     }
 
     public static ICredentialUiCache GetCredentialUiCache(
         ICredentialMemoryCache memoryCache,
-        DbCredentialService dbService
+        CredentialDbService credentialDbCredentialDbService
     )
     {
-        return new CredentialUiCache(dbService, memoryCache);
+        return new CredentialUiCache(credentialDbCredentialDbService, memoryCache);
     }
 
-    public static DbToDoService GetDbToDoService(
+    public static ToDoDbService GetDbToDoService(
         AppState appState,
         ToDoParametersFillerService toDoParametersFillerService,
         IDbConnectionFactory factory,
@@ -160,9 +160,12 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static IToDoUiCache GetToDoUiCache(IToDoMemoryCache memoryCache, DbToDoService dbService)
+    public static IToDoUiCache GetToDoUiCache(
+        IToDoMemoryCache memoryCache,
+        ToDoDbService toDoDbService
+    )
     {
-        return new ToDoUiCache(dbService, memoryCache);
+        return new ToDoUiCache(toDoDbService, memoryCache);
     }
 
     public static ISerializer GetSerializer()
@@ -196,14 +199,14 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        DbToDoService dbToDoService,
+        ToDoDbService toDoDbService,
         IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
 
         return new ToDoUiService(
-            new HttpToDoService(
+            new ToDoHttpService(
                 httpClient,
                 new()
                 {
@@ -217,7 +220,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            dbToDoService,
+            toDoDbService,
             appState,
             uiCache,
             navigator,
@@ -226,21 +229,21 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static IUiCredentialService GetUiCredentialService(
+    public static ICredentialUiService GetUiCredentialService(
         CredentialServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         ICredentialUiCache uiCache,
         INavigator navigator,
-        DbCredentialService dbService,
+        CredentialDbService credentialDbCredentialDbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new UiCredentialService(
-            new HttpCredentialService(
+        return new CredentialUiService(
+            new CredentialHttpService(
                 httpClient,
                 new()
                 {
@@ -250,34 +253,34 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
-                    _ => appState.SetServiceMode(nameof(UiCredentialService), ServiceMode.Offline)
+                    _ => appState.SetServiceMode(nameof(CredentialUiService), ServiceMode.Offline)
                 ),
                 headersFactory
             ),
-            dbService,
+            credentialDbCredentialDbService,
             appState,
             uiCache,
             navigator,
-            nameof(UiCredentialService),
+            nameof(CredentialUiService),
             responseHandler
         );
     }
 
-    public static IUiFilesService GetUiFilesService(
+    public static IFilesUiService GetUiFilesService(
         FilesServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         IFilesUiCache uiCache,
         INavigator navigator,
-        DbFilesService dbService,
+        FilesDbService filesDbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new UiFilesService(
-            new HttpFilesService(
+        return new FilesUiService(
+            new FilesHttpService(
                 httpClient,
                 new()
                 {
@@ -287,15 +290,15 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
-                    _ => appState.SetServiceMode(nameof(UiFilesService), ServiceMode.Offline)
+                    _ => appState.SetServiceMode(nameof(FilesUiService), ServiceMode.Offline)
                 ),
                 headersFactory
             ),
-            dbService,
+            filesDbService,
             appState,
             uiCache,
             navigator,
-            nameof(UiFilesService),
+            nameof(FilesUiService),
             responseHandler
         );
     }
@@ -343,13 +346,13 @@ public interface ISpravaServiceProvider : IServiceProvider
     }
 
     public static SignInViewModel GetSignInViewModel(
-        IUiAuthenticationService uiAuthenticationService,
+        IAuthenticationUiService authenticationUiService,
         IObjectStorage objectStorage,
         AppState appState
     )
     {
         return new(
-            uiAuthenticationService,
+            authenticationUiService,
             UiHelper.NavigateToAsync<RootToDosViewModel>,
             objectStorage,
             appState

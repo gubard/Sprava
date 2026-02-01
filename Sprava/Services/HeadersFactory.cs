@@ -7,16 +7,16 @@ namespace Sprava.Services;
 
 public class HeadersFactory : IFactory<Memory<HttpHeader>>
 {
-    private readonly IUiAuthenticationService _authenticationService;
+    private readonly IAuthenticationUiService _service;
 
-    public HeadersFactory(IUiAuthenticationService authenticationService)
+    public HeadersFactory(IAuthenticationUiService service)
     {
-        _authenticationService = authenticationService;
+        _service = service;
     }
 
     public Memory<HttpHeader> Create()
     {
-        var token = _authenticationService.Token.ThrowIfNull();
+        var token = _service.Token.ThrowIfNull();
 
         return new[]
         {

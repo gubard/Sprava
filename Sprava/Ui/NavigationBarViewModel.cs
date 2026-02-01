@@ -13,7 +13,7 @@ public partial class NavigationBarViewModel : ViewModelBase
     public NavigationBarViewModel(
         INavigator navigator,
         IAppResourceService appResourceService,
-        IUiAuthenticationService authenticationService,
+        IAuthenticationUiService service,
         AppState appState,
         JwtSecurityTokenHandler jwtSecurityTokenHandler
     )
@@ -21,7 +21,7 @@ public partial class NavigationBarViewModel : ViewModelBase
         _navigator = navigator;
         _appResourceService = appResourceService;
 
-        authenticationService.LoggedIn += token =>
+        service.LoggedIn += token =>
         {
             if (!jwtSecurityTokenHandler.CanReadToken(token.Token))
             {
@@ -38,7 +38,7 @@ public partial class NavigationBarViewModel : ViewModelBase
             };
         };
 
-        authenticationService.LoggedOut += () =>
+        service.LoggedOut += () =>
         {
             appState.User = null;
         };

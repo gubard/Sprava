@@ -15,7 +15,7 @@ public static class SpravaCommands
         var mainViewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
 
         var uiAuthenticationService =
-            DiHelper.ServiceProvider.GetService<IUiAuthenticationService>();
+            DiHelper.ServiceProvider.GetService<IAuthenticationUiService>();
 
         async ValueTask LogoutAsync(CancellationToken ct)
         {
