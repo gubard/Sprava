@@ -13,7 +13,8 @@ public interface ISpravaConfig
     AuthenticationServiceOptions AuthenticationService { get; }
     CredentialServiceOptions CredentialService { get; }
     ToDoServiceOptions ToDoService { get; }
-    FilesServiceOptions FilesService { get; }
+    FileSystemServiceOptions FileSystemService { get; }
+    FileStorageServiceOptions FileStorageService { get; }
 }
 
 public class SpravaConfig : ISpravaConfig
@@ -27,11 +28,13 @@ public class SpravaConfig : ISpravaConfig
         AuthenticationService = options.AuthenticationService;
         CredentialService = options.CredentialService;
         ToDoService = options.ToDoService;
-        FilesService = options.FilesService;
+        FileSystemService = options.FileSystemService;
+        FileStorageService = options.FileStorageService;
     }
 
     public AuthenticationServiceOptions AuthenticationService { get; }
     public CredentialServiceOptions CredentialService { get; }
     public ToDoServiceOptions ToDoService { get; }
-    public FilesServiceOptions FilesService { get; }
+    public FileSystemServiceOptions FileSystemService { get; }
+    public FileStorageServiceOptions FileStorageService { get; }
 }

@@ -10,5 +10,6 @@ public class SpravaOptions
     public AuthenticationServiceOptions AuthenticationService { get; set; } = new();
     public CredentialServiceOptions CredentialService { get; set; } = new();
     public ToDoServiceOptions ToDoService { get; set; } = new();
-    public FilesServiceOptions FilesService { get; set; } = new();
+    public FileSystemServiceOptions FileSystemService { get; set; } = new();
+    public FileStorageServiceOptions FileStorageService { get; set; } = new();
 }

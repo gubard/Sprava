@@ -25,10 +25,13 @@ using Manis.Contract.Services;
 using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
+using Neotoma.Contract.Helpers;
+using Neotoma.Contract.Services;
 using Nestor.Db.Helpers;
 using Nestor.Db.Models;
 using Nestor.Db.Services;
 using Sprava.Helpers;
+using Sprava.Models;
 using Sprava.Ui;
 using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
@@ -59,26 +62,30 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
 [Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
-[Transient(typeof(FilesServiceOptions), Factory = nameof(GetFilesServiceOptions))]
+[Transient(typeof(FileSystemServiceOptions), Factory = nameof(GetFileSystemServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
 [Transient(typeof(IFilesUiService), Factory = nameof(GetUiFilesService))]
 [Transient(typeof(ICredentialUiService), Factory = nameof(GetUiCredentialService))]
-[Transient(typeof(IToDoUiService), Factory = nameof(GetUiToDoService))]
+[Transient(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 [Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
-[Transient(typeof(ToDoDbService), Factory = nameof(GetDbToDoService))]
+[Transient(typeof(ToDoDbService), Factory = nameof(GetToDoDbService))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
-[Transient(typeof(CredentialDbService), Factory = nameof(GetDbCredentialService))]
-[Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFilesUiCache))]
-[Transient(typeof(FileSystemDbService), Factory = nameof(GetDbFilesService))]
+[Transient(typeof(CredentialDbService), Factory = nameof(GetCredentialDbService))]
+[Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
+[Transient(typeof(FileSystemDbService), Factory = nameof(GetFileSystemDbService))]
 [Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
+[Transient(typeof(FileStorageDbService), Factory = nameof(GetFileStorageDbService))]
+[Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
+[Transient(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
+[Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
     public static IDbConnectionFactory GetDbConnectionFactory(
@@ -99,7 +106,12 @@ public interface ISpravaServiceProvider : IServiceProvider
         ).InitDbContext(migrator);
     }
 
-    public static FileSystemDbService GetDbFilesService(
+    public static FileStorageDbService GetFileStorageDbService(IDbConnectionFactory factory)
+    {
+        return new(factory);
+    }
+
+    public static FileSystemDbService GetFileSystemDbService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -112,7 +124,15 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static IFileSystemUiCache GetFilesUiCache(
+    public static IFileStorageUiCache GetFileStorageUiCache(
+        IFileStorageMemoryCache memoryCache,
+        FileStorageDbService dbService
+    )
+    {
+        return new FileStorageUiCache(dbService, memoryCache);
+    }
+
+    public static IFileSystemUiCache GetFileSystemUiCache(
         IFileSystemMemoryCache memoryCache,
         FileSystemDbService fileSystemDbService
     )
@@ -120,7 +140,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new FileSystemSystemUiCache(fileSystemDbService, memoryCache);
     }
 
-    public static CredentialDbService GetDbCredentialService(
+    public static CredentialDbService GetCredentialDbService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -141,12 +161,11 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new CredentialUiCache(credentialDbCredentialDbService, memoryCache);
     }
 
-    public static ToDoDbService GetDbToDoService(
+    public static ToDoDbService GetToDoDbService(
         AppState appState,
         ToDoParametersFillerService toDoParametersFillerService,
         IDbConnectionFactory factory,
-        IToDoValidator toDoValidator,
-        IMigrator migrator
+        IToDoValidator toDoValidator
     )
     {
         var user = appState.User.ThrowIfNull();
@@ -192,7 +211,44 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
     }
 
-    public static IToDoUiService GetUiToDoService(
+    public static IFileStorageUiService GetFileStorageUiService(
+        FileStorageServiceOptions options,
+        IFactory<Memory<HttpHeader>> headersFactory,
+        AppState appState,
+        IFileStorageUiCache uiCache,
+        INavigator navigator,
+        HttpClient httpClient,
+        FileStorageDbService dbService,
+        IResponseHandler responseHandler
+    )
+    {
+        httpClient.BaseAddress = new(options.Url);
+
+        return new FileStorageUiService(
+            new FileStorageHttpService(
+                httpClient,
+                new()
+                {
+                    TypeInfoResolver = HestiaJsonContext.Resolver,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                },
+                new TryPolicyService(
+                    3,
+                    TimeSpan.FromSeconds(1),
+                    _ => appState.SetServiceMode(nameof(FileStorageUiService), ServiceMode.Offline)
+                ),
+                headersFactory
+            ),
+            dbService,
+            appState,
+            uiCache,
+            navigator,
+            nameof(FileStorageUiService),
+            responseHandler
+        );
+    }
+
+    public static IToDoUiService GetToDoUiService(
         ToDoServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
@@ -267,7 +323,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     }
 
     public static IFilesUiService GetUiFilesService(
-        FilesServiceOptions options,
+        FileSystemServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
         IFileSystemUiCache uiCache,
@@ -327,6 +383,11 @@ public interface ISpravaServiceProvider : IServiceProvider
             migration.Add(key, value);
         }
 
+        foreach (var (key, value) in NeotomaMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
         return new Migrator(migration.ToFrozenDictionary());
     }
 
@@ -376,8 +437,15 @@ public interface ISpravaServiceProvider : IServiceProvider
         return configuration.ToDoService;
     }
 
-    public static FilesServiceOptions GetFilesServiceOptions(ISpravaConfig configuration)
+    public static FileSystemServiceOptions GetFileSystemServiceOptions(ISpravaConfig configuration)
     {
-        return configuration.FilesService;
+        return configuration.FileSystemService;
+    }
+
+    public static FileStorageServiceOptions GetFileStorageServiceOptions(
+        ISpravaConfig configuration
+    )
+    {
+        return configuration.FileStorageService;
     }
 }
