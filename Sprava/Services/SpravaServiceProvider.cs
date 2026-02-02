@@ -74,7 +74,7 @@ namespace Sprava.Services;
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
 [Transient(typeof(CredentialDbService), Factory = nameof(GetDbCredentialService))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFilesUiCache))]
-[Transient(typeof(FileSystemSystemDbService), Factory = nameof(GetDbFilesService))]
+[Transient(typeof(FileSystemDbService), Factory = nameof(GetDbFilesService))]
 [Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
@@ -99,7 +99,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         ).InitDbContext(migrator);
     }
 
-    public static FileSystemSystemDbService GetDbFilesService(
+    public static FileSystemDbService GetDbFilesService(
         AppState appState,
         IDbConnectionFactory factory,
         GaiaValues gaiaValues
@@ -114,10 +114,10 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IFileSystemUiCache GetFilesUiCache(
         IFileSystemMemoryCache memoryCache,
-        FileSystemSystemDbService fileSystemSystemDbService
+        FileSystemDbService fileSystemDbService
     )
     {
-        return new FileSystemSystemUiCache(fileSystemSystemDbService, memoryCache);
+        return new FileSystemSystemUiCache(fileSystemDbService, memoryCache);
     }
 
     public static CredentialDbService GetDbCredentialService(
@@ -272,7 +272,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         IFileSystemUiCache uiCache,
         INavigator navigator,
-        FileSystemSystemDbService fileSystemSystemDbService,
+        FileSystemDbService fileSystemDbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
@@ -294,7 +294,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            fileSystemSystemDbService,
+            fileSystemDbService,
             appState,
             uiCache,
             navigator,
