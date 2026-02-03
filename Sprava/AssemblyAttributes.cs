@@ -12,7 +12,7 @@ using Sprava.Ui;
 [assembly: ViewPair(typeof(NavigationBarView), typeof(NavigationBarViewModel))]
 [assembly: ViewPair(typeof(DeveloperView), typeof(DeveloperViewModel))]
 [assembly: ViewPair(typeof(FilesPanelView), typeof(FilesPanelViewModel))]
-[assembly: ViewPair(typeof(FilesView), typeof(FilesViewModel))]
+[assembly: ViewPair(typeof(FileSystemView), typeof(FileSystemViewModel))]
 [assembly: ViewPair(typeof(FtpParametersView), typeof(FtpParametersViewModel))]
 [assembly: ViewPair(typeof(FtpFilesView), typeof(FtpFilesViewModel))]
 [assembly: ViewPair(typeof(FilesPanelHeaderView), typeof(FilesPanelHeaderViewModel))]
@@ -37,3 +37,4 @@ using Sprava.Ui;
 [assembly: ViewPair(typeof(ExceptionView), typeof(ExceptionViewModel))]
 [assembly: ViewPair(typeof(ValidationErrorsView), typeof(ValidationErrorsViewModel))]
 [assembly: ViewPair(typeof(ChangeOrderView), typeof(ChangeOrderViewModel))]
+[assembly: ViewPair(typeof(FilesView), typeof(FilesViewModel))]
