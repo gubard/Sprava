@@ -26,6 +26,7 @@ using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
 using Neotoma.Contract.Helpers;
+using Neotoma.Contract.Models;
 using Neotoma.Contract.Services;
 using Nestor.Db.Helpers;
 using Nestor.Db.Models;
@@ -66,8 +67,8 @@ namespace Sprava.Services;
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
-[Transient(typeof(IFilesUiService), Factory = nameof(GetUiFilesService))]
-[Transient(typeof(ICredentialUiService), Factory = nameof(GetUiCredentialService))]
+[Transient(typeof(IFileSystemUiService), Factory = nameof(GetFileSystemUiService))]
+[Transient(typeof(ICredentialUiService), Factory = nameof(GetCredentialUiService))]
 [Transient(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
@@ -106,9 +107,17 @@ public interface ISpravaServiceProvider : IServiceProvider
         ).InitDbContext(migrator);
     }
 
-    public static FileStorageDbService GetFileStorageDbService(IDbConnectionFactory factory)
+    public static FileStorageDbService GetFileStorageDbService(
+        AppState appState,
+        IDbConnectionFactory factory,
+        GaiaValues gaiaValues
+    )
     {
-        return new(factory);
+        return new(
+            factory,
+            gaiaValues,
+            new DbServiceOptionsUiFactory(appState, nameof(FileStorageUiService))
+        );
     }
 
     public static FileSystemDbService GetFileSystemDbService(
@@ -229,7 +238,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 httpClient,
                 new()
                 {
-                    TypeInfoResolver = HestiaJsonContext.Resolver,
+                    TypeInfoResolver = NeotomaJsonContext.Resolver,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 },
                 new TryPolicyService(
@@ -285,7 +294,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static ICredentialUiService GetUiCredentialService(
+    public static ICredentialUiService GetCredentialUiService(
         CredentialServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
@@ -322,7 +331,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
     }
 
-    public static IFilesUiService GetUiFilesService(
+    public static IFileSystemUiService GetFileSystemUiService(
         FileSystemServiceOptions options,
         IFactory<Memory<HttpHeader>> headersFactory,
         AppState appState,
@@ -335,7 +344,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new FilesUiService(
+        return new FileSystemUiService(
             new FileSystemHttpService(
                 httpClient,
                 new()
@@ -346,7 +355,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
-                    _ => appState.SetServiceMode(nameof(FilesUiService), ServiceMode.Offline)
+                    _ => appState.SetServiceMode(nameof(FileSystemUiService), ServiceMode.Offline)
                 ),
                 headersFactory
             ),
@@ -354,7 +363,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             appState,
             uiCache,
             navigator,
-            nameof(FilesUiService),
+            nameof(FileSystemUiService),
             responseHandler
         );
     }
