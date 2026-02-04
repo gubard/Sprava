@@ -1,6 +1,4 @@
-﻿using System;
-using Gaia.Helpers;
-using Gaia.Services;
+﻿using Gaia.Services;
 using Jab;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;

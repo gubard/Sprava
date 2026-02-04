@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Platform;
 using Avalonia.VisualTree;
 using Gaia.Helpers;
-using Gaia.Models;
 using Inanna.Services;
 
 namespace Sprava.Ui;

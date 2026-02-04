@@ -6,11 +6,11 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell;
+using Cromwell.Models;
 using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
-using Sprava.Models;
 
 namespace Sprava.Ui;
 
@@ -84,15 +84,12 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     private async ValueTask InitializedCore(CancellationToken ct)
     {
-        var settings = await _objectStorage.LoadAsync<SpravaSettings>(
-            $"{typeof(SpravaSettings).FullName}",
-            ct
-        );
+        var settings = await _objectStorage.LoadAsync<CromwellSettings>(ct);
 
         Dispatcher.UIThread.Post(() =>
         {
-            GeneralKey = settings.CromwellSettings.GeneralKey;
-            Theme = settings.CromwellSettings.Theme;
+            GeneralKey = settings.GeneralKey;
+            Theme = settings.Theme;
         });
     }
 }

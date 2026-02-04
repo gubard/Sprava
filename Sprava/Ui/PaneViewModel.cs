@@ -1,12 +1,13 @@
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.Input;
+using Cromwell.Models;
 using Diocles.Models;
 using Diocles.Services;
+using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
-using Sprava.Models;
 using Sprava.Services;
 
 namespace Sprava.Ui;
@@ -73,12 +74,13 @@ public partial class PaneViewModel : ViewModelBase
 
     private async ValueTask SaveSettingsCore(AppSettingViewModel setting, CancellationToken ct)
     {
-        var settings = new SpravaSettings
+        var settings = new CromwellSettings
         {
-            CromwellSettings = new() { GeneralKey = setting.GeneralKey, Theme = setting.Theme },
+            GeneralKey = setting.GeneralKey,
+            Theme = setting.Theme,
         };
 
         await _dialogService.CloseMessageBoxAsync(ct);
-        await _objectStorage.SaveAsync($"{typeof(SpravaSettings).FullName}", settings, ct);
+        await _objectStorage.SaveAsync(settings, ct);
     }
 }
