@@ -38,3 +38,4 @@ using Sprava.Ui;
 [assembly: ViewPair(typeof(ValidationErrorsView), typeof(ValidationErrorsViewModel))]
 [assembly: ViewPair(typeof(ChangeOrderView), typeof(ChangeOrderViewModel))]
 [assembly: ViewPair(typeof(FilesView), typeof(FilesViewModel))]
+[assembly: ViewPair(typeof(ToDoItemHeaderView), typeof(ToDoItemHeaderViewModel))]
