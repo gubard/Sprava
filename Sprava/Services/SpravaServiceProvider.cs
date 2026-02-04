@@ -79,7 +79,7 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialDbService), Factory = nameof(GetCredentialDbService))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
 [Transient(typeof(FileSystemDbService), Factory = nameof(GetFileSystemDbService))]
-[Transient(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
+[Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
