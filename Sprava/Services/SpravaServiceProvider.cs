@@ -79,7 +79,7 @@ namespace Sprava.Services;
 [Transient(typeof(CredentialDbService), Factory = nameof(GetCredentialDbService))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
 [Transient(typeof(FileSystemDbService), Factory = nameof(GetFileSystemDbService))]
-[Transient(typeof(IDbConnectionFactory), Factory = nameof(GetDbConnectionFactory))]
+[Transient(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
@@ -89,24 +89,6 @@ namespace Sprava.Services;
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
-    public static IDbConnectionFactory GetDbConnectionFactory(
-        AppState appState,
-        IStorageService storageService,
-        IMigrator migrator
-    )
-    {
-        if (appState.User is null)
-        {
-            return new FileInfo($"{storageService.GetAppDirectory()}/sprava.db").InitDbContext(
-                migrator
-            );
-        }
-
-        return new FileInfo(
-            $"{storageService.GetAppDirectory()}/{appState.User.Id}.db"
-        ).InitDbContext(migrator);
-    }
-
     public static FileStorageDbService GetFileStorageDbService(
         AppState appState,
         IDbConnectionFactory factory,
