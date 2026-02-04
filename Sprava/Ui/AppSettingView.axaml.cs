@@ -8,4 +8,7 @@ public partial class AppSettingView : UserControl
     {
         InitializeComponent();
     }
+
+    public AppSettingViewModel ViewModel =>
+        DataContext as AppSettingViewModel ?? throw new NullReferenceException();
 }

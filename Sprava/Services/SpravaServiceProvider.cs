@@ -67,9 +67,9 @@ namespace Sprava.Services;
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
-[Transient(typeof(IFileSystemUiService), Factory = nameof(GetFileSystemUiService))]
-[Transient(typeof(ICredentialUiService), Factory = nameof(GetCredentialUiService))]
-[Transient(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
+[Singleton(typeof(IFileSystemUiService), Factory = nameof(GetFileSystemUiService))]
+[Singleton(typeof(ICredentialUiService), Factory = nameof(GetCredentialUiService))]
+[Singleton(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
 [Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
@@ -85,7 +85,7 @@ namespace Sprava.Services;
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 [Transient(typeof(FileStorageDbService), Factory = nameof(GetFileStorageDbService))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
-[Transient(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
+[Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
@@ -233,7 +233,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new FileStorageUiService(
+        var service = new FileStorageUiService(
             new FileStorageHttpService(
                 httpClient,
                 new()
@@ -249,12 +249,15 @@ public interface ISpravaServiceProvider : IServiceProvider
                 headersFactory
             ),
             dbService,
-            appState,
             uiCache,
             navigator,
             nameof(FileStorageUiService),
             responseHandler
         );
+
+        appState.AddService(service);
+
+        return service;
     }
 
     public static IToDoUiService GetToDoUiService(
@@ -270,7 +273,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new ToDoUiService(
+        var service = new ToDoUiService(
             new ToDoHttpService(
                 httpClient,
                 new()
@@ -286,12 +289,15 @@ public interface ISpravaServiceProvider : IServiceProvider
                 headersFactory
             ),
             toDoDbService,
-            appState,
             uiCache,
             navigator,
             nameof(ToDoUiService),
             responseHandler
         );
+
+        appState.AddService(service);
+
+        return service;
     }
 
     public static ICredentialUiService GetCredentialUiService(
@@ -307,7 +313,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new CredentialUiService(
+        var service = new CredentialUiService(
             new CredentialHttpService(
                 httpClient,
                 new()
@@ -323,12 +329,15 @@ public interface ISpravaServiceProvider : IServiceProvider
                 headersFactory
             ),
             credentialDbCredentialDbService,
-            appState,
             uiCache,
             navigator,
             nameof(CredentialUiService),
             responseHandler
         );
+
+        appState.AddService(service);
+
+        return service;
     }
 
     public static IFileSystemUiService GetFileSystemUiService(
@@ -344,7 +353,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         httpClient.BaseAddress = new(options.Url);
 
-        return new FileSystemUiService(
+        var service = new FileSystemUiService(
             new FileSystemHttpService(
                 httpClient,
                 new()
@@ -360,12 +369,15 @@ public interface ISpravaServiceProvider : IServiceProvider
                 headersFactory
             ),
             fileSystemDbService,
-            appState,
             uiCache,
             navigator,
             nameof(FileSystemUiService),
             responseHandler
         );
+
+        appState.AddService(service);
+
+        return service;
     }
 
     public static IMigrator GetMigrator()

@@ -4,7 +4,9 @@ using Avalonia;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Cromwell;
+using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
@@ -17,21 +19,19 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     public static readonly string FullAppName =
         $"Sprava {typeof(AppSettingViewModel).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"}";
 
-    [ObservableProperty]
-    private string _generalKey;
-
-    [ObservableProperty]
-    private ThemeVariantType _theme;
-
-    private readonly IObjectStorage _objectStorage;
-    private readonly Application _application;
-
-    public AppSettingViewModel(Application application, IObjectStorage objectStorage)
+    public AppSettingViewModel(
+        Application application,
+        IObjectStorage objectStorage,
+        AppState appState
+    )
     {
         _application = application;
         _objectStorage = objectStorage;
+        AppState = appState;
         _generalKey = string.Empty;
     }
+
+    public AppState AppState { get; }
 
     public ConfiguredValueTaskAwaitable InitUiAsync(CancellationToken ct)
     {
@@ -52,6 +52,34 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
+    }
+
+    [ObservableProperty]
+    private string _generalKey;
+
+    [ObservableProperty]
+    private ThemeVariantType _theme;
+
+    private readonly IObjectStorage _objectStorage;
+    private readonly Application _application;
+
+    [RelayCommand]
+    private async Task SwitchServiceModeAsync(IServiceState serviceState, CancellationToken ct)
+    {
+        await WrapCommandAsync(
+            () =>
+            {
+                if (serviceState.Mode == ServiceMode.Online)
+                {
+                    Dispatcher.UIThread.Post(() => serviceState.Mode = ServiceMode.Offline);
+
+                    return TaskHelper.FromResult((IValidationErrors)new DefaultValidationErrors());
+                }
+
+                return serviceState.HealthCheckAsync(ct);
+            },
+            ct
+        );
     }
 
     private async ValueTask InitializedCore(CancellationToken ct)
