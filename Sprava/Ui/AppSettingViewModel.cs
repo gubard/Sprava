@@ -37,7 +37,19 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     public ConfiguredValueTaskAwaitable InitUiAsync(CancellationToken ct)
     {
-        return WrapCommandAsync(() => InitializedCore(ct).ConfigureAwait(false), ct);
+        return WrapCommandAsync(
+            async () =>
+            {
+                var settings = await _objectStorage.LoadAsync<CromwellSettings>(ct);
+
+                Dispatcher.UIThread.Post(() =>
+                {
+                    GeneralKey = settings.GeneralKey;
+                    Theme = settings.Theme;
+                });
+            },
+            ct
+        );
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -92,16 +104,5 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
             },
             ct
         );
-    }
-
-    private async ValueTask InitializedCore(CancellationToken ct)
-    {
-        var settings = await _objectStorage.LoadAsync<CromwellSettings>(ct);
-
-        Dispatcher.UIThread.Post(() =>
-        {
-            GeneralKey = settings.GeneralKey;
-            Theme = settings.Theme;
-        });
     }
 }
