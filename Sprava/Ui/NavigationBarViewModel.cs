@@ -1,47 +1,16 @@
-using System.IdentityModel.Tokens.Jwt;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
-using Gaia.Helpers;
 using Inanna.Models;
 using Inanna.Services;
-using Melnikov.Services;
 
 namespace Sprava.Ui;
 
 public partial class NavigationBarViewModel : ViewModelBase
 {
-    public NavigationBarViewModel(
-        INavigator navigator,
-        IAppResourceService appResourceService,
-        IAuthenticationUiService service,
-        AppState appState,
-        JwtSecurityTokenHandler jwtSecurityTokenHandler
-    )
+    public NavigationBarViewModel(INavigator navigator, IAppResourceService appResourceService)
     {
         _navigator = navigator;
         _appResourceService = appResourceService;
-
-        service.LoggedIn += token =>
-        {
-            if (!jwtSecurityTokenHandler.CanReadToken(token.Token))
-            {
-                throw new("Invalid token");
-            }
-
-            var jwtSecurityToken = jwtSecurityTokenHandler.ReadJwtToken(token.Token);
-
-            appState.User = new()
-            {
-                Id = Guid.Parse(jwtSecurityToken.Claims.GetNameIdentifierClaim().Value),
-                Login = jwtSecurityToken.Claims.GetNameClaim().Value,
-                Email = jwtSecurityToken.Claims.GetEmailClaim().Value,
-            };
-        };
-
-        service.LoggedOut += () =>
-        {
-            appState.User = null;
-        };
 
         _navigator.ViewChanged += (_, _) =>
         {

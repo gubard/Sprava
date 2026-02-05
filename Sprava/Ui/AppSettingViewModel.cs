@@ -22,12 +22,14 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     public AppSettingViewModel(
         Application application,
         IObjectStorage objectStorage,
-        AppState appState
+        AppState appState,
+        INavigator navigator
     )
     {
         _application = application;
         _objectStorage = objectStorage;
         AppState = appState;
+        _navigator = navigator;
         _generalKey = string.Empty;
     }
 
@@ -62,21 +64,31 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     private readonly IObjectStorage _objectStorage;
     private readonly Application _application;
+    private readonly INavigator _navigator;
 
     [RelayCommand]
     private async Task SwitchServiceModeAsync(IServiceState serviceState, CancellationToken ct)
     {
         await WrapCommandAsync(
-            () =>
+            async () =>
             {
                 if (serviceState.Mode == ServiceMode.Online)
                 {
                     Dispatcher.UIThread.Post(() => serviceState.Mode = ServiceMode.Offline);
 
-                    return TaskHelper.FromResult((IValidationErrors)new DefaultValidationErrors());
+                    return new DefaultValidationErrors();
                 }
 
-                return serviceState.HealthCheckAsync(ct);
+                var errors = await serviceState.HealthCheckAsync(ct);
+
+                if (errors.ValidationErrors.Count != 0)
+                {
+                    return errors;
+                }
+
+                await _navigator.RefreshCurrentViewAsync(ct);
+
+                return errors;
             },
             ct
         );
