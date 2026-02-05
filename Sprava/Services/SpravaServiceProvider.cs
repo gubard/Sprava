@@ -20,6 +20,7 @@ using Hestia.Contract.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
+using Inanna.Ui;
 using Jab;
 using Manis.Contract.Services;
 using Melnikov.Models;
@@ -54,6 +55,7 @@ namespace Sprava.Services;
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
 [Transient(typeof(ISpravaViewModelFactory), typeof(SpravaViewModelFactory))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
+[Singleton(typeof(StatusBarViewModel))]
 [Singleton(typeof(NavigationBarViewModel))]
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(JwtSecurityTokenHandler))]
@@ -82,6 +84,7 @@ namespace Sprava.Services;
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
+[Transient(typeof(IStatusBarService), typeof(StatusBarService))]
 [Transient(typeof(FileStorageDbService), Factory = nameof(GetFileStorageDbService))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]

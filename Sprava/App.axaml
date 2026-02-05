@@ -3,6 +3,7 @@
              xmlns:ss="clr-namespace:Sprava.Services"
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:h="clr-namespace:Sprava.Helpers"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
@@ -21,6 +22,16 @@
 
         <DataTemplate x:DataType="ip:PackIconMaterialDesignKind">
             <ip:PackIconMaterialDesign Kind="{Binding}" />
+        </DataTemplate>
+
+        <DataTemplate x:DataType="m:ServiceOfflineStatus">
+            <StackPanel Classes="horizontal">
+                <TextBlock Classes="small align-center"
+                           Text="{Binding State.ServiceName, Converter={StaticResource StringLocalizationValueConverter}}" />
+                <Button Classes="small" Content="{StaticResource Lang.Offline}"
+                        Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
+                        CommandParameter="{Binding State}" />
+            </StackPanel>
         </DataTemplate>
     </Application.DataTemplates>
 

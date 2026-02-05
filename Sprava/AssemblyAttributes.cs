@@ -40,3 +40,4 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(ChangeOrderView), typeof(ChangeOrderViewModel))]
 [assembly: ViewPair(typeof(FilesView), typeof(FilesViewModel))]
 [assembly: ViewPair(typeof(ToDoItemHeaderView), typeof(ToDoItemHeaderViewModel))]
+[assembly: ViewPair(typeof(StatusBarView), typeof(StatusBarViewModel))]

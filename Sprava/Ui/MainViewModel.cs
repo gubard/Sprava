@@ -16,13 +16,15 @@ public partial class MainViewModel : ViewModelBase
         NavigationBarViewModel navigationBar,
         INavigator navigator,
         PaneViewModel pane,
-        IMelnikovViewModelFactory melnikovFactory
+        IMelnikovViewModelFactory melnikovFactory,
+        StatusBarViewModel statusBar
     )
     {
         Stack = stack;
         NavigationBar = navigationBar;
         _navigator = navigator;
         Pane = pane;
+        StatusBar = statusBar;
 
         navigator.NavigateToAsync(
             melnikovFactory.CreateSignIn(SignInAsync),
@@ -33,6 +35,7 @@ public partial class MainViewModel : ViewModelBase
     public StackViewModel Stack { get; }
     public NavigationBarViewModel NavigationBar { get; }
     public PaneViewModel Pane { get; }
+    public StatusBarViewModel StatusBar { get; }
 
     [ObservableProperty]
     private bool _isShowPane;

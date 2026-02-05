@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Cromwell;
 using Cromwell.Models;
 using Gaia.Helpers;
@@ -22,14 +21,12 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     public AppSettingViewModel(
         Application application,
         IObjectStorage objectStorage,
-        AppState appState,
-        INavigator navigator
+        AppState appState
     )
     {
         _application = application;
         _objectStorage = objectStorage;
         AppState = appState;
-        _navigator = navigator;
         _generalKey = string.Empty;
     }
 
@@ -76,33 +73,4 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     private readonly IObjectStorage _objectStorage;
     private readonly Application _application;
-    private readonly INavigator _navigator;
-
-    [RelayCommand]
-    private async Task SwitchServiceModeAsync(IServiceState serviceState, CancellationToken ct)
-    {
-        await WrapCommandAsync(
-            async () =>
-            {
-                if (serviceState.Mode == ServiceMode.Online)
-                {
-                    Dispatcher.UIThread.Post(() => serviceState.Mode = ServiceMode.Offline);
-
-                    return new DefaultValidationErrors();
-                }
-
-                var errors = await serviceState.HealthCheckAsync(ct);
-
-                if (errors.ValidationErrors.Count != 0)
-                {
-                    return errors;
-                }
-
-                await _navigator.RefreshCurrentViewAsync(ct);
-
-                return errors;
-            },
-            ct
-        );
-    }
 }
