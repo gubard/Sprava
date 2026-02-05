@@ -17,22 +17,22 @@ public class App : InannaApplication
     {
         InsertHelper.AddDefaultInsert(
             nameof(FileEntity),
-            id => new FileEntity[] { new() { Id = id } }.CreateInsertQuery()
+            (i, s) => new FileEntity[] { new() { Id = i } }.CreateInsertQuery(s)
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(ToDoEntity),
-            id => new ToDoEntity[] { new() { Id = id } }.CreateInsertQuery()
+            (i, s) => new ToDoEntity[] { new() { Id = i } }.CreateInsertQuery(s)
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(CredentialEntity),
-            id => new CredentialEntity[] { new() { Id = id } }.CreateInsertQuery()
+            (i, s) => new CredentialEntity[] { new() { Id = i } }.CreateInsertQuery(s)
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(FileObjectEntity),
-            id => new FileObjectEntity[] { new() { Id = id } }.CreateInsertQuery()
+            (i, s) => new FileObjectEntity[] { new() { Id = i } }.CreateInsertQuery(s)
         );
     }
 
