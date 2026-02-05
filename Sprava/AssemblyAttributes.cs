@@ -21,7 +21,6 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(CredentialView), typeof(CredentialViewModel))]
 [assembly: ViewPair(typeof(RootCredentialsView), typeof(RootCredentialsViewModel))]
 [assembly: ViewPair(typeof(CredentialParametersView), typeof(CredentialParametersViewModel))]
-[assembly: ViewPair(typeof(EditCredentialView), typeof(EditCredentialViewModel))]
 [assembly: ViewPair(typeof(RootCredentialsHeaderView), typeof(RootCredentialsHeaderViewModel))]
 [assembly: ViewPair(typeof(RootToDosView), typeof(RootToDosViewModel))]
 [assembly: ViewPair(typeof(ToDoListView), typeof(ToDoListViewModel))]
