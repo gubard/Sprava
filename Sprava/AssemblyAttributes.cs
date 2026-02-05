@@ -5,6 +5,7 @@ using Inanna.Generator;
 using Inanna.Ui;
 using Melnikov.Ui;
 using Sprava.Ui;
+using Weber.Ui;
 
 [assembly: ViewPair(typeof(PaneView), typeof(PaneViewModel))]
 [assembly: ViewPair(typeof(MainView), typeof(MainViewModel))]

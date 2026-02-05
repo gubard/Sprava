@@ -51,6 +51,9 @@
   <Folder Name="/Ui/Melnikov/">
     <Project Path="../Melnikov/Melnikov/Melnikov.csproj" />
   </Folder>
+  <Folder Name="/Ui/Weber/">
+    <Project Path="../Weber/Weber/Weber.csproj" />
+  </Folder>
   <Folder Name="/Zeus/">
     <Project Path="../Zeus/Zeus/Zeus.csproj" />
   </Folder>

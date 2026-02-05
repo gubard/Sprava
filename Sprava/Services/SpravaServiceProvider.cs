@@ -36,6 +36,7 @@ using Sprava.Ui;
 using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
 using Turtle.Contract.Services;
+using Weber.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 using JsonSerializer = Gaia.Services.JsonSerializer;
 
@@ -45,7 +46,6 @@ namespace Sprava.Services;
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
-[Import(typeof(ICaiServiceProvider))]
 [Import(typeof(ICaiServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(AppState))]
