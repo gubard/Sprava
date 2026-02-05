@@ -339,7 +339,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 httpClient,
                 new()
                 {
-                    TypeInfoResolver = AysJsonContext.Resolver,
+                    TypeInfoResolver = AyaJsonContext.Resolver,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 },
                 new TryPolicyService(

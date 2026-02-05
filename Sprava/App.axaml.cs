@@ -4,6 +4,7 @@ using Aya.Contract.Models;
 using Gaia.Helpers;
 using Hestia.Contract.Models;
 using Inanna.Services;
+using Neotoma.Contract.Models;
 using Nestor.Db.Helpers;
 using Sprava.Ui;
 using Turtle.Contract.Models;
@@ -27,6 +28,11 @@ public class App : InannaApplication
         InsertHelper.AddDefaultInsert(
             nameof(CredentialEntity),
             id => new CredentialEntity[] { new() { Id = id } }.CreateInsertQuery()
+        );
+
+        InsertHelper.AddDefaultInsert(
+            nameof(FileObjectEntity),
+            id => new FileObjectEntity[] { new() { Id = id } }.CreateInsertQuery()
         );
     }
 
