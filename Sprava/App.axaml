@@ -4,6 +4,7 @@
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:h="clr-namespace:Sprava.Helpers"
+             xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
@@ -12,8 +13,8 @@
 
         <DataTemplate x:DataType="m:InannaCommand">
             <Button Command="{Binding Command}"
-                    Classes.danger="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Danger}}"
-                    Classes.primary="{Binding Type, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ButtonType.Primary}}"
+                    Classes.danger="{Binding Type, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Danger}}"
+                    Classes.primary="{Binding Type, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Primary}}"
                     IsEnabled="{Binding IsEnable}"
                     Content="{Binding Icon}"
                     CommandParameter="{Binding Parameter}"
@@ -27,7 +28,7 @@
         <DataTemplate x:DataType="m:ServiceOfflineStatus">
             <StackPanel Classes="horizontal">
                 <TextBlock Classes="small align-center"
-                           Text="{Binding State.ServiceName, Converter={StaticResource StringLocalizationValueConverter}}" />
+                           Text="{Binding State.ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
                 <Button Classes="small" Content="{StaticResource Lang.Offline}"
                         Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
                         CommandParameter="{Binding State}" />

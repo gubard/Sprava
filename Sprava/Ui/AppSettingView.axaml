@@ -6,6 +6,7 @@
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              xmlns:h="clr-namespace:Sprava.Helpers"
+             xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.AppSettingView"
              x:DataType="ui:AppSettingViewModel">
@@ -22,10 +23,10 @@
                 <DataTemplate>
                     <StackPanel Classes="horizontal">
                         <TextBlock Classes="align-center"
-                                   Text="{Binding ServiceName, Converter={StaticResource StringLocalizationValueConverter}}" />
+                                   Text="{Binding ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
                         <ToggleButton Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
                                       CommandParameter="{Binding}"
-                                      IsChecked="{Binding Mode, Mode=OneWay, Converter={StaticResource IsValueConverter}, ConverterParameter={x:Static m:ServiceMode.Online}}"
+                                      IsChecked="{Binding Mode, Mode=OneWay, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ServiceMode.Online}}"
                                       Content="{StaticResource Lang.Online}" />
                     </StackPanel>
                 </DataTemplate>
