@@ -16,12 +16,12 @@ public partial class NavigationBarViewModel : ViewModelBase
         {
             OnPropertyChanged(nameof(IsCanBack));
             OnPropertyChanged(nameof(Header));
-            OnPropertyChanged(nameof(IsVisible));
+            OnPropertyChanged(nameof(IsHeaderVisible));
         };
     }
 
     public bool IsCanBack => !_navigator.IsEmpty;
-    public bool IsVisible => _navigator.CurrentView is not INonHeader;
+    public bool IsHeaderVisible => _navigator.CurrentView is not INonHeader;
 
     public object Header =>
         _navigator.CurrentView switch

@@ -30,12 +30,15 @@ public partial class MainViewModel : ViewModelBase
             melnikovFactory.CreateSignIn(SignInAsync),
             CancellationToken.None
         );
+
+        _navigator.ViewChanged += (_, _) => OnPropertyChanged(nameof(IsStatusBarVisible));
     }
 
     public StackViewModel Stack { get; }
     public NavigationBarViewModel NavigationBar { get; }
     public PaneViewModel Pane { get; }
     public StatusBarViewModel StatusBar { get; }
+    public bool IsStatusBarVisible => _navigator.CurrentView is not INonStatusBar;
 
     [ObservableProperty]
     private bool _isShowPane;

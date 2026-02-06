@@ -23,7 +23,7 @@
                 <c:NotificationPanel Identifier="Notifications">
                     <SplitView IsPaneOpen="{Binding IsShowPane}" Pane="{Binding Pane}">
                         <Grid RowDefinitions="Auto,Auto,*">
-                            <ContentControl Content="{Binding StatusBar}" />
+                            <ContentControl IsVisible="{Binding IsStatusBarVisible}" Content="{Binding StatusBar}" />
                             <ContentControl Grid.Row="1" Content="{Binding NavigationBar}" />
                             <ContentControl Grid.Row="2" Content="{Binding Stack}" />
                         </Grid>

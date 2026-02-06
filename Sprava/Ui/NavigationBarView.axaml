@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.NavigationBarView"
              x:DataType="ui:NavigationBarViewModel"
-             IsVisible="{Binding IsVisible}">
+             IsVisible="{Binding IsHeaderVisible}">
     <Grid ColumnDefinitions="Auto,*">
         <StackPanel Grid.Column="0" Classes="horizontal">
             <Button Content="{ip:MaterialDesign Menu}"
