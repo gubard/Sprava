@@ -63,7 +63,6 @@ namespace Sprava.Services;
 [Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
-[Transient(typeof(DbValues), Factory = nameof(GetGaiaValues))]
 [Transient(typeof(FileSystemServiceOptions), Factory = nameof(GetFileSystemServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
@@ -95,7 +94,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static FileStorageDbService GetFileStorageDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        DbValues dbValues
+        IFactory<DbValues> dbValues
     )
     {
         return new(
@@ -108,7 +107,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static FileSystemDbService GetFileSystemDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        DbValues dbValues
+        IFactory<DbValues> dbValues
     )
     {
         return new(
@@ -137,7 +136,7 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static CredentialDbService GetCredentialDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        DbValues dbValues
+        IFactory<DbValues> dbValues
     )
     {
         return new(
