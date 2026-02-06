@@ -81,6 +81,7 @@ namespace Sprava.Services;
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 [Transient(typeof(IStatusBarService), typeof(StatusBarService))]
+[Transient(typeof(IServiceController), Factory = nameof(GetServiceController))]
 [Transient(typeof(FileStorageDbService), Factory = nameof(GetFileStorageDbService))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
@@ -88,6 +89,21 @@ namespace Sprava.Services;
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IServiceController GetServiceController(
+        IFileSystemUiService fileSystemUiService,
+        ICredentialUiService credentialUiService,
+        IToDoUiService toDoUiService,
+        IFileStorageUiService fileStorageUiService
+    )
+    {
+        return new ServiceController([
+            fileSystemUiService,
+            credentialUiService,
+            toDoUiService,
+            fileStorageUiService,
+        ]);
+    }
+
     public static FileStorageDbService GetFileStorageDbService(
         AppState appState,
         IDbConnectionFactory factory,
@@ -400,11 +416,6 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static IStringFormater GetStringFormater()
     {
         return StringFormater.Instance;
-    }
-
-    public static DbValues GetGaiaValues(AppState appState)
-    {
-        return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions(

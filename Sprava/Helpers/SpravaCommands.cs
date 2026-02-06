@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Avalonia.Threading;
+using Diocles.Ui;
 using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Helpers;
@@ -18,13 +19,20 @@ public static class SpravaCommands
         var mainViewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
         var navigator = DiHelper.ServiceProvider.GetService<INavigator>();
 
+        var melnikovViewModelFactory =
+            DiHelper.ServiceProvider.GetService<IMelnikovViewModelFactory>();
+
         var uiAuthenticationService =
             DiHelper.ServiceProvider.GetService<IAuthenticationUiService>();
 
         async ValueTask LogoutAsync(CancellationToken ct)
         {
             await uiAuthenticationService.LogoutAsync(ct);
-            await UiHelper.NavigateToAsync<SignInViewModel>(ct);
+
+            await navigator.NavigateToAsync(
+                melnikovViewModelFactory.CreateSignIn(UiHelper.NavigateToAsync<RootToDosViewModel>),
+                ct
+            );
         }
 
         async ValueTask<IValidationErrors> SwitchServiceModeAsync(
