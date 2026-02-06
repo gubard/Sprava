@@ -5,7 +5,7 @@ using Inanna.Services;
 
 namespace Sprava.Ui;
 
-public partial class NavigationBarViewModel : ViewModelBase
+public sealed partial class NavigationBarViewModel : ViewModelBase
 {
     public NavigationBarViewModel(INavigator navigator, IAppResourceService appResourceService)
     {
@@ -26,11 +26,6 @@ public partial class NavigationBarViewModel : ViewModelBase
     public object Header =>
         _navigator.CurrentView switch
         {
-            null => new TextBlock
-            {
-                Text = _appResourceService.GetResource<string>("Lang.Sprava"),
-                Classes = { "align-left-center", "h3" },
-            },
             IHeader header => header.Header,
             _ => new TextBlock
             {

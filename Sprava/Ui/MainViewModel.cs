@@ -8,7 +8,7 @@ using Melnikov.Services;
 
 namespace Sprava.Ui;
 
-public partial class MainViewModel : ViewModelBase
+public sealed partial class MainViewModel : ViewModelBase
 {
     public MainViewModel(
         StackViewModel stack,
