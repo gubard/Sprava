@@ -12,6 +12,7 @@
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:dh="clr-namespace:Diocles.Helpers;assembly=Diocles"
              xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
+             xmlns:h="clr-namespace:Cromwell.Helpers;assembly=Cromwell"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
@@ -67,6 +68,22 @@
                             Command="{x:Static sh:SpravaCommands.LogoutCommand}"
                             Click="PaneButtonOnClick" />
                 </StackPanel>
+            </c:GroupBoxControl>
+
+            <c:GroupBoxControl Header="{StaticResource Lang.Credentials}"
+                               IsVisible="{Binding Credentials.Count, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static ih:Numbers.Int32_0}}">
+                <ItemsControl ItemsSource="{Binding Credentials}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Classes="align-stretch"
+                                    Command="{x:Static h:CromwellCommands.GeneratePasswordCommand}"
+                                    CommandParameter="{Binding}"
+                                    Click="PaneButtonOnClick">
+                                <TextBlock Classes="align-left" Text="{Binding Name}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </c:GroupBoxControl>
 
             <c:GroupBoxControl Header="{StaticResource Lang.ToDos}"

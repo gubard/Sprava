@@ -1,6 +1,7 @@
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.Input;
 using Cromwell.Models;
+using Cromwell.Services;
 using Diocles.Models;
 using Diocles.Services;
 using Gaia.Helpers;
@@ -20,6 +21,7 @@ public partial class PaneViewModel : ViewModelBase
         IAppResourceService appResourceService,
         IObjectStorage objectStorage,
         IToDoUiCache toDoUiCache,
+        ICredentialUiCache credentialUiCache,
         AppState appState
     )
     {
@@ -28,10 +30,12 @@ public partial class PaneViewModel : ViewModelBase
         _appResourceService = appResourceService;
         _objectStorage = objectStorage;
         ToDos = toDoUiCache.Bookmarks;
+        Credentials = credentialUiCache.Bookmarks;
         AppState = appState;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
+    public IAvaloniaReadOnlyList<CredentialNotify> Credentials { get; }
     public AppState AppState { get; }
 
     private readonly IDialogService _dialogService;
