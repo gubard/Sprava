@@ -19,7 +19,7 @@ public partial class PaneViewModel : ViewModelBase
         ISpravaViewModelFactory spravaViewModelFactory,
         IAppResourceService appResourceService,
         IObjectStorage objectStorage,
-        IToDoMemoryCache toDoMemoryCache,
+        IToDoUiCache toDoUiCache,
         AppState appState
     )
     {
@@ -27,7 +27,7 @@ public partial class PaneViewModel : ViewModelBase
         _spravaViewModelFactory = spravaViewModelFactory;
         _appResourceService = appResourceService;
         _objectStorage = objectStorage;
-        ToDos = toDoMemoryCache.Bookmarks;
+        ToDos = toDoUiCache.Bookmarks;
         AppState = appState;
     }
 

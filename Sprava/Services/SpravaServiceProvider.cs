@@ -63,7 +63,7 @@ namespace Sprava.Services;
 [Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
-[Transient(typeof(GaiaValues), Factory = nameof(GetGaiaValues))]
+[Transient(typeof(DbValues), Factory = nameof(GetGaiaValues))]
 [Transient(typeof(FileSystemServiceOptions), Factory = nameof(GetFileSystemServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
@@ -89,17 +89,18 @@ namespace Sprava.Services;
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
+[Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
     public static FileStorageDbService GetFileStorageDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        GaiaValues gaiaValues
+        DbValues dbValues
     )
     {
         return new(
             factory,
-            gaiaValues,
+            dbValues,
             new DbServiceOptionsUiFactory(appState, nameof(FileStorageUiService))
         );
     }
@@ -107,12 +108,12 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static FileSystemDbService GetFileSystemDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        GaiaValues gaiaValues
+        DbValues dbValues
     )
     {
         return new(
             factory,
-            gaiaValues,
+            dbValues,
             new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
         );
     }
@@ -136,38 +137,37 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static CredentialDbService GetCredentialDbService(
         AppState appState,
         IDbConnectionFactory factory,
-        GaiaValues gaiaValues
+        DbValues dbValues
     )
     {
         return new(
             factory,
-            gaiaValues,
+            dbValues,
             new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
         );
     }
 
     public static ICredentialUiCache GetCredentialUiCache(
         ICredentialMemoryCache memoryCache,
-        CredentialDbService credentialDbCredentialDbService
+        CredentialDbService dbService
     )
     {
-        return new CredentialUiCache(credentialDbCredentialDbService, memoryCache);
+        return new CredentialUiCache(dbService, memoryCache);
     }
 
     public static ToDoDbService GetToDoDbService(
         AppState appState,
-        ToDoParametersFillerService toDoParametersFillerService,
+        ToDoParametersFillerService parametersFillerService,
         IDbConnectionFactory factory,
-        IToDoValidator toDoValidator
+        IToDoValidator validator,
+        IFactory<DbValues> dbValuesFactory
     )
     {
-        var user = appState.User.ThrowIfNull();
-
         return new(
             factory,
-            new(DateTimeOffset.UtcNow.Offset, user.Id),
-            toDoParametersFillerService,
-            toDoValidator,
+            dbValuesFactory,
+            parametersFillerService,
+            validator,
             new DbServiceOptionsUiFactory(appState, nameof(ToDoUiService))
         );
     }
@@ -406,7 +406,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         return StringFormater.Instance;
     }
 
-    public static GaiaValues GetGaiaValues(AppState appState)
+    public static DbValues GetGaiaValues(AppState appState)
     {
         return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
     }
