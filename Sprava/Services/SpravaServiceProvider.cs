@@ -10,14 +10,12 @@ using Cromwell.Models;
 using Cromwell.Services;
 using Diocles.Models;
 using Diocles.Services;
-using Diocles.Ui;
 using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
 using Hestia.Contract.Helpers;
 using Hestia.Contract.Models;
 using Hestia.Contract.Services;
-using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Inanna.Ui;
@@ -52,7 +50,6 @@ namespace Sprava.Services;
 [Singleton(typeof(AppState))]
 [Transient(typeof(PaneViewModel))]
 [Transient(typeof(AppSettingViewModel))]
-[Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
 [Transient(typeof(ISpravaViewModelFactory), typeof(SpravaViewModelFactory))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
 [Singleton(typeof(StatusBarViewModel))]
@@ -408,20 +405,6 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static DbValues GetGaiaValues(AppState appState)
     {
         return new(DateTimeOffset.UtcNow.Offset, appState.User.ThrowIfNull().Id);
-    }
-
-    public static SignInViewModel GetSignInViewModel(
-        IAuthenticationUiService authenticationUiService,
-        IObjectStorage objectStorage,
-        AppState appState
-    )
-    {
-        return new(
-            authenticationUiService,
-            UiHelper.NavigateToAsync<RootToDosViewModel>,
-            objectStorage,
-            appState
-        );
     }
 
     public static AuthenticationServiceOptions GetAuthenticationServiceOptions(

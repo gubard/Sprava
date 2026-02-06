@@ -1,7 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Diocles.Services;
-using Gaia.Helpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Diocles.Ui;
+using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Inanna.Ui;
@@ -27,7 +26,7 @@ public partial class MainViewModel : ViewModelBase
         StatusBar = statusBar;
 
         navigator.NavigateToAsync(
-            melnikovFactory.CreateSignIn(SignInAsync),
+            melnikovFactory.CreateSignIn(UiHelper.NavigateToAsync<RootToDosViewModel>),
             CancellationToken.None
         );
 
@@ -44,12 +43,4 @@ public partial class MainViewModel : ViewModelBase
     private bool _isShowPane;
 
     private readonly INavigator _navigator;
-
-    private ConfiguredValueTaskAwaitable SignInAsync(CancellationToken ct)
-    {
-        return _navigator.NavigateToAsync(
-            DiHelper.ServiceProvider.GetService<IDioclesViewModelFactory>().CreateRootToDos(),
-            ct
-        );
-    }
 }
