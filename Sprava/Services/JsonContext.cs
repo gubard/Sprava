@@ -19,4 +19,5 @@ public partial class OptionsJsonContext : JsonSerializerContext;
 [JsonSerializable(typeof(AuthenticationSettings))]
 [JsonSerializable(typeof(ToDosSetting))]
 [JsonSerializable(typeof(ToDoParametersSettings))]
+[JsonSerializable(typeof(SearchToDoSettings))]
 public partial class SettingsJsonContext : JsonSerializerContext;
