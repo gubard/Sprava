@@ -40,3 +40,5 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(FilesView), typeof(FilesViewModel))]
 [assembly: ViewPair(typeof(ToDoItemHeaderView), typeof(ToDoItemHeaderViewModel))]
 [assembly: ViewPair(typeof(StatusBarView), typeof(StatusBarViewModel))]
+[assembly: ViewPair(typeof(ChangeParentCredentialView), typeof(ChangeParentCredentialViewModel))]
+[assembly: ViewPair(typeof(CredentialTreeView), typeof(CredentialTreeViewModel))]
