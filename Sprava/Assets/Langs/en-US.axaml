@@ -184,8 +184,8 @@
     <s:String x:Key="Lang.SignUp">Sign Up</s:String>
     <s:String x:Key="Lang.Sprava">Sprava</s:String>
     <s:String x:Key="Lang.Offline">Offline</s:String>
-    <s:String x:Key="Lang.ToDos">ToDos</s:String>
-    <s:String x:Key="Lang.ToDo">ToDo</s:String>
+    <s:String x:Key="Lang.ToDos">To Dos</s:String>
+    <s:String x:Key="Lang.ToDo">To Do</s:String>
     <s:String x:Key="Lang.Icon">Icon</s:String>
     <s:String x:Key="Lang.Color">Color</s:String>
     <s:String x:Key="Lang.RemindDaysBefore">Remind days before</s:String>

@@ -75,12 +75,20 @@
                 <ItemsControl ItemsSource="{Binding Credentials}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Classes="align-stretch"
-                                    Command="{x:Static h:CromwellCommands.GeneratePasswordCommand}"
-                                    CommandParameter="{Binding}"
-                                    Click="PaneButtonOnClick">
-                                <TextBlock Classes="align-left" Text="{Binding Name}" />
-                            </Button>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Button Classes="align-stretch"
+                                        Command="{x:Static h:CromwellCommands.GeneratePasswordCommand}"
+                                        CommandParameter="{Binding}"
+                                        Click="PaneButtonOnClick">
+                                    <TextBlock Classes="align-left" Text="{Binding Name}" />
+                                </Button>
+
+                                <Button Grid.Column="1"
+                                        Command="{x:Static h:CromwellCommands.LoginToClipboardCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="{ip:MaterialDesign Login}"
+                                        Click="PaneButtonOnClick" />
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
