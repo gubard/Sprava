@@ -1,6 +1,12 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.AddBarcode">Add barcode</s:String>
+    <s:String x:Key="Lang.AddFiles">Add files</s:String>
+    <s:String x:Key="Lang.GenerateLinearBarcode">Generate linear barcode</s:String>
+    <s:String x:Key="Lang.Generate">Generate</s:String>
+    <s:String x:Key="Lang.Text">Text</s:String>
+    <s:String x:Key="Lang.Barcode">Barcode</s:String>
     <s:String x:Key="Lang.User">User</s:String>
     <s:String x:Key="Lang.Service">Service</s:String>
     <s:String x:Key="Lang.Updated">Updated</s:String>

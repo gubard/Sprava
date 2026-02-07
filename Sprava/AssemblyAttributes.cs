@@ -42,3 +42,5 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(StatusBarView), typeof(StatusBarViewModel))]
 [assembly: ViewPair(typeof(ChangeParentCredentialView), typeof(ChangeParentCredentialViewModel))]
 [assembly: ViewPair(typeof(CredentialTreeView), typeof(CredentialTreeViewModel))]
+[assembly: ViewPair(typeof(LinearBarcodeView), typeof(LinearBarcodeViewModel))]
+[assembly: ViewPair(typeof(LinearBarcodeGeneratorView), typeof(LinearBarcodeGeneratorViewModel))]

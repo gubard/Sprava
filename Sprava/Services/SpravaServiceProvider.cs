@@ -86,8 +86,17 @@ namespace Sprava.Services;
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
+[Singleton(
+    typeof(ILinearBarcodeSerializerFactory),
+    Factory = nameof(GetLinearBarcodeSerializerFactory)
+)]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static ILinearBarcodeSerializerFactory GetLinearBarcodeSerializerFactory()
+    {
+        return new LinearBarcodeSerializerFactory([new UpcALinearBarcodeSerializer()]);
+    }
+
     public static IServiceController GetServiceController(
         IFileSystemUiService fileSystemUiService,
         ICredentialUiService credentialUiService,
