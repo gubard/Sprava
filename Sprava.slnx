@@ -14,6 +14,10 @@
     <Project Path="../Nestor/Nestor.Db/Nestor.Db.csproj" />
     <Project Path="../Nestor/Nestor.SourceGenerator/Nestor.SourceGenerator.csproj" />
   </Folder>
+  <Folder Name="/Rooster/">
+    <Project Path="../Rooster/Rooster.Contract/Rooster.Contract.csproj" />
+    <Project Path="../Rooster/Rooster/Rooster.csproj" />
+  </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Aya/">
     <Project Path="../Aya/Aya.Contract/Aya.Contract.csproj" />
