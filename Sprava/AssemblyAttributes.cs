@@ -44,3 +44,4 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(CredentialTreeView), typeof(CredentialTreeViewModel))]
 [assembly: ViewPair(typeof(LinearBarcodeView), typeof(LinearBarcodeViewModel))]
 [assembly: ViewPair(typeof(LinearBarcodeGeneratorView), typeof(LinearBarcodeGeneratorViewModel))]
+[assembly: ViewPair(typeof(AddBarcodeFileView), typeof(AddBarcodeFileViewModel))]
