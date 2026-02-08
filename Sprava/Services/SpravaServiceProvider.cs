@@ -94,7 +94,10 @@ public interface ISpravaServiceProvider : IServiceProvider
 {
     public static ILinearBarcodeSerializerFactory GetLinearBarcodeSerializerFactory()
     {
-        return new LinearBarcodeSerializerFactory([new UpcALinearBarcodeSerializer()]);
+        return new LinearBarcodeSerializerFactory([
+            new UpcALinearBarcodeSerializer(),
+            new CodabarLinearBarcodeSerializer(),
+        ]);
     }
 
     public static IServiceController GetServiceController(
