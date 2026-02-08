@@ -14,10 +14,6 @@
     <Project Path="../Nestor/Nestor.Db/Nestor.Db.csproj" />
     <Project Path="../Nestor/Nestor.SourceGenerator/Nestor.SourceGenerator.csproj" />
   </Folder>
-  <Folder Name="/Rooster/">
-    <Project Path="../Rooster/Rooster.Contract/Rooster.Contract.csproj" />
-    <Project Path="../Rooster/Rooster/Rooster.csproj" />
-  </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Aya/">
     <Project Path="../Aya/Aya.Contract/Aya.Contract.csproj" />
@@ -34,6 +30,10 @@
   <Folder Name="/Services/Neotoma/">
     <Project Path="../Neotoma/Neotoma.Contract/Neotoma.Contract.csproj" />
     <Project Path="../Neotoma/Neotoma/Neotoma.csproj" />
+  </Folder>
+  <Folder Name="/Services/Rooster/">
+    <Project Path="../Rooster/Rooster.Contract/Rooster.Contract.csproj" />
+    <Project Path="../Rooster/Rooster/Rooster.csproj" />
   </Folder>
   <Folder Name="/Services/Turtle/">
     <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />

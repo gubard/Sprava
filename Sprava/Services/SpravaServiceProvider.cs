@@ -10,11 +10,13 @@ using Cromwell.Models;
 using Cromwell.Services;
 using Diocles.Models;
 using Diocles.Services;
+using Diocles.Ui;
 using Gaia.Models;
 using Gaia.Services;
 using Hestia.Contract.Helpers;
 using Hestia.Contract.Models;
 using Hestia.Contract.Services;
+using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Inanna.Ui;
@@ -77,6 +79,7 @@ namespace Sprava.Services;
 [Transient(typeof(FileSystemDbService), Factory = nameof(GetFileSystemDbService))]
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
+[Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 [Transient(typeof(IStatusBarService), typeof(StatusBarService))]
@@ -92,6 +95,22 @@ namespace Sprava.Services;
 )]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static SignInViewModel GetSignInViewModel(
+        IAuthenticationUiService authenticationUiService,
+        IObjectStorage objectStorage,
+        AppState appState,
+        IServiceController serviceController
+    )
+    {
+        return new(
+            authenticationUiService,
+            UiHelper.NavigateToAsync<RootToDosViewModel>,
+            objectStorage,
+            appState,
+            serviceController
+        );
+    }
+
     public static ILinearBarcodeSerializerFactory GetLinearBarcodeSerializerFactory()
     {
         return new LinearBarcodeSerializerFactory([

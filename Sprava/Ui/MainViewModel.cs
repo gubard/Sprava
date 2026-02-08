@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Diocles.Ui;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
 using Inanna.Ui;
-using Melnikov.Services;
+using Melnikov.Ui;
 
 namespace Sprava.Ui;
 
@@ -15,7 +14,6 @@ public sealed partial class MainViewModel : ViewModelBase
         NavigationBarViewModel navigationBar,
         INavigator navigator,
         PaneViewModel pane,
-        IMelnikovViewModelFactory melnikovFactory,
         StatusBarViewModel statusBar
     )
     {
@@ -24,12 +22,7 @@ public sealed partial class MainViewModel : ViewModelBase
         _navigator = navigator;
         Pane = pane;
         StatusBar = statusBar;
-
-        navigator.NavigateToAsync(
-            melnikovFactory.CreateSignIn(UiHelper.NavigateToAsync<RootToDosViewModel>),
-            CancellationToken.None
-        );
-
+        UiHelper.NavigateToAsync<SignInViewModel>(CancellationToken.None);
         _navigator.ViewChanged += (_, _) => OnPropertyChanged(nameof(IsStatusBarVisible));
     }
 
