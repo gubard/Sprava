@@ -4,7 +4,7 @@
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:h="clr-namespace:Sprava.Helpers"
-             xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
+             xmlns:is="clr-namespace:Inanna.Services;assembly=Inanna"
              x:Class="Sprava.App"
              RequestedThemeVariant="Default">
     <Application.DataTemplates>
@@ -13,8 +13,8 @@
 
         <DataTemplate x:DataType="m:InannaCommand">
             <Button Command="{Binding Command}"
-                    Classes.danger="{Binding Type, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Danger}}"
-                    Classes.primary="{Binding Type, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Primary}}"
+                    Classes.danger="{Binding Type, Converter={x:Static is:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Danger}}"
+                    Classes.primary="{Binding Type, Converter={x:Static is:IsValueConverter.Instance}, ConverterParameter={x:Static m:ButtonType.Primary}}"
                     IsEnabled="{Binding IsEnable}"
                     Content="{Binding Icon}"
                     CommandParameter="{Binding Parameter}"
@@ -28,8 +28,8 @@
         <DataTemplate x:DataType="m:ServiceOfflineStatus">
             <StackPanel Classes="horizontal">
                 <TextBlock Classes="small align-center"
-                           Text="{Binding State.ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
-                <Button Classes="small" Content="{StaticResource Lang.Offline}"
+                           Text="{Binding State.ServiceName, Converter={x:Static is:StringLocalizationConverter.Instance}}" />
+                <Button Classes="small" Content="{DynamicResource Lang.Offline}"
                         Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
                         CommandParameter="{Binding State}" />
             </StackPanel>
@@ -39,8 +39,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://LiveMarkdown.Avalonia/Defaults.axaml"/>
-                <ResourceInclude Source="Assets/Langs/en-US.axaml" />
+                <ResourceInclude Source="avares://LiveMarkdown.Avalonia/Defaults.axaml" />
                 <ResourceInclude Source="Styles/Resources.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -48,11 +47,18 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://LiveMarkdown.Avalonia/Styles.axaml"/>
+        <StyleInclude Source="avares://LiveMarkdown.Avalonia/Styles.axaml" />
         <StyleInclude Source="avares://IconPacks.Avalonia.MaterialDesign/MaterialDesign.axaml" />
         <StyleInclude Source="avares://Inanna/Styles/Theme.axaml" />
         <StyleInclude Source="avares://Cromwell/Styles/Theme.axaml" />
         <StyleInclude Source="avares://Diocles/Styles/Theme.axaml" />
         <StyleInclude Source="Styles/Theme.axaml" />
+
+        <is:LangResource>
+            <is:LangResource.Resources>
+                <ResourceInclude x:Key="{x:Static m:Lang.EnglishUs}" Source="Assets/Langs/en-US.axaml" />
+                <ResourceInclude x:Key="{x:Static m:Lang.Ukrainian}" Source="Assets/Langs/uk-UA.axaml" />
+            </is:LangResource.Resources>
+        </is:LangResource>
     </Application.Styles>
 </Application>

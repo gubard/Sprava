@@ -1,6 +1,9 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.EnglishUs">English(US)</s:String>
+    <s:String x:Key="Lang.Ukrainian">Українська</s:String>
+    <s:String x:Key="Lang.Lang">Language</s:String>
     <s:String x:Key="Lang.Alarms">Alarms</s:String>
     <s:String x:Key="Lang.DueTime">Due time</s:String>
     <s:String x:Key="Lang.Alarm">Alarm</s:String>

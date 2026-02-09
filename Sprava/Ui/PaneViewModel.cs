@@ -9,6 +9,8 @@ using Gaia.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
+using Melnikov.Services;
+using Sprava.Models;
 using Sprava.Services;
 
 namespace Sprava.Ui;
@@ -22,7 +24,8 @@ public partial class PaneViewModel : ViewModelBase
         IObjectStorage objectStorage,
         IToDoUiCache toDoUiCache,
         ICredentialUiCache credentialUiCache,
-        AppState appState
+        AppState appState,
+        IAuthenticationUiService authenticationUiService
     )
     {
         _dialogService = dialogService;
@@ -32,6 +35,7 @@ public partial class PaneViewModel : ViewModelBase
         ToDos = toDoUiCache.Bookmarks;
         Credentials = credentialUiCache.Bookmarks;
         AppState = appState;
+        _authenticationUiService = authenticationUiService;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
@@ -42,6 +46,7 @@ public partial class PaneViewModel : ViewModelBase
     private readonly ISpravaViewModelFactory _spravaViewModelFactory;
     private readonly IAppResourceService _appResourceService;
     private readonly IObjectStorage _objectStorage;
+    private readonly IAuthenticationUiService _authenticationUiService;
 
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)
@@ -76,15 +81,16 @@ public partial class PaneViewModel : ViewModelBase
         await WrapCommandAsync(() => SaveSettingsCore(setting, ct).ConfigureAwait(false), ct);
     }
 
-    private async ValueTask SaveSettingsCore(AppSettingViewModel setting, CancellationToken ct)
+    private async ValueTask SaveSettingsCore(AppSettingViewModel viewModel, CancellationToken ct)
     {
-        var settings = new CromwellSettings
-        {
-            GeneralKey = setting.GeneralKey,
-            Theme = setting.Theme,
-        };
-
+        var cromwellSettings = new CromwellSettings { GeneralKey = viewModel.GeneralKey };
+        var inannaSettings = new InannaSettings { Theme = viewModel.Theme, Lang = viewModel.Lang };
         await _dialogService.CloseMessageBoxAsync(ct);
-        await _objectStorage.SaveAsync(settings, ct);
+        await _objectStorage.SaveAsync(cromwellSettings, ct);
+        await _objectStorage.SaveAsync(inannaSettings, ct);
+
+        await _authenticationUiService.InvokeGlobalAsync(() =>
+            _objectStorage.SaveAsync(inannaSettings, ct)
+        );
     }
 }

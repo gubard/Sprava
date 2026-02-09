@@ -1,6 +1,7 @@
 ﻿using System.Collections.Frozen;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using Avalonia;
 using Aya.Contract.Helpers;
 using Aya.Contract.Models;
 using Aya.Contract.Services;
@@ -97,12 +98,18 @@ namespace Sprava.Services;
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
 [Singleton(typeof(IAlarmUiService), Factory = nameof(GetAlarmUiService))]
 [Transient(typeof(IAuthenticationService), Factory = nameof(GetAuthenticationService))]
+[Singleton(typeof(LangResource), Factory = nameof(GetLangResource))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
 )]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static LangResource GetLangResource(Application app)
+    {
+        return app.Styles.OfType<LangResource>().First();
+    }
+
     public static IAuthenticationService GetAuthenticationService(
         AuthenticationServiceOptions options,
         HttpClient httpClient

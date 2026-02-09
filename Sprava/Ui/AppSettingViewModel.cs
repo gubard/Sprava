@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Cromwell;
 using Cromwell.Models;
 using Gaia.Helpers;
 using Gaia.Services;
@@ -21,12 +20,14 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     public AppSettingViewModel(
         Application application,
         IObjectStorage objectStorage,
-        AppState appState
+        AppState appState,
+        LangResource langResource
     )
     {
         _application = application;
         _objectStorage = objectStorage;
         AppState = appState;
+        _langResource = langResource;
         _generalKey = string.Empty;
     }
 
@@ -37,12 +38,14 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
         return WrapCommandAsync(
             async () =>
             {
-                var settings = await _objectStorage.LoadAsync<CromwellSettings>(ct);
+                var cromwellSettings = await _objectStorage.LoadAsync<CromwellSettings>(ct);
+                var inannaSettings = await _objectStorage.LoadAsync<InannaSettings>(ct);
 
                 Dispatcher.UIThread.Post(() =>
                 {
-                    GeneralKey = settings.GeneralKey;
-                    Theme = settings.Theme;
+                    GeneralKey = cromwellSettings.GeneralKey;
+                    Theme = inannaSettings.Theme;
+                    Lang = inannaSettings.Lang;
                 });
             },
             ct
@@ -53,15 +56,22 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     {
         base.OnPropertyChanged(e);
 
-        if (e.PropertyName == nameof(Theme))
+        switch (e.PropertyName)
         {
-            _application.RequestedThemeVariant = Theme switch
-            {
-                ThemeVariantType.Default => ThemeVariant.Default,
-                ThemeVariantType.Dark => ThemeVariant.Dark,
-                ThemeVariantType.Light => ThemeVariant.Light,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
+            case nameof(Theme):
+                _application.RequestedThemeVariant = Theme switch
+                {
+                    ThemeVariantType.System => ThemeVariant.Default,
+                    ThemeVariantType.Dark => ThemeVariant.Dark,
+                    ThemeVariantType.Light => ThemeVariant.Light,
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
+
+                break;
+            case nameof(Lang):
+                _langResource.Lang = Lang;
+
+                break;
         }
     }
 
@@ -71,6 +81,10 @@ public partial class AppSettingViewModel : ViewModelBase, IInitUi
     [ObservableProperty]
     private ThemeVariantType _theme;
 
+    [ObservableProperty]
+    private Lang _lang;
+
     private readonly IObjectStorage _objectStorage;
     private readonly Application _application;
+    private readonly LangResource _langResource;
 }

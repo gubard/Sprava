@@ -33,7 +33,7 @@
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto">
                         <Button Classes="align-stretch"
-                                Content="{StaticResource Lang.ToDos}"
+                                Content="{DynamicResource Lang.ToDos}"
                                 Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                                 CommandParameter="{x:Type dui:RootToDosViewModel}"
                                 Click="PaneButtonOnClick" />
@@ -46,37 +46,37 @@
                     </Grid>
 
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Credentials}"
+                            Content="{DynamicResource Lang.Credentials}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cui:RootCredentialsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Alarms}"
+                            Content="{DynamicResource Lang.Alarms}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type pui:AlarmsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Files}"
+                            Content="{DynamicResource Lang.Files}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cu:FilesPanelViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Settings}"
+                            Content="{DynamicResource Lang.Settings}"
                             Command="{Binding ShowSettingsViewCommand}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Developer}"
+                            Content="{DynamicResource Lang.Developer}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type ui:DeveloperViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{StaticResource Lang.Logout}"
+                            Content="{DynamicResource Lang.Logout}"
                             Command="{x:Static sh:SpravaCommands.LogoutCommand}"
                             Click="PaneButtonOnClick" />
                 </StackPanel>
             </c:GroupBoxControl>
 
-            <c:GroupBoxControl Header="{StaticResource Lang.Credentials}"
+            <c:GroupBoxControl Header="{DynamicResource Lang.Credentials}"
                                IsVisible="{Binding Credentials.Count, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static ih:Numbers.Int32_0}}">
                 <ItemsControl ItemsSource="{Binding Credentials}">
                     <ItemsControl.ItemTemplate>
@@ -100,7 +100,7 @@
                 </ItemsControl>
             </c:GroupBoxControl>
 
-            <c:GroupBoxControl Header="{StaticResource Lang.ToDos}"
+            <c:GroupBoxControl Header="{DynamicResource Lang.ToDos}"
                                IsVisible="{Binding ToDos.Count, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static ih:Numbers.Int32_0}}">
                 <ItemsControl ItemsSource="{Binding ToDos}">
                     <ItemsControl.ItemTemplate>

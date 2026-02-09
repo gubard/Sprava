@@ -12,11 +12,13 @@
              x:DataType="ui:AppSettingViewModel">
     <StackPanel>
         <TextBlock Text="{x:Static ui:AppSettingViewModel.FullAppName}" />
-        <TextBlock Classes="field" Text="{StaticResource Lang.GeneralKey}" />
+        <TextBlock Classes="field" Text="{DynamicResource Lang.GeneralKey}" />
         <TextBox Text="{Binding GeneralKey}" />
-        <TextBlock Classes="field" Text="{StaticResource Lang.Theme}" />
+        <TextBlock Classes="field" Text="{DynamicResource Lang.Theme}" />
         <c:EnumSelectorControl SelectedEnum="{Binding Theme}" />
-        <TextBlock Classes="field" Text="{StaticResource Lang.Services}" />
+        <TextBlock Classes="field" Text="{DynamicResource Lang.Lang}" />
+        <c:EnumSelectorControl SelectedEnum="{Binding Lang}" />
+        <TextBlock Classes="field" Text="{DynamicResource Lang.Services}" />
 
         <ItemsControl Classes="m-5" ItemsSource="{Binding AppState.ServiceStates}">
             <ItemsControl.ItemTemplate>
@@ -27,7 +29,7 @@
                         <ToggleButton Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
                                       CommandParameter="{Binding}"
                                       IsChecked="{Binding Mode, Mode=OneWay, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ServiceMode.Online}}"
-                                      Content="{StaticResource Lang.Online}" />
+                                      Content="{DynamicResource Lang.Online}" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

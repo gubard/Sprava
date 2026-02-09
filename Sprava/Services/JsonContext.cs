@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Cromwell.Models;
 using Diocles.Models;
+using Inanna.Models;
 using Melnikov.Models;
 using Sprava.Models;
 
@@ -19,4 +20,5 @@ public partial class OptionsJsonContext : JsonSerializerContext;
 [JsonSerializable(typeof(ToDosSetting))]
 [JsonSerializable(typeof(ToDoParametersSettings))]
 [JsonSerializable(typeof(SearchToDoSettings))]
+[JsonSerializable(typeof(InannaSettings))]
 public partial class SettingsJsonContext : JsonSerializerContext;
