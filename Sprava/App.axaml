@@ -47,6 +47,7 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <StyleInclude Source="avares://LiveMarkdown.Avalonia/Styles.axaml" />
         <StyleInclude Source="avares://IconPacks.Avalonia.MaterialDesign/MaterialDesign.axaml" />
         <StyleInclude Source="avares://Inanna/Styles/Theme.axaml" />

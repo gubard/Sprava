@@ -20,19 +20,22 @@
         <c:EnumSelectorControl SelectedEnum="{Binding Lang}" />
         <TextBlock Classes="field" Text="{DynamicResource Lang.Services}" />
 
-        <ItemsControl Classes="m-5" ItemsSource="{Binding AppState.ServiceStates}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Classes="horizontal">
-                        <TextBlock Classes="align-center"
-                                   Text="{Binding ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
-                        <ToggleButton Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
-                                      CommandParameter="{Binding}"
-                                      IsChecked="{Binding Mode, Mode=OneWay, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ServiceMode.Online}}"
-                                      Content="{DynamicResource Lang.Online}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <DataGrid Classes="m-5 align-left" ItemsSource="{Binding AppState.ServiceStates}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource Lang.Service}"
+                                    Binding="{Binding ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
+
+                <DataGridTemplateColumn Header="{DynamicResource Lang.Status}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ToggleButton Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
+                                          CommandParameter="{Binding}"
+                                          IsChecked="{Binding Mode, Mode=OneWay, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ServiceMode.Online}}"
+                                          Content="{DynamicResource Lang.Online}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </StackPanel>
 </UserControl>
