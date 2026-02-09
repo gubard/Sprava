@@ -6,6 +6,7 @@ using Hestia.Contract.Models;
 using Inanna.Services;
 using Neotoma.Contract.Models;
 using Nestor.Db.Helpers;
+using Rooster.Contract.Models;
 using Sprava.Ui;
 using Turtle.Contract.Models;
 
@@ -33,6 +34,11 @@ public class App : InannaApplication
         InsertHelper.AddDefaultInsert(
             nameof(FileObjectEntity),
             (i, s) => new FileObjectEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+        );
+
+        InsertHelper.AddDefaultInsert(
+            nameof(AlarmEntity),
+            (i, s) => new AlarmEntity[] { new() { Id = i } }.CreateInsertQuery(s)
         );
     }
 

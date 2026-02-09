@@ -1,9 +1,5 @@
 ﻿using System.Text.Json;
-using Cai.Models;
-using Cromwell.Models;
-using Diocles.Models;
 using Gaia.Helpers;
-using Melnikov.Models;
 using Sprava.Models;
 
 namespace Sprava.Services;
@@ -15,9 +11,10 @@ public interface ISpravaConfig
     ToDoServiceOptions ToDoService { get; }
     FileSystemServiceOptions FileSystemService { get; }
     FileStorageServiceOptions FileStorageService { get; }
+    AlarmServiceOptions AlarmService { get; }
 }
 
-public class SpravaConfig : ISpravaConfig
+public sealed class SpravaConfig : ISpravaConfig
 {
     public SpravaConfig(Stream stream)
     {
@@ -30,6 +27,7 @@ public class SpravaConfig : ISpravaConfig
         ToDoService = options.ToDoService;
         FileSystemService = options.FileSystemService;
         FileStorageService = options.FileStorageService;
+        AlarmService = options.AlarmService;
     }
 
     public AuthenticationServiceOptions AuthenticationService { get; }
@@ -37,4 +35,5 @@ public class SpravaConfig : ISpravaConfig
     public ToDoServiceOptions ToDoService { get; }
     public FileSystemServiceOptions FileSystemService { get; }
     public FileStorageServiceOptions FileStorageService { get; }
+    public AlarmServiceOptions AlarmService { get; }
 }

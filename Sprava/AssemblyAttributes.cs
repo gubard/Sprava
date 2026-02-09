@@ -4,6 +4,7 @@ using Diocles.Ui;
 using Inanna.Generator;
 using Inanna.Ui;
 using Melnikov.Ui;
+using Pheidippides.Ui;
 using Sprava.Ui;
 using Weber.Ui;
 
@@ -45,3 +46,5 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(LinearBarcodeView), typeof(LinearBarcodeViewModel))]
 [assembly: ViewPair(typeof(LinearBarcodeGeneratorView), typeof(LinearBarcodeGeneratorViewModel))]
 [assembly: ViewPair(typeof(AddBarcodeFileView), typeof(AddBarcodeFileViewModel))]
+[assembly: ViewPair(typeof(AlarmsParametersView), typeof(AlarmsParametersViewModel))]
+[assembly: ViewPair(typeof(AlarmsView), typeof(AlarmsViewModel))]

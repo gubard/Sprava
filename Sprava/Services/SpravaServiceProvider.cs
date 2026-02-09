@@ -4,13 +4,11 @@ using System.Text.Json;
 using Aya.Contract.Helpers;
 using Aya.Contract.Models;
 using Aya.Contract.Services;
-using Cai.Models;
 using Cai.Services;
-using Cromwell.Models;
 using Cromwell.Services;
-using Diocles.Models;
 using Diocles.Services;
 using Diocles.Ui;
+using Gaia.Helpers;
 using Gaia.Models;
 using Gaia.Services;
 using Hestia.Contract.Helpers;
@@ -21,8 +19,8 @@ using Inanna.Models;
 using Inanna.Services;
 using Inanna.Ui;
 using Jab;
+using Manis.Contract.Models;
 using Manis.Contract.Services;
-using Melnikov.Models;
 using Melnikov.Services;
 using Melnikov.Ui;
 using Neotoma.Contract.Helpers;
@@ -31,6 +29,10 @@ using Neotoma.Contract.Services;
 using Nestor.Db.Helpers;
 using Nestor.Db.Models;
 using Nestor.Db.Services;
+using Pheidippides.Services;
+using Rooster.Contract.Helpers;
+using Rooster.Contract.Models;
+using Rooster.Contract.Services;
 using Sprava.Models;
 using Sprava.Ui;
 using Turtle.Contract.Helpers;
@@ -47,6 +49,7 @@ namespace Sprava.Services;
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
 [Import(typeof(ICaiServiceProvider))]
+[Import(typeof(IPheidippidesServiceProvider))]
 [Singleton(typeof(MainViewModel))]
 [Singleton(typeof(AppState))]
 [Transient(typeof(PaneViewModel))]
@@ -58,6 +61,7 @@ namespace Sprava.Services;
 [Transient(typeof(SignUpViewModel))]
 [Transient(typeof(JwtSecurityTokenHandler))]
 [Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
+[Transient(typeof(AlarmServiceOptions), Factory = nameof(GetAlarmServiceOptions))]
 [Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
 [Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
 [Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
@@ -88,13 +92,97 @@ namespace Sprava.Services;
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
+[Singleton(typeof(AlarmDbService), Factory = nameof(GetAlarmDbService))]
+[Singleton(typeof(IAlarmUiCache), Factory = nameof(GetAlarmUiCache))]
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
+[Singleton(typeof(IAlarmUiService), Factory = nameof(GetAlarmUiService))]
+[Transient(typeof(IAuthenticationService), Factory = nameof(GetAuthenticationService))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
 )]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IAuthenticationService GetAuthenticationService(
+        AuthenticationServiceOptions options,
+        HttpClient httpClient
+    )
+    {
+        httpClient.BaseAddress = new(options.Url);
+
+        return new AuthenticationHttpService(
+            httpClient,
+            new()
+            {
+                TypeInfoResolver = ManisJsonContext.Resolver,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            },
+            new TryPolicyService(3, TimeSpan.FromSeconds(1), FuncHelper<Exception>.Empty),
+            EmptyHeadersFactory.Instance
+        );
+    }
+
+    public static IAlarmUiCache GetAlarmUiCache(
+        IAlarmMemoryCache memoryCache,
+        AlarmDbService dbService
+    )
+    {
+        return new AlarmUiCache(dbService, memoryCache);
+    }
+
+    public static AlarmDbService GetAlarmDbService(
+        AppState appState,
+        IDbConnectionFactory factory,
+        IFactory<DbValues> dbValues
+    )
+    {
+        return new(
+            factory,
+            dbValues,
+            new DbServiceOptionsUiFactory(appState, nameof(AlarmUiService))
+        );
+    }
+
+    public static IAlarmUiService GetAlarmUiService(
+        AlarmServiceOptions options,
+        IFactory<Memory<HttpHeader>> headersFactory,
+        AppState appState,
+        IAlarmUiCache uiCache,
+        INavigator navigator,
+        HttpClient httpClient,
+        AlarmDbService dbService,
+        IResponseHandler responseHandler
+    )
+    {
+        httpClient.BaseAddress = new(options.Url);
+
+        var service = new AlarmUiService(
+            new AlarmHttpService(
+                httpClient,
+                new()
+                {
+                    TypeInfoResolver = RoosterJsonContext.Resolver,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                },
+                new TryPolicyService(
+                    3,
+                    TimeSpan.FromSeconds(1),
+                    _ => appState.SetServiceMode(nameof(AlarmUiService), ServiceMode.Offline)
+                ),
+                headersFactory
+            ),
+            dbService,
+            uiCache,
+            navigator,
+            nameof(AlarmUiService),
+            responseHandler
+        );
+
+        appState.AddService(service);
+
+        return service;
+    }
+
     public static SignInViewModel GetSignInViewModel(
         IAuthenticationUiService authenticationUiService,
         IObjectStorage objectStorage,
@@ -123,7 +211,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemUiService fileSystemUiService,
         ICredentialUiService credentialUiService,
         IToDoUiService toDoUiService,
-        IFileStorageUiService fileStorageUiService
+        IFileStorageUiService fileStorageUiService,
+        IAlarmUiService alarmUiService
     )
     {
         return new ServiceController([
@@ -131,6 +220,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             credentialUiService,
             toDoUiService,
             fileStorageUiService,
+            alarmUiService,
         ]);
     }
 
@@ -435,6 +525,11 @@ public interface ISpravaServiceProvider : IServiceProvider
             migration.Add(key, value);
         }
 
+        foreach (var (key, value) in RoosterMigration.Migrations)
+        {
+            migration.Add(key, value);
+        }
+
         return new Migrator(migration.ToFrozenDictionary());
     }
 
@@ -458,6 +553,11 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static CredentialServiceOptions GetCredentialServiceOptions(ISpravaConfig configuration)
     {
         return configuration.CredentialService;
+    }
+
+    public static AlarmServiceOptions GetAlarmServiceOptions(ISpravaConfig configuration)
+    {
+        return configuration.AlarmService;
     }
 
     public static ToDoServiceOptions GetToDoServiceOptions(ISpravaConfig configuration)

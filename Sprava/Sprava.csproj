@@ -39,5 +39,7 @@
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />
+
+    <ProjectReference Include="..\..\Pheidippides\Pheidippides\Pheidippides.csproj" />
   </ItemGroup>
 </Project>

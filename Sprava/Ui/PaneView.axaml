@@ -13,6 +13,7 @@
              xmlns:dh="clr-namespace:Diocles.Helpers;assembly=Diocles"
              xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
              xmlns:h="clr-namespace:Cromwell.Helpers;assembly=Cromwell"
+             xmlns:pui="clr-namespace:Pheidippides.Ui;assembly=Pheidippides"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
              x:DataType="ui:PaneViewModel">
@@ -48,6 +49,11 @@
                             Content="{StaticResource Lang.Credentials}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cui:RootCredentialsViewModel}"
+                            Click="PaneButtonOnClick" />
+                    <Button Classes="align-stretch"
+                            Content="{StaticResource Lang.Alarms}"
+                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            CommandParameter="{x:Type pui:AlarmsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
                             Content="{StaticResource Lang.Files}"
