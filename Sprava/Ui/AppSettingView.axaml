@@ -23,7 +23,7 @@
         <DataGrid Classes="m-5 align-left" ItemsSource="{Binding AppState.ServiceStates}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource Lang.Service}"
-                                    Binding="{Binding ServiceName, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
+                                    Binding="{Binding ServiceName, Mode=OneWay, Converter={x:Static s:StringLocalizationConverter.Instance}}" />
 
                 <DataGridTemplateColumn Header="{DynamicResource Lang.Status}">
                     <DataGridTemplateColumn.CellTemplate>

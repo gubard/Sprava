@@ -1,6 +1,11 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.FileSystemUiService">File system</s:String>
+    <s:String x:Key="Lang.CredentialUiService">Credential</s:String>
+    <s:String x:Key="Lang.ToDoUiService">To do</s:String>
+    <s:String x:Key="Lang.AlarmUiService">Alarm</s:String>
+    <s:String x:Key="Lang.FileStorageUiService">File storage</s:String>
     <s:String x:Key="Lang.EnglishUs">English(US)</s:String>
     <s:String x:Key="Lang.Ukrainian">Українська</s:String>
     <s:String x:Key="Lang.Lang">Language</s:String>
