@@ -22,27 +22,27 @@ public sealed class App : InannaApplication
     {
         InsertHelper.AddDefaultInsert(
             nameof(FileEntity),
-            (i, s) => new FileEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+            i => new FileEntity[] { new() { Id = i } }.CreateInsertQuery()
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(ToDoEntity),
-            (i, s) => new ToDoEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+            i => new ToDoEntity[] { new() { Id = i } }.CreateInsertQuery()
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(CredentialEntity),
-            (i, s) => new CredentialEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+            i => new CredentialEntity[] { new() { Id = i } }.CreateInsertQuery()
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(FileObjectEntity),
-            (i, s) => new FileObjectEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+            i => new FileObjectEntity[] { new() { Id = i } }.CreateInsertQuery()
         );
 
         InsertHelper.AddDefaultInsert(
             nameof(AlarmEntity),
-            (i, s) => new AlarmEntity[] { new() { Id = i } }.CreateInsertQuery(s)
+            i => new AlarmEntity[] { new() { Id = i } }.CreateInsertQuery()
         );
     }
 
