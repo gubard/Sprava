@@ -38,11 +38,15 @@
                                 CommandParameter="{x:Type dui:RootToDosViewModel}"
                                 Click="PaneButtonOnClick" />
 
-                        <Button Grid.Column="1"
-                                Content="{ip:MaterialDesign Search}"
-                                Command="{x:Static ih:InannaCommands.NavigateToCommand}"
-                                CommandParameter="{x:Type dui:SearchToDoViewModel}"
-                                Click="PaneButtonOnClick" />
+                        <StackPanel Grid.Column="1" Classes="horizontal">
+                            <Button Content="{ip:MaterialDesign Search}"
+                                    Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                                    CommandParameter="{x:Type dui:SearchToDoViewModel}"
+                                    Click="PaneButtonOnClick" />
+                            <Button Content="{ip:MaterialDesign ArrowForward}"
+                                    Command="{x:Static dh:DioclesCommands.OpenCurrentToDoCommand}"
+                                    Click="PaneButtonOnClick" />
+                        </StackPanel>
                     </Grid>
 
                     <Button Classes="align-stretch"
