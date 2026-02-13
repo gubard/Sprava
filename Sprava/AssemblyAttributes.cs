@@ -48,3 +48,4 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(AddBarcodeFileView), typeof(AddBarcodeFileViewModel))]
 [assembly: ViewPair(typeof(AlarmsParametersView), typeof(AlarmsParametersViewModel))]
 [assembly: ViewPair(typeof(AlarmsView), typeof(AlarmsViewModel))]
+[assembly: ViewPair(typeof(AdaptiveButtonsView), typeof(AdaptiveButtonsViewModel))]
