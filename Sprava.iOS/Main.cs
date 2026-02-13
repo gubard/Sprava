@@ -1,9 +1,10 @@
 using Gaia.Helpers;
+using UIKit;
 using iOSSpravaServiceProvider = Sprava.iOS.Services.iOSSpravaServiceProvider;
 
 namespace Sprava.iOS;
 
-public class Application
+public sealed class Application
 {
     // This is the main entry point of the application.
     static void Main(string[] args)

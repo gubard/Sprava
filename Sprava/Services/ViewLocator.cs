@@ -5,7 +5,7 @@ using Sprava.SourceGenerator;
 
 namespace Sprava.Services;
 
-public class ViewLocator : IDataTemplate
+public sealed class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {

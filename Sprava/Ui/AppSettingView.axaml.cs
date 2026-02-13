@@ -2,7 +2,7 @@ using Avalonia.Controls;
 
 namespace Sprava.Ui;
 
-public partial class AppSettingView : UserControl
+public sealed partial class AppSettingView : UserControl
 {
     public AppSettingView()
     {

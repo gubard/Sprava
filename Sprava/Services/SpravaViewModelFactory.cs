@@ -8,7 +8,7 @@ namespace Sprava.Services;
 
 public interface ISpravaViewModelFactory : IFactory<AppSettingViewModel>;
 
-public class SpravaViewModelFactory : ISpravaViewModelFactory
+public sealed class SpravaViewModelFactory : ISpravaViewModelFactory
 {
     public SpravaViewModelFactory(
         Application application,

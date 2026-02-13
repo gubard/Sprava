@@ -7,7 +7,7 @@ using Inanna.Services;
 
 namespace Sprava.Ui;
 
-public partial class MainView : UserControl
+public sealed partial class MainView : UserControl
 {
     public MainView()
     {

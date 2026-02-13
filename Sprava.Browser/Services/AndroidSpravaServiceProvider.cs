@@ -12,7 +12,7 @@ namespace Sprava.Browser.Services;
 [Import(typeof(ISpravaServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(BrowserOpenerLink))]
-public partial class BrowserSpravaServiceProvider : IServiceProvider
+public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig(HttpClient httpClient)
     {

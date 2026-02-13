@@ -24,16 +24,16 @@ the build system will package the resources for distribution and generate a clas
 (this is an Android convention) that contains the tokens for each one of the resources 
 included. For example, for the above Resources layout, this is what the R class would expose:
 
-public class R {
-    public class drawable {
+public sealed class R {
+    public sealed class drawable {
         public const int icon = 0x123;
     }
 
-    public class layout {
+    public sealed class layout {
         public const int main = 0x456;
     }
 
-    public class strings {
+    public sealed class strings {
         public const int first_string = 0xabc;
         public const int second_string = 0xbcd;
     }

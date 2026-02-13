@@ -15,7 +15,7 @@ using Sprava.Services;
 
 namespace Sprava.Ui;
 
-public partial class PaneViewModel : ViewModelBase
+public sealed partial class PaneViewModel : ViewModelBase
 {
     public PaneViewModel(
         IDialogService dialogService,

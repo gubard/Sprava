@@ -8,7 +8,7 @@ using Manis.Contract.Errors;
 
 namespace Sprava.Services;
 
-public class ValidationErrorDataTemplate : IDataTemplate
+public sealed class ValidationErrorDataTemplate : IDataTemplate
 {
     private readonly IAppResourceService _appResourceService =
         DiHelper.ServiceProvider.GetService<IAppResourceService>();

@@ -4,7 +4,7 @@ using Nestor.Db.Models;
 
 namespace Sprava.Services;
 
-public class DbServiceOptionsUiFactory : IFactory<DbServiceOptions>
+public sealed class DbServiceOptionsUiFactory : IFactory<DbServiceOptions>
 {
     public DbServiceOptionsUiFactory(AppState appState, string serviceName)
     {

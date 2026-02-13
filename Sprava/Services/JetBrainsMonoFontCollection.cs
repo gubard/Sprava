@@ -2,7 +2,7 @@
 
 namespace Sprava.Services;
 
-public class JetBrainsMonoFontCollection : EmbeddedFontCollection
+public sealed class JetBrainsMonoFontCollection : EmbeddedFontCollection
 {
     public JetBrainsMonoFontCollection()
         : base(

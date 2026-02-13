@@ -21,7 +21,7 @@ namespace Sprava.Android;
         | ConfigChanges.ScreenSize
         | ConfigChanges.UiMode
 )]
-public class MainActivity : AvaloniaMainActivity<App>
+public sealed class MainActivity : AvaloniaMainActivity<App>
 {
     public static MainActivity? Activity;
 

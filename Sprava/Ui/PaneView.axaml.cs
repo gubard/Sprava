@@ -4,7 +4,7 @@ using Gaia.Helpers;
 
 namespace Sprava.Ui;
 
-public partial class PaneView : UserControl
+public sealed partial class PaneView : UserControl
 {
     public PaneView()
     {

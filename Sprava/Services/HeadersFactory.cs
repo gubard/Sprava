@@ -5,7 +5,7 @@ using Melnikov.Services;
 
 namespace Sprava.Services;
 
-public class HeadersFactory : IFactory<Memory<HttpHeader>>
+public sealed class HeadersFactory : IFactory<Memory<HttpHeader>>
 {
     private readonly IAuthenticationUiService _service;
 

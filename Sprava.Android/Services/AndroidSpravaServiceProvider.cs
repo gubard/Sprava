@@ -11,7 +11,7 @@ namespace Sprava.Android.Services;
 [Import(typeof(ISpravaServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(AndroidOpenerLink))]
-public partial class AndroidSpravaServiceProvider : IServiceProvider
+public sealed partial class AndroidSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
     {

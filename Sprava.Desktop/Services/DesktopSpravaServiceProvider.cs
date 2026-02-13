@@ -10,7 +10,7 @@ namespace Sprava.Desktop.Services;
 [Import(typeof(ISpravaServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(DesktopOpenerLink))]
-public partial class DesktopSpravaServiceProvider : IServiceProvider
+public sealed partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
     {

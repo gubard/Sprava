@@ -8,7 +8,7 @@ using Inanna.Models;
 
 namespace Sprava.Ui;
 
-public partial class DeveloperViewModel : ViewModelBase
+public sealed partial class DeveloperViewModel : ViewModelBase
 {
     public IEnumerable<string> Classes => _classes;
 

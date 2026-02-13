@@ -12,7 +12,7 @@ using Inanna.Services;
 
 namespace Sprava.Ui;
 
-public partial class AppSettingViewModel : ViewModelBase, IInitUi
+public sealed partial class AppSettingViewModel : ViewModelBase, IInitUi
 {
     public static readonly string FullAppName =
         $"Sprava {typeof(AppSettingViewModel).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"}";
