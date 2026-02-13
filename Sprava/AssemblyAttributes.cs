@@ -49,3 +49,4 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(AlarmsParametersView), typeof(AlarmsParametersViewModel))]
 [assembly: ViewPair(typeof(AlarmsView), typeof(AlarmsViewModel))]
 [assembly: ViewPair(typeof(AdaptiveButtonsView), typeof(AdaptiveButtonsViewModel))]
+[assembly: ViewPair(typeof(AlarmListView), typeof(AlarmListViewModel))]
