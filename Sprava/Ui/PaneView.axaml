@@ -96,8 +96,7 @@
                                 <Button Grid.Column="1"
                                         Command="{x:Static h:CromwellCommands.LoginToClipboardCommand}"
                                         CommandParameter="{Binding}"
-                                        Content="{ip:MaterialDesign Login}"
-                                        Click="PaneButtonOnClick" />
+                                        Content="{ip:MaterialDesign Login}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -109,12 +108,19 @@
                 <ItemsControl ItemsSource="{Binding ToDos}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Classes="align-stretch"
-                                    Command="{x:Static dh:DioclesCommands.OpenToDosCommand}"
-                                    CommandParameter="{Binding}"
-                                    Click="PaneButtonOnClick">
-                                <TextBlock Classes="align-left" Text="{Binding Name}" />
-                            </Button>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Button Classes="align-stretch"
+                                        Command="{x:Static dh:DioclesCommands.OpenToDosCommand}"
+                                        CommandParameter="{Binding}"
+                                        Click="PaneButtonOnClick">
+                                    <TextBlock Classes="align-left" Text="{Binding Name}" />
+                                </Button>
+
+                                <Button Grid.Column="1"
+                                        Content="{ip:MaterialDesign Bookmark}"
+                                        Command="{Binding $parent[ui:PaneView].ViewModel.UnbookmarkToDoCommand}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

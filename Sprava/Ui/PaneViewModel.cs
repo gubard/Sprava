@@ -24,7 +24,8 @@ public sealed partial class PaneViewModel : ViewModelBase
         IToDoUiCache toDoUiCache,
         ICredentialUiCache credentialUiCache,
         AppState appState,
-        IAuthenticationUiService authenticationUiService
+        IAuthenticationUiService authenticationUiService,
+        IToDoUiService toDoUiService
     )
     {
         _dialogService = dialogService;
@@ -35,6 +36,7 @@ public sealed partial class PaneViewModel : ViewModelBase
         Credentials = credentialUiCache.Bookmarks;
         AppState = appState;
         _authenticationUiService = authenticationUiService;
+        _toDoUiService = toDoUiService;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
@@ -46,6 +48,32 @@ public sealed partial class PaneViewModel : ViewModelBase
     private readonly IAppResourceService _appResourceService;
     private readonly IObjectStorage _objectStorage;
     private readonly IAuthenticationUiService _authenticationUiService;
+    private readonly IToDoUiService _toDoUiService;
+
+    [RelayCommand]
+    private async Task UnbookmarkToDoAsync(ToDoNotify item, CancellationToken ct)
+    {
+        await WrapCommandAsync(
+            () =>
+                _toDoUiService.PostAsync(
+                    Guid.NewGuid(),
+                    new()
+                    {
+                        Edits =
+                        [
+                            new()
+                            {
+                                Ids = [item.Id],
+                                IsBookmark = false,
+                                IsEditIsBookmark = true,
+                            },
+                        ],
+                    },
+                    ct
+                ),
+            ct
+        );
+    }
 
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)
