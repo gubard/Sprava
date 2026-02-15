@@ -49,7 +49,7 @@ public sealed class MainActivity : AvaloniaMainActivity<App>
 
         if (await navigator.NavigateBackOrNullAsync(CancellationToken.None) is null)
         {
-            base.OnBackPressed();
+            Finish();
         }
     }
 }
