@@ -3,6 +3,7 @@ using Cromwell.Models;
 using Diocles.Models;
 using Inanna.Models;
 using Melnikov.Models;
+using Pheidippides.Models;
 using Sprava.Models;
 
 namespace Sprava.Services;
@@ -21,4 +22,5 @@ public sealed partial class OptionsJsonContext : JsonSerializerContext;
 [JsonSerializable(typeof(ToDoParametersSettings))]
 [JsonSerializable(typeof(SearchToDoSettings))]
 [JsonSerializable(typeof(InannaSettings))]
+[JsonSerializable(typeof(AlarmsSettings))]
 public sealed partial class SettingsJsonContext : JsonSerializerContext;
