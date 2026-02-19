@@ -45,7 +45,7 @@ public sealed partial class NavigationBarViewModel : ViewModelBase
 
     private async ValueTask BackCore(CancellationToken ct)
     {
-        await _navigator.NavigateBackOrNullAsync(ct);
+        await _navigator.NavigateBackAsync(ct);
         OnPropertyChanged(nameof(IsCanBack));
     }
 }

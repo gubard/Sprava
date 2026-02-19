@@ -46,8 +46,9 @@ public sealed class MainActivity : AvaloniaMainActivity<App>
     private async ValueTask NavigateBackOrNullCore()
     {
         var navigator = DiHelper.ServiceProvider.GetService<INavigator>();
+        await navigator.NavigateBackAsync(CancellationToken.None);
 
-        if (await navigator.NavigateBackOrNullAsync(CancellationToken.None) is null)
+        if (navigator.CurrentView is null)
         {
             Finish();
         }
