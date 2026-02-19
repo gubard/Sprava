@@ -20,14 +20,8 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <Grid RowDefinitions="Auto,*,Auto">
-            <ProgressBar Value="{Binding ProgressService.CurrentValue}"
-                         Minimum="0"
-                         Maximum="{Binding ProgressService.NeedValue}"
-                         IsIndeterminate="{Binding ProgressService.CurrentValue, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_1}}"
-                         IsVisible="{Binding ProgressService.NeedValue, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_0}}" />
-
-            <c:DialogControl Grid.Row="1" Identifier="MessageBox" Classes="adaptive-dialog-control">
+        <Grid RowDefinitions="*,Auto">
+            <c:DialogControl Identifier="MessageBox" Classes="adaptive-dialog-control">
                 <c:NotificationPanel Identifier="Notifications">
                     <SplitView IsPaneOpen="{Binding IsShowPane}" Pane="{Binding Pane}">
                         <Grid RowDefinitions="Auto,Auto,*">
@@ -39,7 +33,14 @@
                 </c:NotificationPanel>
             </c:DialogControl>
 
-            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="2" />
+            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="1" />
+
+            <ProgressBar Classes="align-stretch-top"
+                         Value="{Binding ProgressService.CurrentValue}"
+                         Minimum="0"
+                         Maximum="{Binding ProgressService.NeedValue}"
+                         IsIndeterminate="{Binding ProgressService.CurrentValue, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_1}}"
+                         IsVisible="{Binding ProgressService.NeedValue, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_0}}" />
         </Grid>
     </Panel>
 </UserControl>
