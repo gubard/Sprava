@@ -14,7 +14,8 @@ public sealed partial class MainViewModel : ViewModelBase
         NavigationBarViewModel navigationBar,
         INavigator navigator,
         PaneViewModel pane,
-        StatusBarViewModel statusBar
+        StatusBarViewModel statusBar,
+        IProgressService progressService
     )
     {
         Stack = stack;
@@ -22,6 +23,7 @@ public sealed partial class MainViewModel : ViewModelBase
         _navigator = navigator;
         Pane = pane;
         StatusBar = statusBar;
+        ProgressService = progressService;
         UiHelper.NavigateToAsync<SignInViewModel>(CancellationToken.None);
         _navigator.ViewChanged += (_, _) => OnPropertyChanged(nameof(IsStatusBarVisible));
     }
@@ -30,6 +32,7 @@ public sealed partial class MainViewModel : ViewModelBase
     public NavigationBarViewModel NavigationBar { get; }
     public PaneViewModel Pane { get; }
     public StatusBarViewModel StatusBar { get; }
+    public IProgressService ProgressService { get; }
     public bool IsStatusBarVisible => _navigator.CurrentView is not INonStatusBar;
 
     [ObservableProperty]

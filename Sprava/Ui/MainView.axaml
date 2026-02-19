@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              xmlns:ui="clr-namespace:Sprava.Ui"
+             xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
+             xmlns:h="clr-namespace:Inanna.Helpers;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.MainView"
              x:DataType="ui:MainViewModel">
@@ -18,8 +20,14 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <Grid RowDefinitions="*,Auto">
-            <c:DialogControl Identifier="MessageBox" Classes="adaptive-dialog-control">
+        <Grid RowDefinitions="Auto,*,Auto">
+            <ProgressBar Value="{Binding ProgressService.CurrentValue}"
+                         Minimum="0"
+                         Maximum="{Binding ProgressService.NeedValue}"
+                         IsIndeterminate="{Binding ProgressService.CurrentValue, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_1}}"
+                         IsVisible="{Binding ProgressService.NeedValue, Converter={x:Static s:IsNotValueConverter.Instance}, ConverterParameter={x:Static h:Numbers.UInt32_0}}" />
+
+            <c:DialogControl Grid.Row="1" Identifier="MessageBox" Classes="adaptive-dialog-control">
                 <c:NotificationPanel Identifier="Notifications">
                     <SplitView IsPaneOpen="{Binding IsShowPane}" Pane="{Binding Pane}">
                         <Grid RowDefinitions="Auto,Auto,*">
@@ -31,7 +39,7 @@
                 </c:NotificationPanel>
             </c:DialogControl>
 
-            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="1" />
+            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="2" />
         </Grid>
     </Panel>
 </UserControl>

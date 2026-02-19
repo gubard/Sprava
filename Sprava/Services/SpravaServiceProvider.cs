@@ -99,6 +99,7 @@ namespace Sprava.Services;
 [Singleton(typeof(IAlarmUiService), Factory = nameof(GetAlarmUiService))]
 [Transient(typeof(IAuthenticationService), Factory = nameof(GetAuthenticationService))]
 [Singleton(typeof(LangResource), Factory = nameof(GetLangResource))]
+[Singleton(typeof(IProgressService), typeof(ProgressService))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
