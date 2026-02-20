@@ -28,7 +28,6 @@ using Neotoma.Contract.Helpers;
 using Neotoma.Contract.Models;
 using Neotoma.Contract.Services;
 using Nestor.Db.Helpers;
-using Nestor.Db.Models;
 using Nestor.Db.Services;
 using Pheidippides.Services;
 using Rooster.Contract.Helpers;
@@ -74,26 +73,19 @@ namespace Sprava.Services;
 [Singleton(typeof(ICredentialUiService), Factory = nameof(GetCredentialUiService))]
 [Singleton(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
-[Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 [Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
-[Transient(typeof(ToDoDbService), Factory = nameof(GetToDoDbService))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
-[Transient(typeof(CredentialDbService), Factory = nameof(GetCredentialDbService))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
-[Transient(typeof(FileSystemDbService), Factory = nameof(GetFileSystemDbService))]
-[Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 [Transient(typeof(IStatusBarService), typeof(StatusBarService))]
 [Transient(typeof(IServiceController), Factory = nameof(GetServiceController))]
-[Transient(typeof(FileStorageDbService), Factory = nameof(GetFileStorageDbService))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
 [Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
-[Singleton(typeof(AlarmDbService), Factory = nameof(GetAlarmDbService))]
 [Singleton(typeof(IAlarmUiCache), Factory = nameof(GetAlarmUiCache))]
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
 [Singleton(typeof(IAlarmUiService), Factory = nameof(GetAlarmUiService))]
@@ -132,23 +124,10 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IAlarmUiCache GetAlarmUiCache(
         IAlarmMemoryCache memoryCache,
-        AlarmDbService dbService
+        IAlarmDbCache dbCache
     )
     {
-        return new AlarmUiCache(dbService, memoryCache);
-    }
-
-    public static AlarmDbService GetAlarmDbService(
-        AppState appState,
-        IDbConnectionFactory factory,
-        IFactory<DbValues> dbValues
-    )
-    {
-        return new(
-            factory,
-            dbValues,
-            new DbServiceOptionsUiFactory(appState, nameof(AlarmUiService))
-        );
+        return new AlarmUiCache(dbCache, memoryCache);
     }
 
     public static IAlarmUiService GetAlarmUiService(
@@ -158,7 +137,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IAlarmUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        AlarmDbService dbService,
+        IAlarmDbService dbService,
         IResponseHandler responseHandler
     )
     {
@@ -232,35 +211,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         ]);
     }
 
-    public static FileStorageDbService GetFileStorageDbService(
-        AppState appState,
-        IDbConnectionFactory factory,
-        IFactory<DbValues> dbValues
-    )
-    {
-        return new(
-            factory,
-            dbValues,
-            new DbServiceOptionsUiFactory(appState, nameof(FileStorageUiService))
-        );
-    }
-
-    public static FileSystemDbService GetFileSystemDbService(
-        AppState appState,
-        IDbConnectionFactory factory,
-        IFactory<DbValues> dbValues
-    )
-    {
-        return new(
-            factory,
-            dbValues,
-            new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
-        );
-    }
-
     public static IFileStorageUiCache GetFileStorageUiCache(
         IFileStorageMemoryCache memoryCache,
-        FileStorageDbService dbService
+        IFileStorageDbCache dbService
     )
     {
         return new FileStorageUiCache(dbService, memoryCache);
@@ -268,56 +221,23 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IFileSystemUiCache GetFileSystemUiCache(
         IFileSystemMemoryCache memoryCache,
-        FileSystemDbService fileSystemDbService
+        IFileSystemDbCache dbCache
     )
     {
-        return new FileSystemSystemUiCache(fileSystemDbService, memoryCache);
-    }
-
-    public static CredentialDbService GetCredentialDbService(
-        AppState appState,
-        IDbConnectionFactory factory,
-        IFactory<DbValues> dbValues
-    )
-    {
-        return new(
-            factory,
-            dbValues,
-            new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
-        );
+        return new FileSystemSystemUiCache(dbCache, memoryCache);
     }
 
     public static ICredentialUiCache GetCredentialUiCache(
         ICredentialMemoryCache memoryCache,
-        CredentialDbService dbService
+        ICredentialDbCache dbService
     )
     {
         return new CredentialUiCache(dbService, memoryCache);
     }
 
-    public static ToDoDbService GetToDoDbService(
-        AppState appState,
-        ToDoParametersFillerService parametersFillerService,
-        IDbConnectionFactory factory,
-        IToDoValidator validator,
-        IFactory<DbValues> dbValuesFactory
-    )
+    public static IToDoUiCache GetToDoUiCache(IToDoMemoryCache memoryCache, IToDoDbCache dbCache)
     {
-        return new(
-            factory,
-            dbValuesFactory,
-            parametersFillerService,
-            validator,
-            new DbServiceOptionsUiFactory(appState, nameof(ToDoUiService))
-        );
-    }
-
-    public static IToDoUiCache GetToDoUiCache(
-        IToDoMemoryCache memoryCache,
-        ToDoDbService toDoDbService
-    )
-    {
-        return new ToDoUiCache(toDoDbService, memoryCache);
+        return new ToDoUiCache(dbCache, memoryCache);
     }
 
     public static ISerializer GetSerializer()
@@ -325,21 +245,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new JsonSerializer(SettingsJsonContext.Default.Options);
     }
 
-    public static IObjectStorage GetObjectStorage(
-        IDbConnectionFactory factory,
-        ISerializer serializer
-    )
-    {
-        return new DbObjectStorage(factory, serializer);
-    }
-
     public static HttpClient GetHttpClient()
     {
         var handler = new HttpClientHandler();
-
-#if DEBUG
-        handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
-#endif
 
         return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
     }
@@ -351,7 +259,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileStorageUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        FileStorageDbService dbService,
+        IFileStorageDbService dbService,
         IResponseHandler responseHandler
     )
     {
@@ -391,7 +299,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        ToDoDbService toDoDbService,
+        IToDoDbService dbService,
         IResponseHandler responseHandler
     )
     {
@@ -412,7 +320,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            toDoDbService,
+            dbService,
             uiCache,
             navigator,
             nameof(ToDoUiService),
@@ -430,7 +338,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         ICredentialUiCache uiCache,
         INavigator navigator,
-        CredentialDbService credentialDbCredentialDbService,
+        ICredentialDbService dbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
@@ -452,7 +360,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            credentialDbCredentialDbService,
+            dbService,
             uiCache,
             navigator,
             nameof(CredentialUiService),
@@ -470,7 +378,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         IFileSystemUiCache uiCache,
         INavigator navigator,
-        FileSystemDbService fileSystemDbService,
+        IFileSystemDbService dbService,
         HttpClient httpClient,
         IResponseHandler responseHandler
     )
@@ -492,7 +400,7 @@ public interface ISpravaServiceProvider : IServiceProvider
                 ),
                 headersFactory
             ),
-            fileSystemDbService,
+            dbService,
             uiCache,
             navigator,
             nameof(FileSystemUiService),

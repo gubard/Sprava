@@ -24,4 +24,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="appsettings.json" />
+  </ItemGroup>
 </Project>

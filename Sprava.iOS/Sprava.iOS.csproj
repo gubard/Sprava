@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Gaia\Gaia\Gaia.csproj" />
+    <ProjectReference Include="..\..\Nestor\Nestor.Db.Sqlite\Nestor.Db.Sqlite.csproj" />
+    <ProjectReference Include="..\Sprava.PhysicalPlatforms\Sprava.PhysicalPlatforms.csproj" />
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
   </ItemGroup>
 </Project>

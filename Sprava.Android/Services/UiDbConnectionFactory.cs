@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
 using Gaia.Services;
 using Inanna.Models;
-using Nestor.Db.Models;
 using Nestor.Db.Services;
+using Nestor.Db.Sqlite.Services;
 
-namespace Sprava.Services;
+namespace Sprava.Android.Services;
 
 public sealed class UiDbConnectionFactory : IDbConnectionFactory
 {

@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Cromwell\Cromwell\Cromwell.csproj" />
     <ProjectReference Include="..\..\Diocles\Diocles\Diocles.csproj" />
     <ProjectReference Include="..\..\Melnikov\Melnikov\Melnikov.csproj" />
+    <ProjectReference Include="..\..\Pheidippides\Pheidippides\Pheidippides.csproj" />
 
     <ProjectReference
       Include="..\..\Inanna\Inanna.SourceGenerator\Inanna.SourceGenerator.csproj"
@@ -39,7 +40,5 @@
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
     />
-
-    <ProjectReference Include="..\..\Pheidippides\Pheidippides\Pheidippides.csproj" />
   </ItemGroup>
 </Project>

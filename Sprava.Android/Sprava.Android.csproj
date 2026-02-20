@@ -36,6 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Nestor\Nestor.Db.Sqlite\Nestor.Db.Sqlite.csproj" />
+    <ProjectReference Include="..\Sprava.PhysicalPlatforms\Sprava.PhysicalPlatforms.csproj" />
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
   </ItemGroup>
 

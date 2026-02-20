@@ -1,6 +1,8 @@
 ﻿using Gaia.Helpers;
 using Gaia.Services;
 using Jab;
+using Nestor.Db.Services;
+using Sprava.PhysicalPlatforms.Services;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
@@ -8,8 +10,10 @@ namespace Sprava.Desktop.Services;
 
 [ServiceProvider]
 [Import(typeof(ISpravaServiceProvider))]
+[Import(typeof(ISpravaPhysicalPlatformsServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(DesktopOpenerLink))]
+[Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 public sealed partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
