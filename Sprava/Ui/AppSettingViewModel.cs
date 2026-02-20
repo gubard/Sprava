@@ -12,7 +12,7 @@ using Inanna.Services;
 
 namespace Sprava.Ui;
 
-public sealed partial class AppSettingViewModel : ViewModelBase, IInitUi
+public sealed partial class AppSettingViewModel : ViewModelBase, IInit
 {
     public static readonly string FullAppName =
         $"Sprava {typeof(AppSettingViewModel).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"}";
@@ -33,7 +33,7 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInitUi
 
     public AppState AppState { get; }
 
-    public ConfiguredValueTaskAwaitable InitUiAsync(CancellationToken ct)
+    public ConfiguredValueTaskAwaitable InitAsync(CancellationToken ct)
     {
         return WrapCommandAsync(
             async () =>
