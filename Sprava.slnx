@@ -73,6 +73,7 @@
   <Project Path="Sprava.Android/Sprava.Android.csproj" />
   <Project Path="Sprava.Browser/Sprava.Browser.csproj" />
   <Project Path="Sprava.Desktop/Sprava.Desktop.csproj" />
+  <Project Path="Sprava.Host/Sprava.Host.csproj" />
   <Project Path="Sprava.iOS/Sprava.iOS.csproj" />
   <Project Path="Sprava.PhysicalPlatforms/Sprava.PhysicalPlatforms.csproj" />
   <Project Path="Sprava/Sprava.csproj" />
