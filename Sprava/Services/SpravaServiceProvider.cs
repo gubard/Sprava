@@ -80,7 +80,6 @@ namespace Sprava.Services;
 [Transient(typeof(DeveloperViewModel))]
 [Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
 [Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
-[Transient(typeof(IResponseHandler), typeof(ResponseHandler))]
 [Transient(typeof(IStatusBarService), typeof(StatusBarService))]
 [Transient(typeof(IServiceController), Factory = nameof(GetServiceController))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
@@ -92,6 +91,7 @@ namespace Sprava.Services;
 [Transient(typeof(IAuthenticationService), Factory = nameof(GetAuthenticationService))]
 [Singleton(typeof(LangResource), Factory = nameof(GetLangResource))]
 [Singleton(typeof(IProgressService), typeof(ProgressService))]
+[Singleton(typeof(IErrorDialogFactory), typeof(ErrorDialogFactory))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
@@ -137,8 +137,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IAlarmUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IAlarmDbService dbService,
-        IResponseHandler responseHandler
+        IAlarmDbService dbService
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -161,8 +160,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(AlarmUiService),
-            responseHandler
+            nameof(AlarmUiService)
         );
 
         appState.AddService(service);
@@ -259,8 +257,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileStorageUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IFileStorageDbService dbService,
-        IResponseHandler responseHandler
+        IFileStorageDbService dbService
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -283,8 +280,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(FileStorageUiService),
-            responseHandler
+            nameof(FileStorageUiService)
         );
 
         appState.AddService(service);
@@ -299,8 +295,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IToDoDbService dbService,
-        IResponseHandler responseHandler
+        IToDoDbService dbService
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -323,8 +318,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(ToDoUiService),
-            responseHandler
+            nameof(ToDoUiService)
         );
 
         appState.AddService(service);
@@ -339,8 +333,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         ICredentialUiCache uiCache,
         INavigator navigator,
         ICredentialDbService dbService,
-        HttpClient httpClient,
-        IResponseHandler responseHandler
+        HttpClient httpClient
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -363,8 +356,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(CredentialUiService),
-            responseHandler
+            nameof(CredentialUiService)
         );
 
         appState.AddService(service);
@@ -379,8 +371,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemUiCache uiCache,
         INavigator navigator,
         IFileSystemDbService dbService,
-        HttpClient httpClient,
-        IResponseHandler responseHandler
+        HttpClient httpClient
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -403,8 +394,7 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(FileSystemUiService),
-            responseHandler
+            nameof(FileSystemUiService)
         );
 
         appState.AddService(service);
