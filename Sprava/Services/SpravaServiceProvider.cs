@@ -222,7 +222,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemDbCache dbCache
     )
     {
-        return new FileSystemSystemUiCache(dbCache, memoryCache);
+        return new FileSystemUiCache(dbCache, memoryCache);
     }
 
     public static ICredentialUiCache GetCredentialUiCache(
