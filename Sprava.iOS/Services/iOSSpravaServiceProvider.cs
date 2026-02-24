@@ -3,6 +3,7 @@ using Gaia.Helpers;
 using Gaia.Services;
 using Jab;
 using Nestor.Db.Services;
+using Pheidippides.Services;
 using Sprava.PhysicalPlatforms.Services;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
@@ -15,6 +16,7 @@ namespace Sprava.iOS.Services;
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(iOSOpenerLink))]
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
+[Singleton(typeof(IAlarmScheduler), typeof(EmptyAlarmScheduler))]
 public sealed partial class iOSSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()

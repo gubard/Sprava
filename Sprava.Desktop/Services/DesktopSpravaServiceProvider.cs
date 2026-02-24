@@ -2,6 +2,7 @@
 using Gaia.Services;
 using Jab;
 using Nestor.Db.Services;
+using Pheidippides.Services;
 using Sprava.PhysicalPlatforms.Services;
 using Sprava.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
@@ -14,6 +15,8 @@ namespace Sprava.Desktop.Services;
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(DesktopOpenerLink))]
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
+[Singleton(typeof(IAlarmScheduler), typeof(DefaultAlarmScheduler))]
+[Singleton(typeof(ISoundPlayer), typeof(SoundPlayer))]
 public sealed partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()

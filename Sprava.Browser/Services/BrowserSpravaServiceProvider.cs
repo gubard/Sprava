@@ -7,6 +7,7 @@ using Gaia.Services;
 using Hestia.Contract.Services;
 using Jab;
 using Neotoma.Contract.Services;
+using Pheidippides.Services;
 using Rooster.Contract.Services;
 using Sprava.Services;
 using Turtle.Contract.Services;
@@ -29,6 +30,8 @@ namespace Sprava.Browser.Services;
 [Transient(typeof(IToDoDbService), typeof(EmptyToDoDbService))]
 [Transient(typeof(IFileStorageDbService), typeof(EmptyFileStorageDbService))]
 [Singleton(typeof(IAlarmDbService), typeof(EmptyAlarmDbService))]
+[Singleton(typeof(IAlarmScheduler), typeof(DefaultAlarmScheduler))]
+[Singleton(typeof(ISoundPlayer), typeof(SoundPlayer))]
 public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig(HttpClient httpClient)
