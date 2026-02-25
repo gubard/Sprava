@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
@@ -48,6 +49,10 @@ public sealed class App : InannaApplication
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+
+#if DEBUG
+        this.AttachDeveloperTools();
+#endif
     }
 
     public override async void OnFrameworkInitializationCompleted()
