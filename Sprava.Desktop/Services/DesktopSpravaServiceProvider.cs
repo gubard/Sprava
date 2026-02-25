@@ -17,6 +17,7 @@ namespace Sprava.Desktop.Services;
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Singleton(typeof(IAlarmScheduler), typeof(DefaultAlarmScheduler))]
 [Singleton(typeof(ISoundPlayer), typeof(SoundPlayer))]
+[Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public sealed partial class DesktopSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
@@ -25,6 +26,11 @@ public sealed partial class DesktopSpravaServiceProvider : IServiceProvider
         using var stream = appSettingsFile.OpenRead();
 
         return new SpravaConfig(stream);
+    }
+
+    public static ISerializer GetSerializer()
+    {
+        return new JsonSerializer(SettingsJsonContext.Default.Options);
     }
 
     public object GetService(Type type)

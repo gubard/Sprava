@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -15,7 +14,7 @@ using Inanna.Services;
 using Java.Lang;
 using Pheidippides.Models;
 using Pheidippides.Services;
-using Sprava.Models;
+using Sprava.Android.Models;
 
 namespace Sprava.Android.Services;
 

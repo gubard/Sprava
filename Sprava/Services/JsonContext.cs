@@ -23,5 +23,4 @@ public sealed partial class OptionsJsonContext : JsonSerializerContext;
 [JsonSerializable(typeof(SearchToDoSettings))]
 [JsonSerializable(typeof(InannaSettings))]
 [JsonSerializable(typeof(AlarmsSettings))]
-[JsonSerializable(typeof(AndroidAlarmSchedulerSettings))]
 public sealed partial class SettingsJsonContext : JsonSerializerContext;

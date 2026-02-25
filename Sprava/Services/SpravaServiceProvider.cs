@@ -40,7 +40,6 @@ using Turtle.Contract.Models;
 using Turtle.Contract.Services;
 using Weber.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
-using JsonSerializer = Gaia.Services.JsonSerializer;
 
 namespace Sprava.Services;
 
@@ -73,7 +72,6 @@ namespace Sprava.Services;
 [Singleton(typeof(ICredentialUiService), Factory = nameof(GetCredentialUiService))]
 [Singleton(typeof(IToDoUiService), Factory = nameof(GetToDoUiService))]
 [Transient(typeof(HttpClient), Factory = nameof(GetHttpClient))]
-[Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 [Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
@@ -236,11 +234,6 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static IToDoUiCache GetToDoUiCache(IToDoMemoryCache memoryCache, IToDoDbCache dbCache)
     {
         return new ToDoUiCache(dbCache, memoryCache);
-    }
-
-    public static ISerializer GetSerializer()
-    {
-        return new JsonSerializer(SettingsJsonContext.Default.Options);
     }
 
     public static HttpClient GetHttpClient()

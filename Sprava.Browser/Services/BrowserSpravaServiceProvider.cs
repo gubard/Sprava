@@ -32,6 +32,7 @@ namespace Sprava.Browser.Services;
 [Singleton(typeof(IAlarmDbService), typeof(EmptyAlarmDbService))]
 [Singleton(typeof(IAlarmScheduler), typeof(DefaultAlarmScheduler))]
 [Singleton(typeof(ISoundPlayer), typeof(SoundPlayer))]
+[Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig(HttpClient httpClient)
@@ -40,6 +41,11 @@ public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
         using var stream = AssetLoader.Open(uri);
 
         return new SpravaConfig(stream);
+    }
+
+    public static ISerializer GetSerializer()
+    {
+        return new JsonSerializer(SettingsJsonContext.Default.Options);
     }
 
     public object GetService(Type type)
