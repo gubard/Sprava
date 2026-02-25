@@ -16,7 +16,7 @@ namespace Sprava.Android.Services;
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(AndroidOpenerLink))]
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
-[Singleton(typeof(IAlarmScheduler), typeof(EmptyAlarmScheduler))]
+[Singleton(typeof(IAlarmScheduler), typeof(AndroidAlarmScheduler))]
 public sealed partial class AndroidSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
