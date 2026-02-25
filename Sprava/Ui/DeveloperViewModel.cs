@@ -5,20 +5,27 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Inanna.Helpers;
 using Inanna.Models;
+using Inanna.Ui;
 
 namespace Sprava.Ui;
 
 public sealed partial class DeveloperViewModel : ViewModelBase
 {
-    public IEnumerable<string> Classes => _classes;
+    public DeveloperViewModel(LogsViewModel logs)
+    {
+        Logs = logs;
+    }
 
-    private readonly AvaloniaList<string> _classes = new();
+    public IEnumerable<string> Classes => _classes;
+    public LogsViewModel Logs { get; }
 
     [ObservableProperty]
     private MaterialDesignSizeType _designSizeType;
 
     [ObservableProperty]
     private Type? _topLevelType;
+
+    private readonly AvaloniaList<string> _classes = new();
 
     [RelayCommand]
     private void Refresh(Button button)

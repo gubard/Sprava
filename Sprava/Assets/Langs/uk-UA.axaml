@@ -1,6 +1,11 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.Trace">Слід</s:String>
+    <s:String x:Key="Lang.Debug">Налагодження</s:String>
+    <s:String x:Key="Lang.Information">Інформація</s:String>
+    <s:String x:Key="Lang.Critical">Критичний</s:String>
+    <s:String x:Key="Lang.Level">Рівень</s:String>
     <s:String x:Key="Lang.FileSystemUiService">Файлова система</s:String>
     <s:String x:Key="Lang.CredentialUiService">Облікові дані</s:String>
     <s:String x:Key="Lang.ToDoUiService">Список справ</s:String>

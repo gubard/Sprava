@@ -17,8 +17,14 @@ namespace Sprava.iOS.Services;
 [Singleton(typeof(IOpenerLink), typeof(iOSOpenerLink))]
 [Singleton(typeof(IDbConnectionFactory), typeof(UiDbConnectionFactory))]
 [Singleton(typeof(IAlarmScheduler), typeof(EmptyAlarmScheduler))]
+[Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public sealed partial class iOSSpravaServiceProvider : IServiceProvider
 {
+    public static ISerializer GetSerializer()
+    {
+        return new JsonSerializer(SettingsJsonContext.Default.Options);
+    }
+
     public static ISpravaConfig GetSpravaConfig()
     {
         var stream = typeof(iOSSpravaServiceProvider)

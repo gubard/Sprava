@@ -24,6 +24,7 @@ using Manis.Contract.Models;
 using Manis.Contract.Services;
 using Melnikov.Services;
 using Melnikov.Ui;
+using Microsoft.Extensions.Logging;
 using Neotoma.Contract.Helpers;
 using Neotoma.Contract.Models;
 using Neotoma.Contract.Services;
@@ -90,12 +91,30 @@ namespace Sprava.Services;
 [Singleton(typeof(LangResource), Factory = nameof(GetLangResource))]
 [Singleton(typeof(IProgressService), typeof(ProgressService))]
 [Singleton(typeof(IErrorDialogFactory), typeof(ErrorDialogFactory))]
+[Singleton(typeof(ILogger), Factory = nameof(GetLogger))]
+[Singleton(typeof(LogsViewModel))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
 )]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static ILogger GetLogger(LogsViewModel viewModel)
+    {
+        using var loggerFactory = LoggerFactory.Create(b =>
+            b.AddProvider(new ViewLoggerProvider(viewModel))
+#if DEBUG
+            .SetMinimumLevel(LogLevel.Trace)
+#else
+            .SetMinimumLevel(LogLevel.Information)
+#endif
+        );
+
+        var logger = loggerFactory.CreateLogger("App");
+
+        return logger;
+    }
+
     public static LangResource GetLangResource(Application app)
     {
         return app.Styles.OfType<LangResource>().First();

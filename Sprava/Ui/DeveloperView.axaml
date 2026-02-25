@@ -8,7 +8,7 @@
              x:DataType="ui:DeveloperViewModel">
     <Grid RowDefinitions="*,Auto">
         <ScrollViewer Classes="vertical-scroll">
-            <Grid ColumnDefinitions="Auto,5,*" RowDefinitions="Auto,Auto,Auto">
+            <Grid ColumnDefinitions="Auto,5,*" RowDefinitions="Auto,Auto,Auto,Auto">
                 <TextBlock Text="{DynamicResource Lang.SizeType}" />
                 <TextBlock Grid.Column="2" Classes="plain-text" Text="{Binding DesignSizeType}" />
                 <TextBlock Grid.Row="1" Text="{DynamicResource Lang.TopLevelType}" />
@@ -22,6 +22,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <ContentControl Grid.Row="3" Grid.ColumnSpan="3" Content="{Binding Logs}" />
             </Grid>
         </ScrollViewer>
 
