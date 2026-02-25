@@ -2,7 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.OS;
+using Android.Provider;
 using Avalonia;
 using Avalonia.Android;
 using Gaia.Helpers;
@@ -33,9 +36,49 @@ public sealed class MainActivity : AvaloniaMainActivity<App>
         return base.CustomizeAppBuilder(builder).WithInterFont().WithJetBrainsMonoFont();
     }
 
+    protected override void OnCreate(Bundle? savedInstanceState)
+    {
+        base.OnCreate(savedInstanceState);
+        EnsureExactAlarmAccessIfNeeded();
+    }
+
     public override void OnBackPressed()
     {
         NavigateBackOrNullAsync();
+    }
+
+    private void EnsureExactAlarmAccessIfNeeded()
+    {
+        if (Build.VERSION.SdkInt < BuildVersionCodes.S)
+        {
+            return;
+        }
+
+        if (GetSystemService(AlarmService) is not AlarmManager alarmManager)
+        {
+            return;
+        }
+
+        if (alarmManager.CanScheduleExactAlarms())
+        {
+            return;
+        }
+
+        var intent = new Intent(Settings.ActionRequestScheduleExactAlarm);
+        intent.SetData(global::Android.Net.Uri.Parse("package:" + PackageName));
+        intent.AddFlags(ActivityFlags.NewTask);
+
+        try
+        {
+            StartActivity(intent);
+        }
+        catch
+        {
+            var fallback = new Intent(Settings.ActionApplicationDetailsSettings);
+            fallback.SetData(global::Android.Net.Uri.Parse("package:" + PackageName));
+            fallback.AddFlags(ActivityFlags.NewTask);
+            StartActivity(fallback);
+        }
     }
 
     private ConfiguredValueTaskAwaitable NavigateBackOrNullAsync()
