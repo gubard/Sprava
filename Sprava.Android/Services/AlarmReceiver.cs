@@ -15,7 +15,7 @@ using Inanna.Services;
 using Java.Lang;
 using Pheidippides.Models;
 using Pheidippides.Services;
-using Sprava.Android.Models;
+using Sprava.Models;
 
 namespace Sprava.Android.Services;
 

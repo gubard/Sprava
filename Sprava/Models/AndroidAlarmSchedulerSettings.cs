@@ -1,6 +1,6 @@
 ﻿using Gaia.Services;
 
-namespace Sprava.Android.Models;
+namespace Sprava.Models;
 
 public sealed class AndroidAlarmSchedulerSettings
     : ObjectStorageValue<AndroidAlarmSchedulerSettings>
