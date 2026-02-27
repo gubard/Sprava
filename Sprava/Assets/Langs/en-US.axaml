@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=System.Runtime">
+    <s:String x:Key="Lang.FileSystem">File system</s:String>
     <s:String x:Key="Lang.Trace">Trace</s:String>
     <s:String x:Key="Lang.Debug">Debug</s:String>
     <s:String x:Key="Lang.Information">Information</s:String>

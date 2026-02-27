@@ -60,7 +60,7 @@
                             CommandParameter="{x:Type pui:AlarmsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
-                            Content="{DynamicResource Lang.Files}"
+                            Content="{DynamicResource Lang.FileSystem}"
                             Command="{x:Static ih:InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cu:FilesPanelViewModel}"
                             Click="PaneButtonOnClick" />
