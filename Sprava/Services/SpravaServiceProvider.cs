@@ -122,7 +122,8 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IAuthenticationService GetAuthenticationService(
         AuthenticationServiceOptions options,
-        HttpClient httpClient
+        HttpClient httpClient,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -134,7 +135,13 @@ public interface ISpravaServiceProvider : IServiceProvider
                 TypeInfoResolver = ManisJsonContext.Resolver,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             },
-            new TryPolicyService(3, TimeSpan.FromSeconds(1), FuncHelper<Exception>.Empty),
+            new TryPolicyService(
+                3,
+                TimeSpan.FromSeconds(1),
+                FuncHelper<Exception>.Empty,
+                logger,
+                FuncHelper<ExceptionsValidationError>.Empty
+            ),
             EmptyHeadersFactory.Instance
         );
     }
@@ -154,7 +161,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IAlarmUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IAlarmDbService dbService
+        IAlarmDbService dbService,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -170,6 +178,8 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
+                    FuncHelper<Exception>.Empty,
+                    logger,
                     _ => appState.SetServiceMode(nameof(AlarmUiService), ServiceMode.Offline)
                 ),
                 headersFactory
@@ -269,7 +279,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileStorageUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IFileStorageDbService dbService
+        IFileStorageDbService dbService,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -285,6 +296,8 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
+                    FuncHelper<Exception>.Empty,
+                    logger,
                     _ => appState.SetServiceMode(nameof(FileStorageUiService), ServiceMode.Offline)
                 ),
                 headersFactory
@@ -307,7 +320,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         HttpClient httpClient,
-        IToDoDbService dbService
+        IToDoDbService dbService,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -323,6 +337,8 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
+                    FuncHelper<Exception>.Empty,
+                    logger,
                     _ => appState.SetServiceMode(nameof(ToDoUiService), ServiceMode.Offline)
                 ),
                 headersFactory
@@ -345,7 +361,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         ICredentialUiCache uiCache,
         INavigator navigator,
         ICredentialDbService dbService,
-        HttpClient httpClient
+        HttpClient httpClient,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -361,6 +378,8 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
+                    FuncHelper<Exception>.Empty,
+                    logger,
                     _ => appState.SetServiceMode(nameof(CredentialUiService), ServiceMode.Offline)
                 ),
                 headersFactory
@@ -383,7 +402,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemUiCache uiCache,
         INavigator navigator,
         IFileSystemDbService dbService,
-        HttpClient httpClient
+        HttpClient httpClient,
+        ILogger logger
     )
     {
         httpClient.BaseAddress = new(options.Url);
@@ -399,6 +419,8 @@ public interface ISpravaServiceProvider : IServiceProvider
                 new TryPolicyService(
                     3,
                     TimeSpan.FromSeconds(1),
+                    FuncHelper<Exception>.Empty,
+                    logger,
                     _ => appState.SetServiceMode(nameof(FileSystemUiService), ServiceMode.Offline)
                 ),
                 headersFactory
