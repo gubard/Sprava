@@ -52,6 +52,9 @@
   <Folder Name="/Ui/Cai/">
     <Project Path="../Cai/Cai/Cai.csproj" />
   </Folder>
+  <Folder Name="/Ui/Coco/">
+    <Project Path="../Coco/Coco/Coco.csproj" />
+  </Folder>
   <Folder Name="/Ui/Cromwell/">
     <Project Path="../Cromwell/Cromwell/Cromwell.csproj" />
   </Folder>
