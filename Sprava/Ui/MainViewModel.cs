@@ -24,8 +24,8 @@ public sealed partial class MainViewModel : ViewModelBase
         Pane = pane;
         StatusBar = statusBar;
         ProgressService = progressService;
-        UiHelper.NavigateToAsync<SignInViewModel>(CancellationToken.None);
         _navigator.ViewChanged += (_, _) => OnPropertyChanged(nameof(IsStatusBarVisible));
+        UiHelper.NavigateToAsync<SignInViewModel>(CancellationToken.None);
     }
 
     public StackViewModel Stack { get; }

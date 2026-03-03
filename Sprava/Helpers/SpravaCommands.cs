@@ -21,12 +21,6 @@ public static class SpravaCommands
         var uiAuthenticationService =
             DiHelper.ServiceProvider.GetService<IAuthenticationUiService>();
 
-        async ValueTask LogoutAsync(CancellationToken ct)
-        {
-            await uiAuthenticationService.LogoutAsync(ct);
-            await UiHelper.NavigateToAsync<SignInViewModel>(ct);
-        }
-
         async ValueTask<IValidationErrors> SwitchServiceModeAsync(
             IServiceState state,
             CancellationToken ct
@@ -65,7 +59,11 @@ public static class SpravaCommands
             return TaskHelper.ConfiguredCompletedTask;
         });
 
-        LogoutCommand = UiHelper.CreateCommand(ct => LogoutAsync(ct).ConfigureAwait(false));
+        LogoutCommand = UiHelper.CreateCommand(async ct =>
+        {
+            await uiAuthenticationService.LogoutAsync(ct);
+            await UiHelper.NavigateToAsync<SignInViewModel>(ct);
+        });
 
         SwitchServiceModeCommand = UiHelper.CreateCommand<IServiceState, IValidationErrors>(
             (state, ct) => SwitchServiceModeAsync(state, ct).ConfigureAwait(false)
