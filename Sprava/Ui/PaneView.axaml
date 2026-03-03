@@ -16,7 +16,8 @@
              xmlns:pui="clr-namespace:Pheidippides.Ui;assembly=Pheidippides"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
-             x:DataType="ui:PaneViewModel">
+             x:DataType="ui:PaneViewModel"
+             Classes="m-5">
     <ScrollViewer Classes="vertical-scroll">
         <StackPanel>
             <c:GroupBoxControl>
