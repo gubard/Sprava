@@ -268,7 +268,11 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static HttpClient GetHttpClient()
     {
         var handler = new HttpClientHandler();
-
+        
+#if DEBUG
+        handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; 
+#endif
+        
         return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
     }
 
