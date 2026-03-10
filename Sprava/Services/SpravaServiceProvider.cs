@@ -122,14 +122,17 @@ public interface ISpravaServiceProvider : IServiceProvider
 
     public static IAuthenticationService GetAuthenticationService(
         AuthenticationServiceOptions options,
-        HttpClient httpClient,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         return new AuthenticationHttpService(
-            httpClient,
+            new FuncFactory<HttpClient>(() =>
+            {
+                var client = GetHttpClient();
+                client.BaseAddress = new(options.Url);
+
+                return client;
+            }),
             new()
             {
                 TypeInfoResolver = ManisJsonContext.Resolver,
@@ -160,16 +163,19 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         IAlarmUiCache uiCache,
         INavigator navigator,
-        HttpClient httpClient,
         IAlarmDbService dbService,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         var service = new AlarmUiService(
             new AlarmHttpService(
-                httpClient,
+                new FuncFactory<HttpClient>(() =>
+                {
+                    var client = GetHttpClient();
+                    client.BaseAddress = new(options.Url);
+
+                    return client;
+                }),
                 new()
                 {
                     TypeInfoResolver = RoosterJsonContext.Resolver,
@@ -268,11 +274,11 @@ public interface ISpravaServiceProvider : IServiceProvider
     public static HttpClient GetHttpClient()
     {
         var handler = new HttpClientHandler();
-        
+
 #if DEBUG
-        handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; 
+        handler.ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 #endif
-        
         return new(handler) { Timeout = TimeSpan.FromSeconds(10) };
     }
 
@@ -282,16 +288,19 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         IFileStorageUiCache uiCache,
         INavigator navigator,
-        HttpClient httpClient,
         IFileStorageDbService dbService,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         var service = new FileStorageUiService(
             new FileStorageHttpService(
-                httpClient,
+                new FuncFactory<HttpClient>(() =>
+                {
+                    var client = GetHttpClient();
+                    client.BaseAddress = new(options.Url);
+
+                    return client;
+                }),
                 new()
                 {
                     TypeInfoResolver = NeotomaJsonContext.Resolver,
@@ -323,16 +332,19 @@ public interface ISpravaServiceProvider : IServiceProvider
         AppState appState,
         IToDoUiCache uiCache,
         INavigator navigator,
-        HttpClient httpClient,
         IToDoDbService dbService,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         var service = new ToDoUiService(
             new ToDoHttpService(
-                httpClient,
+                new FuncFactory<HttpClient>(() =>
+                {
+                    var client = GetHttpClient();
+                    client.BaseAddress = new(options.Url);
+
+                    return client;
+                }),
                 new()
                 {
                     TypeInfoResolver = HestiaJsonContext.Resolver,
@@ -365,15 +377,18 @@ public interface ISpravaServiceProvider : IServiceProvider
         ICredentialUiCache uiCache,
         INavigator navigator,
         ICredentialDbService dbService,
-        HttpClient httpClient,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         var service = new CredentialUiService(
             new CredentialHttpService(
-                httpClient,
+                new FuncFactory<HttpClient>(() =>
+                {
+                    var client = GetHttpClient();
+                    client.BaseAddress = new(options.Url);
+
+                    return client;
+                }),
                 new()
                 {
                     TypeInfoResolver = TurtleJsonContext.Resolver,
@@ -406,15 +421,18 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemUiCache uiCache,
         INavigator navigator,
         IFileSystemDbService dbService,
-        HttpClient httpClient,
         ILogger logger
     )
     {
-        httpClient.BaseAddress = new(options.Url);
-
         var service = new FileSystemUiService(
             new FileSystemHttpService(
-                httpClient,
+                new FuncFactory<HttpClient>(() =>
+                {
+                    var client = GetHttpClient();
+                    client.BaseAddress = new(options.Url);
+
+                    return client;
+                }),
                 new()
                 {
                     TypeInfoResolver = AyaJsonContext.Resolver,
