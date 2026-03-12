@@ -9,6 +9,7 @@ using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Models;
 using Inanna.Services;
+using Sprava.Models;
 
 namespace Sprava.Ui;
 
@@ -21,7 +22,8 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInit
         Application application,
         IObjectStorage objectStorage,
         AppState appState,
-        LangResource langResource
+        LangResource langResource,
+        IEnumerable<DownloadInstallItem> downloadInstallItems
     )
     {
         _application = application;
@@ -29,9 +31,11 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInit
         AppState = appState;
         _langResource = langResource;
         _generalKey = string.Empty;
+        DownloadInstallItems = downloadInstallItems;
     }
 
     public AppState AppState { get; }
+    public IEnumerable<DownloadInstallItem> DownloadInstallItems { get; }
 
     public ConfiguredValueTaskAwaitable InitAsync(CancellationToken ct)
     {

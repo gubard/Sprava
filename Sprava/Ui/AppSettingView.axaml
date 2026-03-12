@@ -7,6 +7,7 @@
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
              xmlns:h="clr-namespace:Sprava.Helpers"
              xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
+             xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.AppSettingView"
              x:DataType="ui:AppSettingViewModel">
@@ -37,5 +38,17 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <TextBlock Classes="field" Text="{DynamicResource Lang.Downloads}" />
+
+        <ItemsControl Classes="horizontal-wrap" ItemsSource="{Binding DownloadInstallItems}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{x:Static ih:InannaCommands.OpenLinkCommand}" 
+                            CommandParameter="{Binding Url}"
+                            Content="{Binding Name}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </StackPanel>
 </UserControl>

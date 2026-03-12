@@ -8,6 +8,13 @@ public sealed class SpravaOptions
     public FileSystemServiceOptions FileSystemService { get; set; } = new();
     public FileStorageServiceOptions FileStorageService { get; set; } = new();
     public AlarmServiceOptions AlarmService { get; set; } = new();
+    public DownloadInstallOptions[] Downloads { get; set; } = [];
+}
+
+public sealed class DownloadInstallOptions
+{
+    public string Name { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
 }
 
 public sealed class FileSystemServiceOptions

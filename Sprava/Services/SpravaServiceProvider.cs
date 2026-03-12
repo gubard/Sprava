@@ -92,6 +92,7 @@ namespace Sprava.Services;
 [Singleton(typeof(IProgressService), typeof(ProgressService))]
 [Singleton(typeof(IErrorDialogFactory), typeof(ErrorDialogFactory))]
 [Singleton(typeof(ILogger), Factory = nameof(GetLogger))]
+[Singleton(typeof(IEnumerable<DownloadInstallItem>), Factory = nameof(GetDownloadInstallItems))]
 [Singleton(typeof(LogsViewModel))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
@@ -99,6 +100,11 @@ namespace Sprava.Services;
 )]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IEnumerable<DownloadInstallItem> GetDownloadInstallItems(ISpravaConfig config)
+    {
+        return config.Downloads;
+    }
+
     public static ILogger GetLogger(LogsViewModel viewModel)
     {
         using var loggerFactory = LoggerFactory.Create(b =>

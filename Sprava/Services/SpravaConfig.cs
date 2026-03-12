@@ -12,6 +12,7 @@ public interface ISpravaConfig
     FileSystemServiceOptions FileSystemService { get; }
     FileStorageServiceOptions FileStorageService { get; }
     AlarmServiceOptions AlarmService { get; }
+    IEnumerable<DownloadInstallItem> Downloads { get; }
 }
 
 public sealed class SpravaConfig : ISpravaConfig
@@ -28,6 +29,10 @@ public sealed class SpravaConfig : ISpravaConfig
         FileSystemService = options.FileSystemService;
         FileStorageService = options.FileStorageService;
         AlarmService = options.AlarmService;
+
+        Downloads = options
+            .Downloads.Select(x => new DownloadInstallItem(x.Name, x.Url.ToUri()))
+            .ToArray();
     }
 
     public AuthenticationServiceOptions AuthenticationService { get; }
@@ -36,4 +41,5 @@ public sealed class SpravaConfig : ISpravaConfig
     public FileSystemServiceOptions FileSystemService { get; }
     public FileStorageServiceOptions FileStorageService { get; }
     public AlarmServiceOptions AlarmService { get; }
+    public IEnumerable<DownloadInstallItem> Downloads { get; }
 }
