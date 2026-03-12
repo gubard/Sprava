@@ -105,6 +105,14 @@ public sealed class ValidationErrorDataTemplate : IDataTemplate
                 Text = _appResourceService.GetResource<string>("Lang.Unauthorized"),
                 Classes = { "plain-text" },
             },
+            ConnectionValidationError e => new()
+            {
+                Text = _stringFormater.Format(
+                    _appResourceService.GetResource<string>("Lang.ConnectionValidationError"),
+                    e.Resurce
+                ),
+                Classes = { "plain-text" },
+            },
             _ => new TextBox
             {
                 Text = $"Not found \"{param.GetType()}\"",
