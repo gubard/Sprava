@@ -35,13 +35,13 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Button Classes="align-stretch"
                                 Content="{DynamicResource Lang.ToDos}"
-                                Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                                Command="{Binding InannaCommands.NavigateToCommand}"
                                 CommandParameter="{x:Type dui:RootToDosViewModel}"
                                 Click="PaneButtonOnClick" />
 
                         <StackPanel Grid.Column="1" Classes="horizontal">
                             <Button Content="{ip:MaterialDesign Search}"
-                                    Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                                    Command="{Binding InannaCommands.NavigateToCommand}"
                                     CommandParameter="{x:Type dui:SearchToDoViewModel}"
                                     Click="PaneButtonOnClick" />
                             <Button Content="{ip:MaterialDesign ArrowForward}"
@@ -52,17 +52,17 @@
 
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.Credentials}"
-                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            Command="{Binding InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cui:RootCredentialsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.Alarms}"
-                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            Command="{Binding InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type pui:AlarmsViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.FileSystem}"
-                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            Command="{Binding InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type cu:FilesPanelViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
@@ -71,7 +71,7 @@
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.Developer}"
-                            Command="{x:Static ih:InannaCommands.NavigateToCommand}"
+                            Command="{Binding InannaCommands.NavigateToCommand}"
                             CommandParameter="{x:Type ui:DeveloperViewModel}"
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"

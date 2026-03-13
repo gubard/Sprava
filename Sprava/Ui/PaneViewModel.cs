@@ -25,7 +25,8 @@ public sealed partial class PaneViewModel : ViewModelBase
         ICredentialUiCache credentialUiCache,
         AppState appState,
         IAuthenticationUiService authenticationUiService,
-        IToDoUiService toDoUiService
+        IToDoUiService toDoUiService,
+        InannaCommands inannaCommands
     )
     {
         _dialogService = dialogService;
@@ -37,11 +38,13 @@ public sealed partial class PaneViewModel : ViewModelBase
         AppState = appState;
         _authenticationUiService = authenticationUiService;
         _toDoUiService = toDoUiService;
+        InannaCommands = inannaCommands;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
     public IAvaloniaReadOnlyList<CredentialNotify> Credentials { get; }
     public AppState AppState { get; }
+    public InannaCommands InannaCommands { get; }
 
     private readonly IDialogService _dialogService;
     private readonly ISpravaViewModelFactory _spravaViewModelFactory;

@@ -23,7 +23,8 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInit
         IObjectStorage objectStorage,
         AppState appState,
         LangResource langResource,
-        IEnumerable<DownloadInstallItem> downloadInstallItems
+        IEnumerable<DownloadInstallItem> downloadInstallItems,
+        InannaCommands inannaCommands
     )
     {
         _application = application;
@@ -32,10 +33,12 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInit
         _langResource = langResource;
         _generalKey = string.Empty;
         DownloadInstallItems = downloadInstallItems;
+        InannaCommands = inannaCommands;
     }
 
     public AppState AppState { get; }
     public IEnumerable<DownloadInstallItem> DownloadInstallItems { get; }
+    public InannaCommands InannaCommands { get; }
 
     public ConfiguredValueTaskAwaitable InitAsync(CancellationToken ct)
     {

@@ -94,6 +94,7 @@ namespace Sprava.Services;
 [Singleton(typeof(ILogger), Factory = nameof(GetLogger))]
 [Singleton(typeof(IEnumerable<DownloadInstallItem>), Factory = nameof(GetDownloadInstallItems))]
 [Singleton(typeof(LogsViewModel))]
+[Singleton(typeof(InannaCommands))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
@@ -211,7 +212,8 @@ public interface ISpravaServiceProvider : IServiceProvider
         IAuthenticationUiService authenticationUiService,
         IObjectStorage objectStorage,
         AppState appState,
-        IServiceController serviceController
+        IServiceController serviceController,
+        InannaCommands inannaCommands
     )
     {
         return new(
@@ -219,7 +221,8 @@ public interface ISpravaServiceProvider : IServiceProvider
             UiHelper.NavigateToAsync<RootToDosViewModel>,
             objectStorage,
             appState,
-            serviceController
+            serviceController,
+            inannaCommands
         );
     }
 

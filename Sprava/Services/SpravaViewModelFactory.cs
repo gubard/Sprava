@@ -28,7 +28,14 @@ public sealed class SpravaViewModelFactory : ISpravaViewModelFactory
 
     public AppSettingViewModel Create()
     {
-        return new(_application, _objectStorage, _appState, _langResource, _downloadInstallItems);
+        return new(
+            _application,
+            _objectStorage,
+            _appState,
+            _langResource,
+            _downloadInstallItems,
+            _inannaCommands
+        );
     }
 
     private readonly Application _application;
@@ -36,4 +43,5 @@ public sealed class SpravaViewModelFactory : ISpravaViewModelFactory
     private readonly AppState _appState;
     private readonly LangResource _langResource;
     private readonly IEnumerable<DownloadInstallItem> _downloadInstallItems;
+    private readonly InannaCommands _inannaCommands;
 }
