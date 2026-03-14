@@ -10,56 +10,42 @@ using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Services;
 
-public sealed class SpravaCommands
+public sealed class SpravaCommands : Commands
 {
     public SpravaCommands(IServiceProvider serviceProvider)
+        : base(serviceProvider)
     {
-        _serviceProvider = serviceProvider;
+        _showPaneCommand = CreateLazyCommand(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+                ServiceProvider.GetService<MainViewModel>().IsShowPane = true
+            );
 
-        _showPaneCommand = new Lazy<ICommand>(() =>
-            _serviceProvider
-                .GetService<ICommandFactory>()
-                .CreateCommand(_ =>
-                {
-                    Dispatcher.UIThread.Post(() =>
-                        _serviceProvider.GetService<MainViewModel>().IsShowPane = true
-                    );
+            return TaskHelper.ConfiguredCompletedTask;
+        });
 
-                    return TaskHelper.ConfiguredCompletedTask;
-                })
-        );
+        _hidePaneCommand = CreateLazyCommand(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+                ServiceProvider.GetService<MainViewModel>().IsShowPane = false
+            );
 
-        _hidePaneCommand = new Lazy<ICommand>(() =>
-            _serviceProvider
-                .GetService<ICommandFactory>()
-                .CreateCommand(_ =>
-                {
-                    Dispatcher.UIThread.Post(() =>
-                        _serviceProvider.GetService<MainViewModel>().IsShowPane = false
-                    );
+            return TaskHelper.ConfiguredCompletedTask;
+        });
 
-                    return TaskHelper.ConfiguredCompletedTask;
-                })
-        );
-
-        _logoutCommand = new Lazy<ICommand>(() =>
-            _serviceProvider
-                .GetService<ICommandFactory>()
-                .CreateCommand(async ct =>
-                {
-                    await _serviceProvider.GetService<IAuthenticationUiService>().LogoutAsync(ct);
-                    await _serviceProvider
-                        .GetService<INavigator>()
-                        .NavigateToAsync<SignInViewModel>(serviceProvider, ct);
-                })
-        );
+        _logoutCommand = CreateLazyCommand(async ct =>
+        {
+            await ServiceProvider.GetService<IAuthenticationUiService>().LogoutAsync(ct);
+            await ServiceProvider
+                .GetService<INavigator>()
+                .NavigateToAsync<SignInViewModel>(serviceProvider, ct);
+        });
     }
 
     public ICommand ShowPaneCommand => _showPaneCommand.Value;
     public ICommand HidePaneCommand => _hidePaneCommand.Value;
     public ICommand LogoutCommand => _logoutCommand.Value;
 
-    private readonly IServiceProvider _serviceProvider;
     private readonly Lazy<ICommand> _showPaneCommand;
     private readonly Lazy<ICommand> _hidePaneCommand;
     private readonly Lazy<ICommand> _logoutCommand;
