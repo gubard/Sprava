@@ -51,3 +51,4 @@ using Weber.Ui;
 [assembly: ViewPair(typeof(AdaptiveButtonsView), typeof(AdaptiveButtonsViewModel))]
 [assembly: ViewPair(typeof(AlarmListView), typeof(AlarmListViewModel))]
 [assembly: ViewPair(typeof(LogsView), typeof(LogsViewModel))]
+[assembly: ViewPair(typeof(ServiceOfflineStatusView), typeof(ServiceOfflineStatusViewModel))]

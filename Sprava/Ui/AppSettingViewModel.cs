@@ -24,8 +24,10 @@ public sealed partial class AppSettingViewModel : ViewModelBase, IInit
         AppState appState,
         LangResource langResource,
         IEnumerable<DownloadInstallItem> downloadInstallItems,
-        InannaCommands inannaCommands
+        InannaCommands inannaCommands,
+        ISafeExecuteWrapper safeExecuteWrapper
     )
+        : base(safeExecuteWrapper)
     {
         _application = application;
         _objectStorage = objectStorage;

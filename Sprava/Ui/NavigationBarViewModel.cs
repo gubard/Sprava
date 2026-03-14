@@ -2,15 +2,23 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Inanna.Models;
 using Inanna.Services;
+using Sprava.Services;
 
 namespace Sprava.Ui;
 
 public sealed partial class NavigationBarViewModel : ViewModelBase
 {
-    public NavigationBarViewModel(INavigator navigator, IAppResourceService appResourceService)
+    public NavigationBarViewModel(
+        INavigator navigator,
+        IAppResourceService appResourceService,
+        ISafeExecuteWrapper safeExecuteWrapper,
+        SpravaCommands spravaCommands
+    )
+        : base(safeExecuteWrapper)
     {
         _navigator = navigator;
         _appResourceService = appResourceService;
+        SpravaCommands = spravaCommands;
 
         _navigator.ViewChanged += (_, _) =>
         {
@@ -22,6 +30,7 @@ public sealed partial class NavigationBarViewModel : ViewModelBase
 
     public bool IsCanBack => !_navigator.IsEmpty;
     public bool IsHeaderVisible => _navigator.CurrentView is not INonHeader;
+    public SpravaCommands SpravaCommands { get; }
 
     public object Header =>
         _navigator.CurrentView switch

@@ -18,7 +18,7 @@ public sealed partial class PaneViewModel : ViewModelBase
 {
     public PaneViewModel(
         IDialogService dialogService,
-        ISpravaViewModelFactory spravaViewModelFactory,
+        ISpravaViewModelFactory factory,
         IAppResourceService appResourceService,
         IObjectStorage objectStorage,
         IToDoUiCache toDoUiCache,
@@ -26,11 +26,16 @@ public sealed partial class PaneViewModel : ViewModelBase
         AppState appState,
         IAuthenticationUiService authenticationUiService,
         IToDoUiService toDoUiService,
-        InannaCommands inannaCommands
+        InannaCommands inannaCommands,
+        ISafeExecuteWrapper safeExecuteWrapper,
+        SpravaCommands spravaCommands,
+        CromwellCommands cromwellCommands,
+        DioclesCommands dioclesCommands
     )
+        : base(safeExecuteWrapper)
     {
         _dialogService = dialogService;
-        _spravaViewModelFactory = spravaViewModelFactory;
+        _factory = factory;
         _appResourceService = appResourceService;
         _objectStorage = objectStorage;
         ToDos = toDoUiCache.Bookmarks;
@@ -39,15 +44,21 @@ public sealed partial class PaneViewModel : ViewModelBase
         _authenticationUiService = authenticationUiService;
         _toDoUiService = toDoUiService;
         InannaCommands = inannaCommands;
+        DioclesCommands = dioclesCommands;
+        SpravaCommands = spravaCommands;
+        CromwellCommands = cromwellCommands;
     }
 
     public IAvaloniaReadOnlyList<ToDoNotify> ToDos { get; }
     public IAvaloniaReadOnlyList<CredentialNotify> Credentials { get; }
     public AppState AppState { get; }
     public InannaCommands InannaCommands { get; }
+    public DioclesCommands DioclesCommands { get; }
+    public SpravaCommands SpravaCommands { get; }
+    public CromwellCommands CromwellCommands { get; }
 
     private readonly IDialogService _dialogService;
-    private readonly ISpravaViewModelFactory _spravaViewModelFactory;
+    private readonly ISpravaViewModelFactory _factory;
     private readonly IAppResourceService _appResourceService;
     private readonly IObjectStorage _objectStorage;
     private readonly IAuthenticationUiService _authenticationUiService;
@@ -81,7 +92,7 @@ public sealed partial class PaneViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowSettingsViewAsync(CancellationToken ct)
     {
-        var setting = _spravaViewModelFactory.Create();
+        var setting = _factory.CreateAppSettingViewModel();
 
         await WrapCommandAsync(
             () =>
@@ -91,13 +102,14 @@ public sealed partial class PaneViewModel : ViewModelBase
                             .GetResource<string>("Lang.Settings")
                             .DispatchToDialogHeader(),
                         setting,
+                        SafeExecuteWrapper,
                         new DialogButton(
                             _appResourceService.GetResource<string>("Lang.Save"),
                             SaveSettingsCommand,
                             setting,
                             DialogButtonType.Primary
                         ),
-                        UiHelper.CancelButton
+                        _dialogService.CancelButton
                     ),
                     ct
                 ),

@@ -10,22 +10,25 @@ namespace Sprava.Ui;
 public sealed partial class MainViewModel : ViewModelBase
 {
     public MainViewModel(
-        StackViewModel stack,
-        NavigationBarViewModel navigationBar,
+        StackViewModel stackViewModel,
+        StatusBarViewModel statusBarViewModel,
+        PaneViewModel paneViewModel,
+        NavigationBarViewModel navigationBarViewModel,
         INavigator navigator,
-        PaneViewModel pane,
-        StatusBarViewModel statusBar,
-        IProgressService progressService
+        IProgressService progressService,
+        ISafeExecuteWrapper safeExecuteWrapper,
+        Gaia.Services.IServiceProvider serviceProvider
     )
+        : base(safeExecuteWrapper)
     {
-        Stack = stack;
-        NavigationBar = navigationBar;
+        Stack = stackViewModel;
+        NavigationBar = navigationBarViewModel;
         _navigator = navigator;
-        Pane = pane;
-        StatusBar = statusBar;
+        Pane = paneViewModel;
+        StatusBar = statusBarViewModel;
         ProgressService = progressService;
         _navigator.ViewChanged += (_, _) => OnPropertyChanged(nameof(IsStatusBarVisible));
-        UiHelper.NavigateToAsync<SignInViewModel>(CancellationToken.None);
+        _navigator.NavigateToAsync<SignInViewModel>(serviceProvider, CancellationToken.None);
     }
 
     public StackViewModel Stack { get; }

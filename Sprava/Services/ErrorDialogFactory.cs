@@ -10,35 +10,43 @@ namespace Sprava.Services;
 
 public sealed class ErrorDialogFactory : IErrorDialogFactory
 {
-    public ErrorDialogFactory(
-        IInannaViewModelFactory viewModelFactory,
-        IAppResourceService appResourceService,
-        IDialogService dialogService,
-        IAuthenticationUiService authenticationUiService
-    )
+    public ErrorDialogFactory(Gaia.Services.IServiceProvider serviceProvider)
     {
-        _viewModelFactory = viewModelFactory;
-        _appResourceService = appResourceService;
+        _serviceProvider = serviceProvider;
 
-        _unauthorizedDialogButton = new(
-            _appResourceService.GetResource<string>("Lang.Ok"),
-            UiHelper.CreateCommand(async ct =>
-            {
-                await dialogService.CloseMessageBoxAsync(ct);
-                await authenticationUiService.LogoutAsync(ct);
-                await UiHelper.NavigateToAsync<SignInViewModel>(ct);
-            }),
-            null,
-            DialogButtonType.Primary
+        _unauthorizedDialogButton = new Lazy<DialogButton>(() =>
+            new(
+                _serviceProvider.GetService<IAppResourceService>().GetResource<string>("Lang.Ok"),
+                _serviceProvider
+                    .GetService<ICommandFactory>()
+                    .CreateCommand(async ct =>
+                    {
+                        await _serviceProvider
+                            .GetService<IDialogService>()
+                            .CloseMessageBoxAsync(ct);
+                        await _serviceProvider
+                            .GetService<IAuthenticationUiService>()
+                            .LogoutAsync(ct);
+                        await _serviceProvider
+                            .GetService<INavigator>()
+                            .NavigateToAsync<SignInViewModel>(serviceProvider, ct);
+                    }),
+                null,
+                DialogButtonType.Primary
+            )
         );
     }
 
     public DialogViewModel Create(Exception[] input)
     {
         return new(
-            _appResourceService.GetResource<string>("Lang.Error").DispatchToDialogHeader(),
-            _viewModelFactory.CreateException(input),
-            UiHelper.OkButton
+            _serviceProvider
+                .GetService<IAppResourceService>()
+                .GetResource<string>("Lang.Error")
+                .DispatchToDialogHeader(),
+            _serviceProvider.GetService<IInannaViewModelFactory>().CreateException(input),
+            _serviceProvider.GetService<ISafeExecuteWrapper>(),
+            _serviceProvider.GetService<IDialogService>().OkButton
         );
     }
 
@@ -47,20 +55,29 @@ public sealed class ErrorDialogFactory : IErrorDialogFactory
         if (input.Any(x => x is UnauthorizedValidationError))
         {
             return new(
-                _appResourceService.GetResource<string>("Lang.Error").DispatchToDialogHeader(),
-                _viewModelFactory.CreateValidationErrors(input),
-                _unauthorizedDialogButton
+                _serviceProvider
+                    .GetService<IAppResourceService>()
+                    .GetResource<string>("Lang.Error")
+                    .DispatchToDialogHeader(),
+                _serviceProvider
+                    .GetService<IInannaViewModelFactory>()
+                    .CreateValidationErrors(input),
+                _serviceProvider.GetService<ISafeExecuteWrapper>(),
+                _unauthorizedDialogButton.Value
             );
         }
 
         return new(
-            _appResourceService.GetResource<string>("Lang.Error").DispatchToDialogHeader(),
-            _viewModelFactory.CreateValidationErrors(input),
-            UiHelper.OkButton
+            _serviceProvider
+                .GetService<IAppResourceService>()
+                .GetResource<string>("Lang.Error")
+                .DispatchToDialogHeader(),
+            _serviceProvider.GetService<IInannaViewModelFactory>().CreateValidationErrors(input),
+            _serviceProvider.GetService<ISafeExecuteWrapper>(),
+            _serviceProvider.GetService<IDialogService>().OkButton
         );
     }
 
-    private readonly IInannaViewModelFactory _viewModelFactory;
-    private readonly IAppResourceService _appResourceService;
-    private readonly DialogButton _unauthorizedDialogButton;
+    private readonly Gaia.Services.IServiceProvider _serviceProvider;
+    private readonly Lazy<DialogButton> _unauthorizedDialogButton;
 }

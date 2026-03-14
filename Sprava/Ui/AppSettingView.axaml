@@ -5,7 +5,6 @@
              xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              xmlns:ui="clr-namespace:Sprava.Ui"
              xmlns:m="clr-namespace:Inanna.Models;assembly=Inanna"
-             xmlns:h="clr-namespace:Sprava.Helpers"
              xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.AppSettingView"
@@ -28,7 +27,7 @@
                 <DataGridTemplateColumn Header="{DynamicResource Lang.Status}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ToggleButton Command="{x:Static h:SpravaCommands.SwitchServiceModeCommand}"
+                            <ToggleButton Command="{Binding $parent[ui:AppSettingView].ViewModel.InannaCommands.SwitchServiceModeCommand}"
                                           CommandParameter="{Binding}"
                                           IsChecked="{Binding Mode, Mode=OneWay, Converter={x:Static s:IsValueConverter.Instance}, ConverterParameter={x:Static m:ServiceMode.Online}}"
                                           Content="{DynamicResource Lang.Online}" />

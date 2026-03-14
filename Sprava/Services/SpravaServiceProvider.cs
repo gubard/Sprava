@@ -6,7 +6,9 @@ using Aya.Contract.Helpers;
 using Aya.Contract.Models;
 using Aya.Contract.Services;
 using Cai.Services;
+using Cai.Ui;
 using Cromwell.Services;
+using Cromwell.Ui;
 using Diocles.Services;
 using Diocles.Ui;
 using Gaia.Helpers;
@@ -31,6 +33,7 @@ using Neotoma.Contract.Services;
 using Nestor.Db.Helpers;
 using Nestor.Db.Services;
 using Pheidippides.Services;
+using Pheidippides.Ui;
 using Rooster.Contract.Helpers;
 using Rooster.Contract.Models;
 using Rooster.Contract.Services;
@@ -45,27 +48,18 @@ using IServiceProvider = Gaia.Services.IServiceProvider;
 namespace Sprava.Services;
 
 [ServiceProviderModule]
+//  Imports
 [Import(typeof(ICromwellServiceProvider))]
 [Import(typeof(IMelnikovServiceProvider))]
 [Import(typeof(IDioclesServiceProvider))]
 [Import(typeof(ICaiServiceProvider))]
 [Import(typeof(IPheidippidesServiceProvider))]
-[Singleton(typeof(MainViewModel))]
-[Singleton(typeof(AppState))]
-[Transient(typeof(PaneViewModel))]
-[Transient(typeof(AppSettingViewModel))]
+[Import(typeof(IInannaServiceProvider))]
+//  Services
 [Transient(typeof(ISpravaViewModelFactory), typeof(SpravaViewModelFactory))]
 [Transient(typeof(IAuthenticationValidator), typeof(AuthenticationValidator))]
-[Singleton(typeof(StatusBarViewModel))]
-[Singleton(typeof(NavigationBarViewModel))]
-[Transient(typeof(SignUpViewModel))]
 [Transient(typeof(JwtSecurityTokenHandler))]
 [Transient(typeof(IFactory<Memory<HttpHeader>>), typeof(HeadersFactory))]
-[Transient(typeof(AlarmServiceOptions), Factory = nameof(GetAlarmServiceOptions))]
-[Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
-[Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
-[Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
-[Transient(typeof(FileSystemServiceOptions), Factory = nameof(GetFileSystemServiceOptions))]
 [Singleton(typeof(IStringFormater), Factory = nameof(GetStringFormater))]
 [Transient(typeof(IStorageService), Factory = nameof(GetStorageService))]
 [Singleton(typeof(IMigrator), Factory = nameof(GetMigrator))]
@@ -76,14 +70,10 @@ namespace Sprava.Services;
 [Transient(typeof(IToDoUiCache), Factory = nameof(GetToDoUiCache))]
 [Transient(typeof(ICredentialUiCache), Factory = nameof(GetCredentialUiCache))]
 [Transient(typeof(IFileSystemUiCache), Factory = nameof(GetFileSystemUiCache))]
-[Transient(typeof(DeveloperViewModel))]
-[Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
-[Transient(typeof(IInannaViewModelFactory), typeof(InannaViewModelFactory))]
 [Transient(typeof(IStatusBarService), typeof(StatusBarService))]
 [Transient(typeof(IServiceController), Factory = nameof(GetServiceController))]
 [Transient(typeof(IFileStorageUiCache), Factory = nameof(GetFileStorageUiCache))]
 [Singleton(typeof(IFileStorageUiService), Factory = nameof(GetFileStorageUiService))]
-[Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
 [Singleton(typeof(IAlarmUiCache), Factory = nameof(GetAlarmUiCache))]
 [Transient(typeof(IFactory<DbValues>), typeof(DbValuesUiFactory))]
 [Singleton(typeof(IAlarmUiService), Factory = nameof(GetAlarmUiService))]
@@ -93,27 +83,128 @@ namespace Sprava.Services;
 [Singleton(typeof(IErrorDialogFactory), typeof(ErrorDialogFactory))]
 [Singleton(typeof(ILogger), Factory = nameof(GetLogger))]
 [Singleton(typeof(IEnumerable<DownloadInstallItem>), Factory = nameof(GetDownloadInstallItems))]
-[Singleton(typeof(LogsViewModel))]
-[Singleton(typeof(InannaCommands))]
+[Singleton(typeof(ICommandFactory), typeof(CommandFactory))]
+[Singleton(typeof(ISafeExecuteWrapper), typeof(SafeExecuteWrapper))]
+[Singleton(typeof(SpravaCommands))]
 [Singleton(
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
 )]
+//  Models
+[Singleton(typeof(AppState))]
+[Transient(typeof(AlarmServiceOptions), Factory = nameof(GetAlarmServiceOptions))]
+[Transient(typeof(AuthenticationServiceOptions), Factory = nameof(GetAuthenticationServiceOptions))]
+[Transient(typeof(CredentialServiceOptions), Factory = nameof(GetCredentialServiceOptions))]
+[Transient(typeof(ToDoServiceOptions), Factory = nameof(GetToDoServiceOptions))]
+[Transient(typeof(FileSystemServiceOptions), Factory = nameof(GetFileSystemServiceOptions))]
+[Transient(typeof(FileStorageServiceOptions), Factory = nameof(GetFileStorageServiceOptions))]
+//  ViewModels
+[Singleton(typeof(StackViewModel), Factory = nameof(GetStackViewModel))]
+[Singleton(typeof(StatusBarViewModel), Factory = nameof(GetStatusBarViewModel))]
+[Singleton(typeof(PaneViewModel), Factory = nameof(GetPaneViewModel))]
+[Singleton(typeof(NavigationBarViewModel), Factory = nameof(GetNavigationBarViewModel))]
+[Singleton(typeof(MainViewModel), Factory = nameof(GetMainViewModel))]
+[Singleton(typeof(LogsViewModel), Factory = nameof(GetLogsViewModel))]
+[Transient(typeof(DeveloperViewModel), Factory = nameof(GetDeveloperViewModel))]
+[Transient(typeof(SignInViewModel), Factory = nameof(GetSignInViewModel))]
+[Transient(typeof(SignUpViewModel), Factory = nameof(GetSignUpViewModel))]
+[Transient(typeof(RootToDosViewModel), Factory = nameof(GetRootToDosViewModel))]
+[Transient(typeof(SearchToDoViewModel), Factory = nameof(GetSearchToDoViewModel))]
+[Transient(typeof(RootCredentialsViewModel), Factory = nameof(GetRootCredentialsViewModel))]
+[Transient(typeof(AlarmsViewModel), Factory = nameof(GetAlarmsViewModel))]
+[Transient(typeof(FilesPanelViewModel), Factory = nameof(GetFilesPanelViewModel))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static FilesPanelViewModel GetFilesPanelViewModel(ICaiViewModelFactory factory)
+    {
+        return factory.CreateFilesPanel();
+    }
+
+    public static AlarmsViewModel GetAlarmsViewModel(IPheidippidesViewModelFactory factory)
+    {
+        return factory.CreateAlarms();
+    }
+
+    public static RootCredentialsViewModel GetRootCredentialsViewModel(
+        ICromwellViewModelFactory factory
+    )
+    {
+        return factory.CreateRootCredentials();
+    }
+
+    public static SearchToDoViewModel GetSearchToDoViewModel(IDioclesViewModelFactory factory)
+    {
+        return factory.CreSearchToDo();
+    }
+
+    public static RootToDosViewModel GetRootToDosViewModel(IDioclesViewModelFactory factory)
+    {
+        return factory.CreateRootToDos();
+    }
+
+    public static SignUpViewModel GetSignUpViewModel(IMelnikovViewModelFactory factory)
+    {
+        return factory.CreateSignUp();
+    }
+
+    public static SignInViewModel GetSignInViewModel(
+        IMelnikovViewModelFactory factory,
+        INavigator navigator,
+        IServiceProvider serviceProvider
+    )
+    {
+        return factory.CreateSignIn(ct =>
+            navigator.NavigateToAsync<RootToDosViewModel>(serviceProvider, ct)
+        );
+    }
+    public static DeveloperViewModel GetDeveloperViewModel(ISpravaViewModelFactory factory)
+    {
+        return factory.CreateDeveloper();
+    }
+
+    public static LogsViewModel GetLogsViewModel(IInannaViewModelFactory factory)
+    {
+        return factory.CreateLogs();
+    }
+
+    public static StackViewModel GetStackViewModel(IInannaViewModelFactory factory)
+    {
+        return factory.CreateStack();
+    }
+
+    public static MainViewModel GetMainViewModel(ISpravaViewModelFactory factory)
+    {
+        return factory.CreateMain();
+    }
+
+    public static StatusBarViewModel GetStatusBarViewModel(ISpravaViewModelFactory factory)
+    {
+        return factory.CreateStatusBar();
+    }
+
+    public static PaneViewModel GetPaneViewModel(ISpravaViewModelFactory factory)
+    {
+        return factory.CreatePane();
+    }
+
+    public static NavigationBarViewModel GetNavigationBarViewModel(ISpravaViewModelFactory factory)
+    {
+        return factory.CreateNavigationBar();
+    }
+
     public static IEnumerable<DownloadInstallItem> GetDownloadInstallItems(ISpravaConfig config)
     {
         return config.Downloads;
     }
 
-    public static ILogger GetLogger(LogsViewModel viewModel)
+    public static ILogger GetLogger(IServiceProvider serviceProvider)
     {
         using var loggerFactory = LoggerFactory.Create(b =>
-            b.AddProvider(new ViewLoggerProvider(viewModel))
+            b.AddProvider(new ViewLoggerProvider(serviceProvider))
 #if DEBUG
             .SetMinimumLevel(LogLevel.Trace)
 #else
-            .SetMinimumLevel(LogLevel.Information)
+                .SetMinimumLevel(LogLevel.Information)
 #endif
         );
 
@@ -171,7 +262,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         IAlarmUiCache uiCache,
         INavigator navigator,
         IAlarmDbService dbService,
-        ILogger logger
+        ILogger logger,
+        IStatusBarService statusBarService,
+        IInannaViewModelFactory factory
     )
     {
         var service = new AlarmUiService(
@@ -200,30 +293,14 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(AlarmUiService)
+            nameof(AlarmUiService),
+            statusBarService,
+            factory
         );
 
         appState.AddService(service);
 
         return service;
-    }
-
-    public static SignInViewModel GetSignInViewModel(
-        IAuthenticationUiService authenticationUiService,
-        IObjectStorage objectStorage,
-        AppState appState,
-        IServiceController serviceController,
-        InannaCommands inannaCommands
-    )
-    {
-        return new(
-            authenticationUiService,
-            UiHelper.NavigateToAsync<RootToDosViewModel>,
-            objectStorage,
-            appState,
-            serviceController,
-            inannaCommands
-        );
     }
 
     public static ILinearBarcodeSerializerFactory GetLinearBarcodeSerializerFactory()
@@ -275,9 +352,13 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new CredentialUiCache(dbService, memoryCache);
     }
 
-    public static IToDoUiCache GetToDoUiCache(IToDoMemoryCache memoryCache, IToDoDbCache dbCache)
+    public static IToDoUiCache GetToDoUiCache(
+        IToDoMemoryCache memoryCache,
+        IToDoDbCache dbCache,
+        DioclesCommands dioclesCommands
+    )
     {
-        return new ToDoUiCache(dbCache, memoryCache);
+        return new ToDoUiCache(dbCache, memoryCache, dioclesCommands);
     }
 
     public static HttpClient GetHttpClient()
@@ -298,7 +379,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileStorageUiCache uiCache,
         INavigator navigator,
         IFileStorageDbService dbService,
-        ILogger logger
+        ILogger logger,
+        IStatusBarService statusBarService,
+        IInannaViewModelFactory factory
     )
     {
         var service = new FileStorageUiService(
@@ -327,7 +410,9 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(FileStorageUiService)
+            nameof(FileStorageUiService),
+            statusBarService,
+            factory
         );
 
         appState.AddService(service);
@@ -342,7 +427,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         IToDoUiCache uiCache,
         INavigator navigator,
         IToDoDbService dbService,
-        ILogger logger
+        ILogger logger,
+        IStatusBarService statusBarService,
+        IInannaViewModelFactory factory
     )
     {
         var service = new ToDoUiService(
@@ -371,7 +458,9 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(ToDoUiService)
+            nameof(ToDoUiService),
+            statusBarService,
+            factory
         );
 
         appState.AddService(service);
@@ -386,7 +475,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         ICredentialUiCache uiCache,
         INavigator navigator,
         ICredentialDbService dbService,
-        ILogger logger
+        ILogger logger,
+        IStatusBarService statusBarService,
+        IInannaViewModelFactory factory
     )
     {
         var service = new CredentialUiService(
@@ -415,7 +506,9 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(CredentialUiService)
+            nameof(CredentialUiService),
+            statusBarService,
+            factory
         );
 
         appState.AddService(service);
@@ -430,7 +523,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         IFileSystemUiCache uiCache,
         INavigator navigator,
         IFileSystemDbService dbService,
-        ILogger logger
+        ILogger logger,
+        IStatusBarService statusBarService,
+        IInannaViewModelFactory factory
     )
     {
         var service = new FileSystemUiService(
@@ -459,7 +554,9 @@ public interface ISpravaServiceProvider : IServiceProvider
             dbService,
             uiCache,
             navigator,
-            nameof(FileSystemUiService)
+            nameof(FileSystemUiService),
+            statusBarService,
+            factory
         );
 
         appState.AddService(service);

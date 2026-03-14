@@ -3,16 +3,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="clr-namespace:Sprava.Ui"
-             xmlns:sh="clr-namespace:Sprava.Helpers"
              xmlns:c="clr-namespace:Inanna.Controls;assembly=Inanna"
              xmlns:ih="clr-namespace:Inanna.Helpers;assembly=Inanna"
              xmlns:cui="clr-namespace:Cromwell.Ui;assembly=Cromwell"
              xmlns:dui="clr-namespace:Diocles.Ui;assembly=Diocles"
              xmlns:cu="clr-namespace:Cai.Ui;assembly=Cai"
              xmlns:ip="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:dh="clr-namespace:Diocles.Helpers;assembly=Diocles"
              xmlns:s="clr-namespace:Inanna.Services;assembly=Inanna"
-             xmlns:h="clr-namespace:Cromwell.Helpers;assembly=Cromwell"
              xmlns:pui="clr-namespace:Pheidippides.Ui;assembly=Pheidippides"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Sprava.Ui.PaneView"
@@ -27,7 +24,7 @@
                         <Button Grid.Column="1"
                                 Classes="mini p-5"
                                 Content="{ip:MaterialDesign Close}"
-                                Command="{x:Static sh:SpravaCommands.HidePaneCommand}" />
+                                Command="{Binding $parent[ui:PaneView].ViewModel.SpravaCommands.HidePaneCommand}" />
                     </Grid>
                 </c:GroupBoxControl.Header>
 
@@ -45,7 +42,7 @@
                                     CommandParameter="{x:Type dui:SearchToDoViewModel}"
                                     Click="PaneButtonOnClick" />
                             <Button Content="{ip:MaterialDesign ArrowForward}"
-                                    Command="{x:Static dh:DioclesCommands.OpenCurrentToDoCommand}"
+                                    Command="{Binding DioclesCommands.OpenCurrentToDoCommand}"
                                     Click="PaneButtonOnClick" />
                         </StackPanel>
                     </Grid>
@@ -76,7 +73,7 @@
                             Click="PaneButtonOnClick" />
                     <Button Classes="align-stretch"
                             Content="{DynamicResource Lang.Logout}"
-                            Command="{x:Static sh:SpravaCommands.LogoutCommand}"
+                            Command="{Binding SpravaCommands.LogoutCommand}"
                             Click="PaneButtonOnClick" />
                 </StackPanel>
             </c:GroupBoxControl>
@@ -88,14 +85,14 @@
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Button Classes="align-stretch"
-                                        Command="{x:Static h:CromwellCommands.GeneratePasswordCommand}"
+                                        Command="{Binding $parent[ui:PaneView].ViewModel.CromwellCommands.GeneratePasswordCommand}"
                                         CommandParameter="{Binding}"
                                         Click="PaneButtonOnClick">
                                     <TextBlock Classes="align-left" Text="{Binding Name}" />
                                 </Button>
 
                                 <Button Grid.Column="1"
-                                        Command="{x:Static h:CromwellCommands.LoginToClipboardCommand}"
+                                        Command="{Binding $parent[ui:PaneView].ViewModel.CromwellCommands.LoginToClipboardCommand}"
                                         CommandParameter="{Binding}"
                                         Content="{ip:MaterialDesign Login}" />
                             </Grid>
@@ -111,7 +108,7 @@
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Button Classes="align-stretch"
-                                        Command="{x:Static dh:DioclesCommands.OpenToDosCommand}"
+                                        Command="{Binding $parent[ui:PaneView].ViewModel.DioclesCommands.OpenToDosCommand}"
                                         CommandParameter="{Binding}"
                                         Click="PaneButtonOnClick">
                                     <TextBlock Classes="align-left" Text="{Binding Name}" />
