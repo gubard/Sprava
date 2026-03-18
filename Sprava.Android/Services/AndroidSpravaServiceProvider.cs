@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization.Metadata;
+using Avalonia.Platform;
 using Gaia.Helpers;
 using Gaia.Services;
 using Jab;
@@ -24,11 +25,8 @@ public sealed partial class AndroidSpravaServiceProvider : IServiceProvider
 {
     public static ISpravaConfig GetSpravaConfig()
     {
-        using var stream = MainActivity
-            .Activity.ThrowIfNull()
-            .Assets.ThrowIfNull()
-            .Open("appsettings.json")
-            .ThrowIfNull();
+        var uri = new Uri("avares://Sprava.Android/appsettings.json");
+        using var stream = AssetLoader.Open(uri);
 
         return new SpravaConfig(stream);
     }

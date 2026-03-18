@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
@@ -6,6 +7,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Provider;
+using Android.Runtime;
 using Avalonia;
 using Avalonia.Android;
 using Gaia.Helpers;
@@ -14,6 +16,20 @@ using Sprava.Android.Services;
 using Sprava.Helpers;
 
 namespace Sprava.Android;
+
+[Application]
+public class AndroidApp : AvaloniaAndroidApplication<App>
+{
+    protected AndroidApp(IntPtr javaReference, JniHandleOwnership transfer)
+        : base(javaReference, transfer) { }
+
+    protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
+    {
+        DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
+
+        return base.CustomizeAppBuilder(builder).WithInterFont().WithJetBrainsMonoFont();
+    }
+}
 
 [Activity(
     Label = "Sprava.Android",
@@ -24,16 +40,13 @@ namespace Sprava.Android;
         | ConfigChanges.ScreenSize
         | ConfigChanges.UiMode
 )]
-public sealed class MainActivity : AvaloniaMainActivity<App>
+public sealed class MainActivity : AvaloniaMainActivity
 {
     public static MainActivity? Activity;
 
-    protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
+    public MainActivity()
     {
         Activity = this;
-        DiHelper.ServiceProvider = new AndroidSpravaServiceProvider();
-
-        return base.CustomizeAppBuilder(builder).WithInterFont().WithJetBrainsMonoFont();
     }
 
     protected override void OnCreate(Bundle? savedInstanceState)

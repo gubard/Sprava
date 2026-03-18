@@ -1,8 +1,8 @@
 using Avalonia.Collections;
 using Avalonia.Controls;
-using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Gaia.Helpers;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
@@ -32,9 +32,12 @@ public sealed partial class DeveloperViewModel : ViewModelBase
     [RelayCommand]
     private void Refresh(Button button)
     {
-        var topLevel = button.GetVisualAncestors().OfType<TopLevel>().First();
-        TopLevelType = topLevel.GetType();
-        _classes.UpdateOrder(topLevel.Classes.ToArray());
-        DesignSizeType = TopLevelAssist.GetMaterialDesignSizeType(topLevel);
+        WrapCommand(() =>
+        {
+            var topLevel = TopLevel.GetTopLevel(button).ThrowIfNull();
+            TopLevelType = topLevel.GetType();
+            _classes.UpdateOrder(topLevel.Classes.ToArray());
+            DesignSizeType = TopLevelAssist.GetMaterialDesignSizeType(topLevel);
+        });
     }
 }

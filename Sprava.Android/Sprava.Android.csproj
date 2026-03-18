@@ -40,12 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AndroidAsset Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-  </ItemGroup>
-
-  <ItemGroup>
     <AvaloniaResource Include="Logo.png" />
+    <AvaloniaResource Include="appsettings.json" />
   </ItemGroup>
 </Project>

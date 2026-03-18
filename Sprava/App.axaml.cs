@@ -59,7 +59,6 @@ public sealed class App : InannaApplication
     {
         await LoadSettingAsync();
         var viewModel = DiHelper.ServiceProvider.GetService<MainViewModel>();
-        DisableAvaloniaDataAnnotationValidation();
 
         switch (ApplicationLifetime)
         {

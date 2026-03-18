@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http;
 using Avalonia.Platform;
 using Aya.Contract.Services;
 using Gaia.Helpers;
@@ -35,7 +34,7 @@ namespace Sprava.Browser.Services;
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
 {
-    public static ISpravaConfig GetSpravaConfig(HttpClient httpClient)
+    public static ISpravaConfig GetSpravaConfig()
     {
         var uri = new Uri("avares://Sprava.Browser/appsettings.json");
         using var stream = AssetLoader.Open(uri);

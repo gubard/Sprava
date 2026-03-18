@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Platform;
-using Avalonia.VisualTree;
 using Gaia.Helpers;
 using Inanna.Services;
 
@@ -20,7 +19,7 @@ public sealed partial class MainView : UserControl
                 return;
             }
 
-            var topLevel = visual.GetVisualAncestors().OfType<TopLevel>().FirstOrDefault();
+            var topLevel = TopLevel.GetTopLevel(visual);
 
             if (topLevel is null)
             {
