@@ -48,6 +48,9 @@
   <Folder Name="/Solution Items/">
     <File Path="Directory.Packages.props" />
   </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
   <Folder Name="/Ui/" />
   <Folder Name="/Ui/Cai/">
     <Project Path="../Cai/Cai/Cai.csproj" />
