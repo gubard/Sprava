@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Aya\Aya.Db\Aya.Db.csproj" />
-    <ProjectReference Include="..\..\Hestia\Hestia.Db\Hestia.Db.csproj" />
-    <ProjectReference Include="..\..\Neotoma\Neotoma.Db\Neotoma.Db.csproj" />
-    <ProjectReference Include="..\..\Rooster\Rooster.Db\Rooster.Db.csproj" />
-    <ProjectReference Include="..\..\Turtle\Turtle.Db\Turtle.Db.csproj" />
     <ProjectReference Include="..\Sprava\Sprava.csproj" />
   </ItemGroup>
 </Project>

@@ -26,6 +26,12 @@
     <ProjectReference Include="..\..\Diocles\Diocles\Diocles.csproj" />
     <ProjectReference Include="..\..\Melnikov\Melnikov\Melnikov.csproj" />
     <ProjectReference Include="..\..\Pheidippides\Pheidippides\Pheidippides.csproj" />
+    <ProjectReference Include="..\..\Nestor\Nestor.Db.LiteDb\Nestor.Db.LiteDb.csproj" />
+    <ProjectReference Include="..\..\Aya\Aya.Db\Aya.Db.csproj" />
+    <ProjectReference Include="..\..\Hestia\Hestia.Db\Hestia.Db.csproj" />
+    <ProjectReference Include="..\..\Neotoma\Neotoma.Db\Neotoma.Db.csproj" />
+    <ProjectReference Include="..\..\Rooster\Rooster.Db\Rooster.Db.csproj" />
+    <ProjectReference Include="..\..\Turtle\Turtle.Db\Turtle.Db.csproj" />
 
     <ProjectReference
       Include="..\..\Inanna\Inanna.SourceGenerator\Inanna.SourceGenerator.csproj"

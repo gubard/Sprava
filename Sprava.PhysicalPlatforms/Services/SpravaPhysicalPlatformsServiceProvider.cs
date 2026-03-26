@@ -44,7 +44,7 @@ public interface ISpravaPhysicalPlatformsServiceProvider
         return new DbObjectStorage(factory, serializer);
     }
 
-    public static AlarmDbService GetAlarmDbService(
+    public static AlarmAdoDbService GetAlarmDbService(
         AppState appState,
         IDbConnectionFactory factory,
         IFactory<DbValues> dbValues
@@ -56,7 +56,7 @@ public interface ISpravaPhysicalPlatformsServiceProvider
             new DbServiceOptionsUiFactory(appState, nameof(AlarmUiService))
         );
     }
-    public static FileStorageDbService GetFileStorageDbService(
+    public static FileStorageAdoDbService GetFileStorageDbService(
         AppState appState,
         IDbConnectionFactory factory,
         IFactory<DbValues> dbValues
@@ -69,7 +69,7 @@ public interface ISpravaPhysicalPlatformsServiceProvider
         );
     }
 
-    public static FileSystemDbService GetFileSystemDbService(
+    public static FileSystemAdoDbService GetFileSystemDbService(
         AppState appState,
         IDbConnectionFactory factory,
         IFactory<DbValues> dbValues
@@ -81,7 +81,7 @@ public interface ISpravaPhysicalPlatformsServiceProvider
             new DbServiceOptionsUiFactory(appState, nameof(FileSystemUiService))
         );
     }
-    public static CredentialDbService GetCredentialDbService(
+    public static CredentialAdoDbService GetCredentialDbService(
         AppState appState,
         IDbConnectionFactory factory,
         IFactory<DbValues> dbValues
@@ -93,7 +93,7 @@ public interface ISpravaPhysicalPlatformsServiceProvider
             new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
         );
     }
-    public static ToDoDbService GetToDoDbService(
+    public static ToDoAdoDbService GetToDoDbService(
         AppState appState,
         ToDoParametersFillerService parametersFillerService,
         IDbConnectionFactory factory,
