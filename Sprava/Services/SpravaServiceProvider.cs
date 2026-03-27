@@ -5,6 +5,7 @@ using Avalonia;
 using Aya.Contract.Helpers;
 using Aya.Contract.Models;
 using Aya.Contract.Services;
+using Aya.Db.Services;
 using Cai.Services;
 using Cai.Ui;
 using Cromwell.Services;
@@ -17,6 +18,7 @@ using Gaia.Services;
 using Hestia.Contract.Helpers;
 using Hestia.Contract.Models;
 using Hestia.Contract.Services;
+using Hestia.Db.Services;
 using Inanna.Helpers;
 using Inanna.Models;
 using Inanna.Services;
@@ -30,18 +32,23 @@ using Microsoft.Extensions.Logging;
 using Neotoma.Contract.Helpers;
 using Neotoma.Contract.Models;
 using Neotoma.Contract.Services;
+using Neotoma.Db.Services;
 using Nestor.Db.Helpers;
+using Nestor.Db.LiteDb.Models;
+using Nestor.Db.LiteDb.Services;
 using Nestor.Db.Services;
 using Pheidippides.Services;
 using Pheidippides.Ui;
 using Rooster.Contract.Helpers;
 using Rooster.Contract.Models;
 using Rooster.Contract.Services;
+using Rooster.Db.Services;
 using Sprava.Models;
 using Sprava.Ui;
 using Turtle.Contract.Helpers;
 using Turtle.Contract.Models;
 using Turtle.Contract.Services;
+using Turtle.Db.Services;
 using Weber.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
@@ -90,6 +97,17 @@ namespace Sprava.Services;
     typeof(ILinearBarcodeSerializerFactory),
     Factory = nameof(GetLinearBarcodeSerializerFactory)
 )]
+[Transient(typeof(IFileSystemDbCache), Factory = nameof(GetFileSystemDbService))]
+[Transient(typeof(ICredentialDbCache), Factory = nameof(GetCredentialDbService))]
+[Transient(typeof(IToDoDbCache), Factory = nameof(GetToDoDbService))]
+[Transient(typeof(IFileStorageDbCache), Factory = nameof(GetFileStorageDbService))]
+[Singleton(typeof(IAlarmDbCache), Factory = nameof(GetAlarmDbService))]
+[Transient(typeof(IFileSystemDbService), Factory = nameof(GetFileSystemDbService))]
+[Transient(typeof(ICredentialDbService), Factory = nameof(GetCredentialDbService))]
+[Transient(typeof(IToDoDbService), Factory = nameof(GetToDoDbService))]
+[Transient(typeof(IFileStorageDbService), Factory = nameof(GetFileStorageDbService))]
+[Singleton(typeof(IAlarmDbService), Factory = nameof(GetAlarmDbService))]
+[Transient(typeof(IObjectStorage), Factory = nameof(GetObjectStorage))]
 //  Models
 [Singleton(typeof(AppState))]
 [Transient(typeof(AlarmServiceOptions), Factory = nameof(GetAlarmServiceOptions))]
@@ -115,6 +133,77 @@ namespace Sprava.Services;
 [Transient(typeof(FilesPanelViewModel), Factory = nameof(GetFilesPanelViewModel))]
 public interface ISpravaServiceProvider : IServiceProvider
 {
+    public static IObjectStorage GetObjectStorage(IDatabaseFactory factory, ISerializer serializer)
+    {
+        return new LiteDbObjectStorage(factory, serializer);
+    }
+
+    public static AlarmLiteDbService GetAlarmDbService(
+        AppState appState,
+        IDatabaseFactory factory,
+        IFactory<DbValues> dbValues
+    )
+    {
+        return new(
+            factory,
+            dbValues,
+            new DbServiceOptionsUiFactory(appState, nameof(AlarmUiService))
+        );
+    }
+    public static FileStorageLiteDbService GetFileStorageDbService(
+        AppState appState,
+        IDatabaseFactory factory,
+        IFactory<DbValues> dbValues
+    )
+    {
+        return new(
+            factory,
+            dbValues,
+            new DbServiceOptionsUiFactory(appState, nameof(FileStorageUiService))
+        );
+    }
+
+    public static FileSystemLiteDbService GetFileSystemDbService(
+        AppState appState,
+        IDatabaseFactory factory,
+        IFactory<DbValues> dbValues
+    )
+    {
+        return new(
+            factory,
+            dbValues,
+            new DbServiceOptionsUiFactory(appState, nameof(FileSystemUiService))
+        );
+    }
+    public static CredentialLiteDbService GetCredentialDbService(
+        AppState appState,
+        IDatabaseFactory factory,
+        IFactory<DbValues> dbValues
+    )
+    {
+        return new(
+            factory,
+            dbValues,
+            new DbServiceOptionsUiFactory(appState, nameof(CredentialUiService))
+        );
+    }
+    public static ToDoLiteDbService GetToDoDbService(
+        AppState appState,
+        ToDoParametersFillerService parametersFillerService,
+        IDatabaseFactory factory,
+        IToDoValidator validator,
+        IFactory<DbValues> dbValuesFactory
+    )
+    {
+        return new(
+            factory,
+            dbValuesFactory,
+            parametersFillerService,
+            validator,
+            new DbServiceOptionsUiFactory(appState, nameof(ToDoUiService))
+        );
+    }
+
     public static FilesPanelViewModel GetFilesPanelViewModel(ICaiViewModelFactory factory)
     {
         return factory.CreateFilesPanel();
