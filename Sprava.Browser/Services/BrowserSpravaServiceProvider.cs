@@ -1,15 +1,11 @@
 ﻿using System;
 using Avalonia.Platform;
-using Aya.Contract.Services;
 using Gaia.Helpers;
 using Gaia.Services;
-using Hestia.Contract.Services;
 using Jab;
-using Neotoma.Contract.Services;
+using Nestor.Db.LiteDb.Services;
 using Pheidippides.Services;
-using Rooster.Contract.Services;
 using Sprava.Services;
-using Turtle.Contract.Services;
 using IServiceProvider = Gaia.Services.IServiceProvider;
 
 namespace Sprava.Browser.Services;
@@ -18,19 +14,9 @@ namespace Sprava.Browser.Services;
 [Import(typeof(ISpravaServiceProvider))]
 [Singleton(typeof(ISpravaConfig), Factory = nameof(GetSpravaConfig))]
 [Singleton(typeof(IOpenerLink), typeof(BrowserOpenerLink))]
-[Singleton(typeof(IObjectStorage), typeof(MemoryObjectStorage))]
-[Transient(typeof(IFileSystemDbCache), typeof(EmptyFileSystemDbCache))]
-[Transient(typeof(ICredentialDbCache), typeof(EmptyCredentialDbCache))]
-[Transient(typeof(IToDoDbCache), typeof(EmptyToDoDbCache))]
-[Transient(typeof(IFileStorageDbCache), typeof(EmptyFileStorageDbCache))]
-[Singleton(typeof(IAlarmDbCache), typeof(EmptyAlarmDbCache))]
-[Transient(typeof(IFileSystemDbService), typeof(EmptyFileSystemDbService))]
-[Transient(typeof(ICredentialDbService), typeof(EmptyCredentialDbService))]
-[Transient(typeof(IToDoDbService), typeof(EmptyToDoDbService))]
-[Transient(typeof(IFileStorageDbService), typeof(EmptyFileStorageDbService))]
-[Singleton(typeof(IAlarmDbService), typeof(EmptyAlarmDbService))]
 [Singleton(typeof(IAlarmScheduler), typeof(DefaultAlarmScheduler))]
 [Singleton(typeof(ISoundPlayer), typeof(SoundPlayer))]
+[Singleton(typeof(IDatabaseFactory), typeof(BrowserDatabaseFactory))]
 [Transient(typeof(ISerializer), Factory = nameof(GetSerializer))]
 public sealed partial class BrowserSpravaServiceProvider : IServiceProvider
 {

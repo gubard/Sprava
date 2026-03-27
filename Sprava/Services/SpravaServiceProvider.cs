@@ -34,7 +34,6 @@ using Neotoma.Contract.Models;
 using Neotoma.Contract.Services;
 using Neotoma.Db.Services;
 using Nestor.Db.Helpers;
-using Nestor.Db.LiteDb.Models;
 using Nestor.Db.LiteDb.Services;
 using Nestor.Db.Services;
 using Pheidippides.Services;

@@ -24,7 +24,7 @@ public sealed class FileUiUltraLiteDatabaseFactory : IUltraLiteDatabaseFactory
 
     private readonly AppState _appState;
     private readonly IStorageService _storageService;
-    private readonly Dictionary<FileInfo, IUltraLiteDatabaseFactory> _factories;
+    private readonly Dictionary<FileInfo, FileUltraLiteDatabaseFactory> _factories;
 
     private FileInfo CreateDbFile()
     {
@@ -43,6 +43,6 @@ public sealed class FileUiUltraLiteDatabaseFactory : IUltraLiteDatabaseFactory
             return;
         }
 
-        _factories.Add(file, new FileUltraLiteDatabaseFactory(file));
+        _factories.Add(file, new(file));
     }
 }

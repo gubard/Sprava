@@ -8,6 +8,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <StripSymbols>false</StripSymbols>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">

@@ -11,7 +11,7 @@ public sealed class BrowserOpenerLink : IOpenerLink
 {
     public ConfiguredValueTaskAwaitable OpenLinkAsync(Uri link, CancellationToken ct)
     {
-        JsWindowInterop.WindowOpen(link.AbsoluteUri);
+        JsInterop.WindowOpen(link.AbsoluteUri);
 
         return TaskHelper.ConfiguredCompletedTask;
     }
