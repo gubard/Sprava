@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
 using Gaia.Helpers;
@@ -9,11 +10,12 @@ namespace Sprava.Browser;
 
 internal sealed class Program
 {
-    private static Task Main(string[] args)
+    private static async Task Main(string[] args)
     {
+        await JSHost.ImportAsync("db-storage.js", "./../db-storage.js");
+        await JSHost.ImportAsync("window.js", "./../window.js");
         DiHelper.ServiceProvider = new BrowserSpravaServiceProvider();
-
-        return BuildAvaloniaApp().StartBrowserAppAsync("out");
+        await BuildAvaloniaApp().StartBrowserAppAsync("out");
     }
 
     public static AppBuilder BuildAvaloniaApp()
