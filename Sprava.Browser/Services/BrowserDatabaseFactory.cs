@@ -53,7 +53,13 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
 
         var data = await JsInterop.LoadDatabase(fileName);
         var bytes = DecodeBase64(data);
-        var stream = new MemoryStream(bytes);
+        var stream = new MemoryStream();
+
+        if (bytes.Length > 0)
+        {
+            stream.Write(bytes, 0, bytes.Length);
+        }
+
         stream.Position = 0;
         _cache.Add(fileName, new Database(new(stream)));
     }
