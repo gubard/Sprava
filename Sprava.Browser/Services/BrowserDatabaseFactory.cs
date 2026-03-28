@@ -61,7 +61,11 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
         }
 
         stream.Position = 0;
-        _cache.Add(fileName, new Database(new(stream)));
+
+        if (!_cache.ContainsKey(fileName))
+        {
+            _cache.Add(fileName, new Database(new(stream)));
+        }
     }
 
     private static byte[] DecodeBase64(string? base64)
