@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -14,6 +15,7 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
     public BrowserDatabaseFactory(AppState appState)
     {
         _appState = appState;
+        _cache = new();
     }
 
     public ConfiguredValueTaskAwaitable<IDatabase> CreateAsync(CancellationToken ct)
@@ -22,19 +24,17 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
     }
 
     private readonly AppState _appState;
+    private readonly Dictionary<string, IDatabase> _cache;
 
-    private async ValueTask<IDatabase> CreateCore(CancellationToken ct)
+    public async ValueTask<IDatabase> CreateCore(CancellationToken ct)
     {
-        var fileName = GetFileName();
-        var data = await JsInterop.LoadDatabase(fileName);
-        var bytes = DecodeBase64(data);
-        var stream = new MemoryStream(bytes);
-        stream.Position = 0;
+        var fileName = CreateDbFileName();
+        await InitDbContextAsync(fileName, ct);
 
-        return new BrowserDatabase(fileName, new(stream), stream);
+        return _cache[fileName];
     }
 
-    private string GetFileName()
+    private string CreateDbFileName()
     {
         if (_appState.User is null)
         {
@@ -44,7 +44,21 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
         return $"{_appState.User.Id}.litedb";
     }
 
-    public static byte[] DecodeBase64(string? base64)
+    private async ValueTask InitDbContextAsync(string fileName, CancellationToken ct)
+    {
+        if (_cache.ContainsKey(fileName))
+        {
+            return;
+        }
+
+        var data = await JsInterop.LoadDatabase(fileName);
+        var bytes = DecodeBase64(data);
+        var stream = new MemoryStream(bytes);
+        stream.Position = 0;
+        _cache.Add(fileName, new Database(new(stream)));
+    }
+
+    private static byte[] DecodeBase64(string? base64)
     {
         return string.IsNullOrWhiteSpace(base64) ? [] : Convert.FromBase64String(base64);
     }

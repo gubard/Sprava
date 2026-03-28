@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Sprava.Browser.Services;
 
 public sealed class BrowserDatabase : IDatabase
 {
+    private readonly SemaphoreSlim _asyncSemaphore = new(1, 1);
     private readonly MemoryStream _stream;
     private readonly UltraLiteDatabase _database;
     private readonly string _fileName;
@@ -27,26 +29,57 @@ public sealed class BrowserDatabase : IDatabase
         _stream.Dispose();
     }
 
-    public bool DropCollection(string name)
+    public ConfiguredValueTaskAwaitable ExecuteAsync(
+        Action<UltraLiteDatabase> action,
+        CancellationToken ct
+    )
     {
-        return _database.DropCollection(name);
+        return ExecuteCore(action, ct).ConfigureAwait(false);
     }
 
-    public UltraLiteCollection<BsonDocument> GetCollection(string name, BsonAutoId autoId)
+    private async ValueTask ExecuteCore(Action<UltraLiteDatabase> action, CancellationToken ct)
     {
-        return _database.GetCollection(name, autoId);
+        await _asyncSemaphore.WaitAsync(ct);
+
+        try
+        {
+            action(_database);
+            var data = _stream.ToArray();
+            await JsInterop.SaveDatabase(_fileName, data);
+        }
+        finally
+        {
+            _asyncSemaphore.Release();
+        }
     }
 
-    public ConfiguredValueTaskAwaitable SaveChangesAsync(CancellationToken ct)
+    public ConfiguredValueTaskAwaitable<T> ExecuteAsync<T>(
+        Func<UltraLiteDatabase, T> action,
+        CancellationToken ct
+    )
     {
-        return SaveChangesCore(ct).ConfigureAwait(false);
+        return ExecuteCore(action, ct).ConfigureAwait(false);
     }
 
-    public async ValueTask SaveChangesCore(CancellationToken ct)
+    private async ValueTask<T> ExecuteCore<T>(
+        Func<UltraLiteDatabase, T> action,
+        CancellationToken ct
+    )
     {
-        var position = _stream.Position;
-        _stream.Position = 0;
-        await JsInterop.SaveDatabase(_fileName, _stream.ToArray());
-        _stream.Position = position;
+        T result;
+        await _asyncSemaphore.WaitAsync(ct);
+
+        try
+        {
+            result = action(_database);
+            var data = _stream.ToArray();
+            await JsInterop.SaveDatabase(_fileName, data);
+        }
+        finally
+        {
+            _asyncSemaphore.Release();
+        }
+
+        return result;
     }
 }

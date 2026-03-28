@@ -1,30 +1,31 @@
+using System.Runtime.CompilerServices;
+using Gaia.Helpers;
 using Gaia.Services;
 using Inanna.Models;
 using Nestor.Db.LiteDb.Services;
-using UltraLiteDB;
 
 namespace Sprava.PhysicalPlatforms.Services;
 
-public sealed class FileUiUltraLiteDatabaseFactory : IUltraLiteDatabaseFactory
+public sealed class UiDatabaseFactory : IDatabaseFactory
 {
-    public FileUiUltraLiteDatabaseFactory(AppState appState, IStorageService storageService)
+    public UiDatabaseFactory(AppState appState, IStorageService storageService)
     {
         _appState = appState;
         _storageService = storageService;
-        _factories = new();
+        _cache = new();
     }
 
-    public UltraLiteDatabase Create()
+    public ConfiguredValueTaskAwaitable<IDatabase> CreateAsync(CancellationToken ct)
     {
         var dbFile = CreateDbFile();
         InitDbContext(dbFile);
 
-        return _factories[dbFile].Create();
+        return TaskHelper.FromResult(_cache[dbFile.FullName]);
     }
 
     private readonly AppState _appState;
     private readonly IStorageService _storageService;
-    private readonly Dictionary<FileInfo, FileUltraLiteDatabaseFactory> _factories;
+    private readonly Dictionary<string, IDatabase> _cache;
 
     private FileInfo CreateDbFile()
     {
@@ -38,11 +39,11 @@ public sealed class FileUiUltraLiteDatabaseFactory : IUltraLiteDatabaseFactory
 
     private void InitDbContext(FileInfo file)
     {
-        if (_factories.ContainsKey(file))
+        if (_cache.ContainsKey(file.FullName))
         {
             return;
         }
 
-        _factories.Add(file, new(file));
+        _cache.Add(file.FullName, new Database(new(file.FullName)));
     }
 }
