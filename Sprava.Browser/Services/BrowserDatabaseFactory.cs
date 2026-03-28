@@ -64,7 +64,7 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
 
         if (!_cache.ContainsKey(fileName))
         {
-            _cache.Add(fileName, new Database(new(stream)));
+            _cache.Add(fileName, new BrowserDatabase(new(stream), fileName, stream));
         }
     }
 
