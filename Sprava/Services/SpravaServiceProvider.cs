@@ -689,9 +689,9 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new Migrator(migration.ToFrozenDictionary());
     }
 
-    public static IStorageService GetStorageService()
+    public static IStorageService GetStorageService(ILogger logger)
     {
-        return new StorageService("Sprava");
+        return new StorageService("Sprava", logger);
     }
 
     public static IStringFormater GetStringFormater()
