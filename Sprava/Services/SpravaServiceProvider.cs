@@ -88,6 +88,7 @@ namespace Sprava.Services;
 [Singleton(typeof(IProgressService), typeof(ProgressService))]
 [Singleton(typeof(IErrorDialogFactory), typeof(ErrorDialogFactory))]
 [Singleton(typeof(ILogger), Factory = nameof(GetLogger))]
+[Singleton(typeof(ILogger<>), Factory = nameof(GetLoggerT))]
 [Singleton(typeof(IEnumerable<DownloadInstallItem>), Factory = nameof(GetDownloadInstallItems))]
 [Singleton(typeof(ICommandFactory), typeof(CommandFactory))]
 [Singleton(typeof(ISafeExecuteWrapper), typeof(SafeExecuteWrapper))]
@@ -297,6 +298,22 @@ public interface ISpravaServiceProvider : IServiceProvider
         );
 
         var logger = loggerFactory.CreateLogger("App");
+
+        return logger;
+    }
+
+    public static ILogger<T> GetLoggerT<T>(IServiceProvider serviceProvider)
+    {
+        using var loggerFactory = LoggerFactory.Create(b =>
+            b.AddProvider(new ViewLoggerProvider(serviceProvider))
+#if DEBUG
+            .SetMinimumLevel(LogLevel.Trace)
+#else
+                .SetMinimumLevel(LogLevel.Information)
+#endif
+        );
+
+        var logger = loggerFactory.CreateLogger<T>();
 
         return logger;
     }
@@ -689,7 +706,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         return new Migrator(migration.ToFrozenDictionary());
     }
 
-    public static IStorageService GetStorageService(ILogger logger)
+    public static IStorageService GetStorageService(ILogger<StorageService> logger)
     {
         return new StorageService("Sprava", logger);
     }
