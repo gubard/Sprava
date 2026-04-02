@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -24,7 +24,7 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
     }
 
     private readonly AppState _appState;
-    private readonly Dictionary<string, IDatabase> _cache;
+    private readonly ConcurrentDictionary<string, IDatabase> _cache;
 
     public async ValueTask<IDatabase> CreateCore(CancellationToken ct)
     {
@@ -61,11 +61,7 @@ public sealed class BrowserDatabaseFactory : IDatabaseFactory
         }
 
         stream.Position = 0;
-
-        if (!_cache.ContainsKey(fileName))
-        {
-            _cache.Add(fileName, new BrowserDatabase(new(stream), fileName, stream));
-        }
+        _cache.TryAdd(fileName, new BrowserDatabase(new(stream), fileName, stream));
     }
 
     private static byte[] DecodeBase64(string? base64)
