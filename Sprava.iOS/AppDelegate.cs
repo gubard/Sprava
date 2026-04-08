@@ -1,8 +1,3 @@
-using Avalonia;
-using Avalonia.iOS;
-using Foundation;
-using Sprava.Helpers;
-
 namespace Sprava.iOS;
 
 // The UIApplicationDelegate for the application. This class is responsible for launching the

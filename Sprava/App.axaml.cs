@@ -10,6 +10,7 @@ using Inanna.Models;
 using Inanna.Services;
 using Neotoma.Contract.Models;
 using Nestor.Db.Helpers;
+using Nestor.Db.LiteDb.Helpers;
 using Rooster.Contract.Models;
 using Sprava.Ui;
 using Turtle.Contract.Models;
@@ -20,29 +21,29 @@ public sealed class App : InannaApplication
 {
     static App()
     {
-        InsertHelper.AddDefaultInsert(
+        DefaultBsonDocument.AddDefaultBsonDocument(
             nameof(FileEntity),
-            i => new FileEntity[] { new() { Id = i } }.CreateInsertQuery()
+            i => new FileEntity { Id = i }.ToBsonDocument()
         );
 
-        InsertHelper.AddDefaultInsert(
+        DefaultBsonDocument.AddDefaultBsonDocument(
             nameof(ToDoEntity),
-            i => new ToDoEntity[] { new() { Id = i } }.CreateInsertQuery()
+            i => new ToDoEntity { Id = i }.ToBsonDocument()
         );
 
-        InsertHelper.AddDefaultInsert(
+        DefaultBsonDocument.AddDefaultBsonDocument(
             nameof(CredentialEntity),
-            i => new CredentialEntity[] { new() { Id = i } }.CreateInsertQuery()
+            i => new CredentialEntity { Id = i }.ToBsonDocument()
         );
 
-        InsertHelper.AddDefaultInsert(
+        DefaultBsonDocument.AddDefaultBsonDocument(
             nameof(FileObjectEntity),
-            i => new FileObjectEntity[] { new() { Id = i } }.CreateInsertQuery()
+            i => new FileObjectEntity { Id = i }.ToBsonDocument()
         );
 
-        InsertHelper.AddDefaultInsert(
+        DefaultBsonDocument.AddDefaultBsonDocument(
             nameof(AlarmEntity),
-            i => new AlarmEntity[] { new() { Id = i } }.CreateInsertQuery()
+            i => new AlarmEntity { Id = i }.ToBsonDocument()
         );
     }
 
