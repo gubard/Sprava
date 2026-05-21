@@ -18,6 +18,7 @@
       Include="AvaloniaUI.DiagnosticsSupport"
       Condition="'$(Configuration)' == 'Debug'"
     />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" />
   </ItemGroup>
 
   <ItemGroup>

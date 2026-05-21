@@ -290,8 +290,9 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         using var loggerFactory = LoggerFactory.Create(b =>
             b.AddProvider(new ViewLoggerProvider(serviceProvider))
+                .AddConsole()
 #if DEBUG
-            .SetMinimumLevel(LogLevel.Trace)
+                .SetMinimumLevel(LogLevel.Trace)
 #else
                 .SetMinimumLevel(LogLevel.Information)
 #endif
@@ -306,8 +307,9 @@ public interface ISpravaServiceProvider : IServiceProvider
     {
         using var loggerFactory = LoggerFactory.Create(b =>
             b.AddProvider(new ViewLoggerProvider(serviceProvider))
+                .AddConsole()
 #if DEBUG
-            .SetMinimumLevel(LogLevel.Trace)
+                .SetMinimumLevel(LogLevel.Trace)
 #else
                 .SetMinimumLevel(LogLevel.Information)
 #endif
