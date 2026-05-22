@@ -41,5 +41,8 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isShowPane;
 
+    [ObservableProperty]
+    private double _mobileBottomRectangleHeight;
+
     private readonly INavigator _navigator;
 }

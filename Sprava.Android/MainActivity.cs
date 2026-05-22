@@ -10,10 +10,13 @@ using Android.Provider;
 using Android.Runtime;
 using Avalonia;
 using Avalonia.Android;
+using Avalonia.Controls;
+using Avalonia.Controls.Platform;
 using Gaia.Helpers;
 using Inanna.Services;
 using Sprava.Android.Services;
 using Sprava.Helpers;
+using Sprava.Ui;
 
 namespace Sprava.Android;
 
@@ -49,15 +52,39 @@ public sealed class MainActivity : AvaloniaMainActivity
         Activity = this;
     }
 
+    public override void OnBackPressed()
+    {
+        NavigateBackOrNullAsync();
+    }
+
+    public override void OnWindowFocusChanged(bool hasFocus)
+    {
+        base.OnWindowFocusChanged(hasFocus);
+
+        if (!hasFocus)
+        {
+            return;
+        }
+
+        var topLevel = TopLevel.GetTopLevel((Visual?)Activity?.Content);
+
+        if (topLevel?.InputPane is null)
+        {
+            return;
+        }
+
+        var main = DiHelper.ServiceProvider.GetService<MainViewModel>();
+
+        main.MobileBottomRectangleHeight =
+            topLevel.InputPane.State == InputPaneState.Closed
+                ? 0
+                : topLevel.InputPane.OccludedRect.Height;
+    }
+
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
         EnsureExactAlarmAccessIfNeeded();
-    }
-
-    public override void OnBackPressed()
-    {
-        NavigateBackOrNullAsync();
     }
 
     private void EnsureExactAlarmAccessIfNeeded()

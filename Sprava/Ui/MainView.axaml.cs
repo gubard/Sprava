@@ -34,8 +34,11 @@ public sealed partial class MainView : UserControl
             }
 
             topLevel.InputPane.StateChanged += (_, i) =>
-                MobileBottomRectangle.Height =
+                ViewModel.MobileBottomRectangleHeight =
                     i.NewState == InputPaneState.Closed ? 0 : i.EndRect.Height;
         };
     }
+
+    private MainViewModel ViewModel =>
+        DataContext as MainViewModel ?? throw new NullReferenceException();
 }

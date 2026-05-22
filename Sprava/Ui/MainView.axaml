@@ -33,7 +33,7 @@
                 </c:NotificationPanel>
             </c:DialogControl>
 
-            <Rectangle x:Name="MobileBottomRectangle" Grid.Row="1" />
+            <Rectangle Grid.Row="1" Height="{Binding MobileBottomRectangleHeight}" />
 
             <ProgressBar Classes="align-stretch-top"
                          Value="{Binding ProgressService.CurrentValue}"
