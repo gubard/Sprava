@@ -179,7 +179,6 @@
     <s:String x:Key="Lang.Error">Помилка</s:String>
     <s:String x:Key="Lang.Ok">Ок</s:String>
     <s:String x:Key="Lang.Delete">Видалити</s:String>
-    <s:String x:Key="Lang.DeleteAsk">Видалити {}?</s:String>
     <s:String x:Key="Lang.CreatingNewItem">Створення нового {}</s:String>
     <s:String x:Key="Lang.Message">Повідомлення</s:String>
     <s:String x:Key="Lang.StackTrace">Трасування стека</s:String>
