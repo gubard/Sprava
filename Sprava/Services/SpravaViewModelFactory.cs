@@ -17,7 +17,6 @@ public interface ISpravaViewModelFactory
     AppSettingViewModel CreateAppSettingViewModel();
     NavigationBarViewModel CreateNavigationBar();
     PaneViewModel CreatePane();
-    StatusBarViewModel CreateStatusBar();
     MainViewModel CreateMain();
     DeveloperViewModel CreateDeveloper();
 }
@@ -70,11 +69,6 @@ public sealed class SpravaViewModelFactory : ISpravaViewModelFactory
             _serviceProvider.GetService<CromwellCommands>(),
             _serviceProvider.GetService<DioclesCommands>()
         );
-    }
-
-    public StatusBarViewModel CreateStatusBar()
-    {
-        return new(_serviceProvider.GetService<ISafeExecuteWrapper>());
     }
 
     public MainViewModel CreateMain()

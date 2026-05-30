@@ -266,7 +266,7 @@ public interface ISpravaServiceProvider : IServiceProvider
         return factory.CreateMain();
     }
 
-    public static StatusBarViewModel GetStatusBarViewModel(ISpravaViewModelFactory factory)
+    public static StatusBarViewModel GetStatusBarViewModel(IInannaViewModelFactory factory)
     {
         return factory.CreateStatusBar();
     }

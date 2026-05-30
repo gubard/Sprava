@@ -67,6 +67,10 @@ public sealed class App : InannaApplication
                 desktop.MainWindow = new MainWindow { DataContext = viewModel };
 
                 break;
+            case IActivityApplicationLifetime activity:
+                activity.MainViewFactory = () => new MainView { DataContext = viewModel };
+
+                break;
             case ISingleViewApplicationLifetime singleViewPlatform:
                 singleViewPlatform.MainView = new MainView { DataContext = viewModel };
 
