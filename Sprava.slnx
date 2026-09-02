@@ -3,8 +3,6 @@
     <Project Path="../Gaia/Gaia/Gaia.csproj" />
   </Folder>
   <Folder Name="/Git/">
-    <Project Path="../IconPacks.Avalonia.Aot/src/IconPacks.Avalonia.Core/IconPacks.Avalonia.Core.csproj" />
-    <Project Path="../IconPacks.Avalonia.Aot/src/IconPacks.Avalonia.MaterialDesign/IconPacks.Avalonia.MaterialDesign.csproj" />
     <Project Path="../UltraLiteDB/UltraLiteDB/UltraLiteDB.csproj" />
   </Folder>
   <Folder Name="/Inanna/">
@@ -46,9 +44,6 @@
     <Project Path="../Turtle/Turtle.Contract/Turtle.Contract.csproj" />
     <Project Path="../Turtle/Turtle.Db/Turtle.Db.csproj" />
     <Project Path="../Turtle/Turtle/Turtle.csproj" />
-  </Folder>
-  <Folder Name="/Solution Items/">
-    <File Path="Directory.Packages.props" />
   </Folder>
   <Folder Name="/SolutionItems/">
     <File Path="Directory.Packages.props" />

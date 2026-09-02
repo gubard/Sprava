@@ -31,7 +31,7 @@ public sealed class SpravaConfig : ISpravaConfig
         AlarmService = options.AlarmService;
 
         Downloads = options
-            .Downloads.Select(x => new DownloadInstallItem(x.Name, x.Url.ToUri()))
+            .Downloads.SelectAsSpan(x => new DownloadInstallItem(x.Name, x.Url.ToUri()))
             .ToArray();
     }
 
